@@ -10,7 +10,43 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//use App\Http\middleware\Authenticate;
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
+	//echo "dasdasda";
 });
+
+//Route::
+
+Route::group(['middleware' => 'AuthSimas'], function(){
+	Route::get('/coba', function(){
+		return "coba";
+	});
+
+	// route admin \\
+	Route::group(['middleware'=> 'CekRole:admin'], function(){
+
+		Route::get('/admin', [
+			"uses"  => 'Admin\AdminController@index',
+			"as"    => 'web.admin',
+		]);
+
+	});
+
+	// route mahasiswa \\
+	Route::group(['middleware' => 'CekRole:mahasiswa'], function(){
+
+	});
+
+	// route admisi \\
+	Route::group(['middleware' => 'CekRole:admisi'], function(){
+
+	});
+});
+
+
+Route::get('/home',[
+	"middleware" => "CekRole:guest",
+	"uses"  	 => "UserController@login",
+	"as"         => "web.login"
+]);
