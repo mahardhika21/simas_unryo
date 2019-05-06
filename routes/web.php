@@ -50,3 +50,10 @@ Route::get('/home',[
 	"uses"  	 => "UserController@login",
 	"as"         => "web.login"
 ]);
+
+
+Route::get('/view',[
+	"middleware" => "CekRole:guest",
+	"uses"  	 => "UserController@view",
+	"as"         => "web.view"
+]);

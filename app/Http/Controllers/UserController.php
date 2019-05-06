@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
-use App\Model\User;
+use App\Model\Users;
 
 
 class UserController extends Controller
@@ -57,5 +57,15 @@ class UserController extends Controller
 		}catch(Exception $e){
 			echo "".$e->message;
 		}
+	}
+
+	public function view(Request $request)
+	{
+		$data = array
+			(
+				"url"  => $this->url->to('/'),
+			);
+
+		return view('mahasiswa/index', $data);
 	}
 }
