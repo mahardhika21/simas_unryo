@@ -64,6 +64,7 @@ class UserController extends Controller
 		$data = array
 			(
 				"url"  => $this->url->to('/'),
+				"sub"  => view('mahasiswa/sub'),
 			);
 
 		return view('mahasiswa/index', $data);
