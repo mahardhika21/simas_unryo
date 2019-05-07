@@ -36,6 +36,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 	// route mahasiswa \\
 	Route::group(['middleware' => 'CekRole:mahasiswa'], function(){
 
+		Route::get('/mahasiswa',[
+			"uses" => 'Mahasiswa\MahasiswaController@home',
+			"as"   => 'mahasiswa.get.home'
+		]);
+
 	});
 
 	// route admisi \\
@@ -55,5 +60,15 @@ Route::get('/home',[
 Route::get('/view',[
 	"middleware" => "CekRole:guest",
 	"uses"  	 => "UserController@view",
+	"as"         => "web.view"
+]);
+
+Route::get('/set_session',[
+	"uses"  	 => "UserController@set_session",
+	"as"         => "web.view"
+]);
+
+Route::get('/see_session',[
+	"uses"  	 => "UserController@see_session",
 	"as"         => "web.view"
 ]);

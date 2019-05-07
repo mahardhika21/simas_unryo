@@ -69,4 +69,22 @@ class UserController extends Controller
 
 		return view('mahasiswa/index', $data);
 	}
+
+
+	public function set_session(Request $request)
+	{
+		$arr_ses = array
+							(
+								"username" => "1234567",
+								"level"    => "mahasiswa",
+							);
+				$request->session()->put('roleAuth',$arr_ses);
+				echo "oke";	
+	}
+
+	public function see_session(Request $request)
+	{
+		$data = $request->session()->get('roleAuth');
+				echo '<pre>'.print_r($data, true).'</pre>';
+	}
 }

@@ -16,4 +16,21 @@ class MahasiswaCOntroller extends Controller
 	{
 		$this->url = $url;
 	}
+
+
+	public function home(Request $request)
+	{
+		$data = array 
+				(
+					"message" => "",
+					"url"     => $this->url->to('/'),
+					"part"    => array
+								(
+									"footer"   => view('base/footer'),
+									"header"   => view('base/header-mahasiswa'),
+									"sidebar"  => view('base/side-menu-mahasiswa'),
+								),
+				);
+		return view('mahasiswa/home', $data);
+	}
 }

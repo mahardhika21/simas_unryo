@@ -8,7 +8,7 @@ class CekRole
 
 	function handle($request, Closure $next, $role)
 	{
-			$sesion = $request->session()->get('roleAuth');
+			$session = $request->session()->get('roleAuth');
 			if(!empty($session))
 			{
 
@@ -18,7 +18,7 @@ class CekRole
 			{
 				if($session['level'] != $role)
 				{
-					return redirect($role);
+					return redirect($session['level']);
 				}
 			}
 
