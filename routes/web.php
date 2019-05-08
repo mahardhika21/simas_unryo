@@ -41,10 +41,15 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => 'mahasiswa.get.home'
 		]);
 
+		Route::get('/mahasiswa/profile', [
+			"uses" => 'Mahasiswa\MahasiswaController@profile',
+			"as"   => 'mahasiswa.get.profile'
+		]);
+
 	});
 
 	// route admisi \\
-	Route::group(['middleware' => 'CekRole:admisi'], function(){
+	Route::group(['middleware' => 'CekRole:baak'], function(){
 
 	});
 });
