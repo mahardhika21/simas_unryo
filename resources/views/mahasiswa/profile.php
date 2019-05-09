@@ -105,30 +105,10 @@
                     <div class=" p-4">
                       <div class="row">
                         <div class="col-md-12">
-                             <div class="table-responsive">
-                              <table class="table table-striped table-borderless">
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">Nama</th>
-                                    <td>:</td>
-                                    <td>Otto</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                             <a class="btn btn-primary mt-3" href="#">Update Profile</a>
                         </div>
                         
-                      <a class="btn btn-primary mt-3" href="#">Update Profile</a>
+                     
                     </div>
                   </div>
                </div>
@@ -138,6 +118,8 @@
        
           </div>
         </div>
+      </div>
+
       </section>
   
       <!-- start footer -->

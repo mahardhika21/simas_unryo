@@ -15,7 +15,7 @@
           <ul id="side-main-menu" class="side-menu list-unstyled">                  
             <li><a href="<?php echo $url .'/mahasiswa'; ?>"> <i class="icon-home"></i>Home                             </a></li>
             <li><a href="<?php echo $url .'/mahasiswa/profile'; ?>"> <i class="icon-user"></i>Profile                             </a></li>
-          <li><a href="#dropdownmsg" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-envelope"></i>pesan </a>
+          <li style="display: none;"><a href="#dropdownmsg" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-envelope"></i>pesan </a>
               <ul id="dropdownmsg" class="collapse list-unstyled ">
                 <li><a href="<?php echo $url .'/mahasiswa/send_message'; ?>">Kirim Pesan</a></li>
                 <li><a href="<?php echo $url .'/mahasiswa/message'; ?>">list pesan</a></li>

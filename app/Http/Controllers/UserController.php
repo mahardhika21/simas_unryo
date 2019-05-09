@@ -76,7 +76,7 @@ class UserController extends Controller
 		$arr_ses = array
 							(
 								"username" => "1234567",
-								"level"    => "mahasiswa",
+								"level"    => "admin",
 							);
 				$request->session()->put('roleAuth',$arr_ses);
 				echo "oke";	

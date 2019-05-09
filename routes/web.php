@@ -46,11 +46,32 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => 'mahasiswa.get.profile'
 		]);
 
+		Route::get('/mahasiswa/room', [
+			"uses" => 'Mahasiswa\MahasiswaController@room',
+			"as"   => 'mahasiswa.get.profile'
+		]);
+
+		Route::get('/mahasiswa/myroom', [
+			"uses" => 'Mahasiswa\MahasiswaController@my_room',
+			"as"   => 'mahasiswa.get.profile'
+		]);
+
+		Route::get('/mahasiswa/payment', [
+			"uses" => 'Mahasiswa\MahasiswaController@profile',
+			"as"   => 'mahasiswa.get.profile'
+		]);
+
+		Route::get('/mahasiswa/confirmPayment', [
+			"uses" => 'Mahasiswa\MahasiswaController@confirm_payment',
+			"as"   => 'mahasiswa.get.profile'
+		]);
+
 	});
 
 	// route admisi \\
 	Route::group(['middleware' => 'CekRole:baak'], function(){
 
+		
 	});
 });
 

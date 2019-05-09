@@ -84,7 +84,7 @@ class MahasiswaCOntroller extends Controller
 		  			"curency"  => $this->curency,
 		  			"part"     => array
 		  							(
-		  								"header"  =>  view('base/header'),
+		  								"header"  =>  view('base/header-mahasiswa'),
 		  								"sidebar" =>  view('base/side-menu-mahasiswa', $this->baseUrl()),
 		  								"footer"  =>  view('base/footer'),
 		  							)
@@ -122,7 +122,7 @@ class MahasiswaCOntroller extends Controller
 		  			"curency"  => $this->curency,
 		  			"part"     => array
 		  							(
-		  								"header"  =>  view('base/header'),
+		  								"header"  =>  view('base/header-mahasiswa'),
 		  								"sidebar" =>  view('base/side-menu-mahasiswa', $this->baseUrl()),
 		  								"footer"  =>  view('base/footer'),
 		  							)
@@ -141,7 +141,7 @@ class MahasiswaCOntroller extends Controller
 		  			"curency"  => $this->curency,
 		  			"part"     => array
 		  							(
-		  								"header"  =>  view('base/header'),
+		  								"header"  =>  view('base/header-mahasiswa'),
 		  								"sidebar" =>  view('base/side-menu-mahasiswa', $this->baseUrl()),
 		  								"footer"  =>  view('base/footer'),
 		  							)

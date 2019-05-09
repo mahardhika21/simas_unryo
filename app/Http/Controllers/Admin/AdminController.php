@@ -19,12 +19,32 @@ class AdminController extends Controller
 
 	public function index(Request $request)
 	{
+
+//die();
 		$data = array
 				(
 					"url" => $this->url->to('/'),
+					"part" => array
+							(
+								"header"  => view('base/header-admin'),
+								"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
+								"footer"  => view('base/footer')
+							),
 				);
 
-		echo "hai";
+		return view('admin/home',$data);
+
+	}
+
+
+
+private function baseUrl()
+	{
+		$url = array
+			  (
+			  	"url" => $this->url->to('/'),
+			  );
+		return $url;
 	}
 	
 }
