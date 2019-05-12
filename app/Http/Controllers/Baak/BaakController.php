@@ -19,6 +19,42 @@ class BaakController extends Controller
 		$this->url = $url;
 	}
 
+	public function index(Request $request)
+	{
 
+		$data = array
+				(
+					"url" => $this->url->to('/'),
+					"part" => array
+							(
+								"header"  => view('base/header-admin'),
+								"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
+								"footer"  => view('base/footer')
+							),
+				);
+
+		return view('baak/home',$data);
+
+	}
+
+	public function profile(Request $request)
+	{
+
+		$data = array
+				(
+					"url" => $this->url->to('/'),
+					"part" => array
+							(
+								"header"  => view('base/header-admin'),
+								"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
+								"footer"  => view('base/footer')
+							),
+				);
+
+		return view('baak/profile',$data);
+	}
+
+
+	
 	
 }

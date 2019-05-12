@@ -98,3 +98,14 @@ Route::get('/see_session',[
 	"uses"  	 => "UserController@see_session",
 	"as"         => "web.view"
 ]);
+
+
+Route::post('/userLogin', [
+	"uses" => 'UserController@set_login',
+	"as"   => "web.login",
+]);
+
+Route::get('/logOut',[
+	"uses"  => 'UserController@log_out',
+	"as"    => "web.log_out"
+]);

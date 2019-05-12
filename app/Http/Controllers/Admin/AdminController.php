@@ -37,14 +37,156 @@ class AdminController extends Controller
 	}
 
 
-
-private function baseUrl()
+	public function profile(Request $request)
 	{
-		$url = array
-			  (
-			  	"url" => $this->url->to('/'),
-			  );
-		return $url;
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/profile',$data);
 	}
+
+	public function room_list(Request $request)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/room_list',$data);
+	}
+
+	public function add_room(Request $request,$type)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/add_roomview_'.$type,$data);
+	}
+
+
+	public function list_rent_room(Request $request)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/add_userView_'.$type,$data);
+	}
+
+
+	public function list_stat_paid(Request $request,$type)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/stat_paid'.$type,$data);
+	}
+
+
+
+	public function user_list(Request $request, $type)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/user_list',$data);
+	}
+
+
+	public function add_user(Request $request, $type)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/add_userView_'.$type,$data);
+	}
+
+
+	public function price(Request $request)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/add_userView_'.$type,$data);
+	}
+
+	public function report(Request $request,$type)
+	{
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"part"  => array
+								(
+									"header"   => view('base/header-admin'),
+									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
+									"footer"   => view('base/footer')
+								),
+				);
+		return view('admin/report_'.$type,$data);
+	}
+
+
+
+	private function baseUrl()
+		{
+			$url = array
+				  (
+				  	"url" => $this->url->to('/'),
+				  );
+			return $url;
+		}
 	
 }

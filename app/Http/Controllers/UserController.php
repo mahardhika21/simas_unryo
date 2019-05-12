@@ -35,21 +35,27 @@ class UserController extends Controller
 		$username  = $request->input('username');
 		$password  = md5($request->input('password'));
 
+
+		echo $username .' '. $password;
+
 		try
 		{
 			$data = User::where('username',$username)
 						->where('password',$password)
 						->get();
+			// 			echo $data[0]->username;
+			// 			echo '<pre>'.print_r($data, true).'</pre>';
+			// die();
 			if(!empty($data))
 			{
 				$arr_ses = array
 							(
 								"username" => $username,
-								"level"    => $data->level,
+								"level"    => $data[0]->level,
 							);
-				$request->session()->put($arr_ses);
+				$request->session()->put('roleAuth',$arr_ses);
 
-				return redirect($level);
+				return redirect($data[0]->level);
 			}else{
 				$message = array('status' => "danger", 'message' => 'login gagal');
 				return redirect('login')->with($message);
@@ -57,6 +63,14 @@ class UserController extends Controller
 		}catch(Exception $e){
 			echo "".$e->message;
 		}
+	}
+
+
+	public function log_out(Request $request)
+	{
+		$request->session()->forget('roleAuth');
+		$message = array('status' => "success", 'message' => 'anda telah keluar dari sistem');
+		return redirect('home')->with($message);
 	}
 
 	public function view(Request $request)
