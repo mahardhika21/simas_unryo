@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <title>BERANDA</title>
 </head>
 
 <body>
@@ -61,8 +62,8 @@
         $message = Session::get('success');
           echo '<pre>'.print_r($message, true) .'</pre>'; ?>
           <form class="" action="<?php echo $url .'/userLogin'; ?>" method="post">
-            <div class="form-group"> <label>Email address</label> <input type="text" class="form-control" placeholder="masukkan username" name="username"> <small class="form-text text-muted"></small> </div>
-            <div class="form-group"> <label>Password</label> <input type="password" class="form-control" placeholder="Password" name="password"> </div> <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group"> <label>Email address</label> <input type="text" class="form-control" placeholder="masukkan  username" required="" name="username"> <small class="form-text text-muted"></small> </div>
+            <div class="form-group"> <label>Password</label> <input type="password" class="form-control" placeholder="Password" name="password" required=""> </div> <button type="submit" class="btn btn-primary">Submit</button>
           </form>
           <form class="" style="display: none;">
             <div class="form-group"> <label>Email address</label> <input type="email" class="form-control" placeholder="Enter email"> <small class="form-text text-muted"></small> </div>

@@ -36,17 +36,18 @@ class UserController extends Controller
 		$password  = md5($request->input('password'));
 
 
-		echo $username .' '. $password;
+		//echo $username .' '. $password;
 
 		try
 		{
 			$data = User::where('username',$username)
 						->where('password',$password)
 						->get();
-			// 			echo $data[0]->username;
-			// 			echo '<pre>'.print_r($data, true).'</pre>';
+			
+
+			// echo count($data);
 			// die();
-			if(!empty($data))
+			if(count($data)> 0)
 			{
 				$arr_ses = array
 							(
@@ -58,7 +59,7 @@ class UserController extends Controller
 				return redirect($data[0]->level);
 			}else{
 				$message = array('status' => "danger", 'message' => 'login gagal');
-				return redirect('login')->with($message);
+				return redirect('home')->with($message);
 			}
 		}catch(Exception $e){
 			echo "".$e->message;

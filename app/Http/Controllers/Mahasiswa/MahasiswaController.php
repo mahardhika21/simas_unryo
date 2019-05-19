@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\FacadesDB;
 use Illuminate\Routing\UrlGenerator;
 use App\Helpers\Curency_helper;
+use App\Model\Mahasiswa;
 
 class MahasiswaCOntroller extends Controller
 {
@@ -57,12 +58,12 @@ class MahasiswaCOntroller extends Controller
 
 	public function profile(Request $request)
 	{
-		
+		$user = $request->session()->get('roleAuth');
 		$data = array
 				(
 					"message"  => "",
 					"url"      => $this->url->to('/'),
-					"curency"  => $this->curency,
+					"data"     => Mahasiswa::where('nim',$user['username'])->get(),
 					"part"     => array
 								  (
 								  	 "header"  => view('base/header-mahasiswa'),
