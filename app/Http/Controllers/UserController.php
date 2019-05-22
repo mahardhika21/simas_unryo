@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
 use App\Model\Users;
+use Mail;
 
 
 class UserController extends Controller
@@ -101,5 +103,74 @@ class UserController extends Controller
 	{
 		$data = $request->session()->get('roleAuth');
 				echo '<pre>'.print_r($data, true).'</pre>';
+	}
+
+	public function update_password(Request $request)
+	{
+		$password_old   = $request->input('password_old');
+		$password_new   = $request->input('password_new');
+		$password_renew = $request->input('password_renew');
+
+
+		$cek = User::where('password',md5($password_old));
+
+		if(count($cek) > 0)
+		{
+			if($password_new === $password_renew)
+			{
+				$username = $request->session('roleAuth');
+				$proses = User::whre('password',md5($password_new))->where('username',$username['username']);
+
+				if($proses === true)
+				{
+					$message = array
+						(
+							"code"    => "1",
+							"message" => "upadate Passsword Sukses",
+						);
+				return response()->json($message);
+				}
+			}else
+			{
+				$message = array
+						(
+							"code"    => "00",
+							"message" => "Passsword Baru tidak sama",
+						);
+				return response()->json($message);
+			}
+		}else{
+				$message = array
+						(
+							"code"    => "00",
+							"message" => "Passsword Lama yang dimasukkan salah",
+						);
+				return response()->json($message);
+		}
+	}
+
+
+	public function test_response(Request $request)
+	{
+		$arr = array('nama' => "naruto", "alamat" => "Desa Konoha Gakure");
+
+		return response()->json($arr);
+	}
+
+
+	public function sendMail(Request $request)
+	{
+		try
+		{
+			 Mail::send('emails.email_reset_pass', ['nama' => "mahar", 'pesan' => "sss"], function ($message) use ($request)
+        {
+            $message->subject($request->judul);
+            $message->from('donotreply@kiddy.com', 'Kiddy');
+            $message->to("mahardhika894@gmail.com");
+        });
+		}catch(Exception $e)
+		{
+			return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+		}
 	}
 }
