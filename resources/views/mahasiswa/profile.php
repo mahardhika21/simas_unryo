@@ -40,7 +40,7 @@
       <!-- navbar header-->
 
       <!-- Counts Section -->
-      <section class="dashboard-counts section-padding">
+      <section class="dashboard-counts section-padding" style="display: none;">
         <div class="container-fluid">
           <div class="row">
             <!-- Count item widget-->
@@ -93,21 +93,69 @@
       </section>
     
       <!-- Statistics Section-->
-      <section class="statistics">
+      <section class="statistics" style="margin-top: 35px;">
         <div class="container-fluid">
           <div class="row d-flex">
             <div class="col-lg-12">
               <!-- Income-->
               <div class="card income text-center">
-                <div class="icon"><i class="icon-user"></i></div>
+               
                 <div class="col-lg-12 p-3">
-                  <div class=" text-center">
+                  <div class=" ">
                     <div class=" p-4">
                       <div class="row">
-                        <div class="col-md-12">
-                             <a class="btn btn-primary mt-3" href="#">Update Profile</a>
+                        <div class="col-sm-12">
+                           <div class="panel panel-info">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title text-center">Detail Profile Mahasiswa</h3>
+                                </div>
+                                <div class="panel-body">
+                                  <div class="row">
+                                    <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" style="max-height: 120px;" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" class="img-circle img-responsive"> </div>
+
+                                    <div class=" col-md-9 col-lg-9 "> 
+                                      <table class="table table-user-information">
+                                        <tbody>
+                                          <tr>
+                                            <td width="130px">Ninm </td>
+                                            <td><?php echo $data[0]->nim; ?></td>
+                                          </tr>
+                                          <tr>
+                                            <td>Nama </td>
+                                            <td><?php echo $data[0]->nama; ?></td>
+                                          </tr>
+                                          <tr>
+                                            <td>Fakultas </td>
+                                            <td><?php echo $data[0]->fakultas; ?></td>
+                                          </tr>
+                                          <tr>
+                                            <td>Prodi </td>
+                                            <td><?php echo $data[0]->prodi; ?></td>
+                                          </tr>
+                                          
+                                             <tr>
+                                            <td>Tahun Masuk</td>
+                                            <td> <?php echo $data[0]->tahun_masuk; ?></td>
+                                          </tr>
+                                        
+                                         
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                 <div class="panel-footer">   
+                       <a style="display: none;" class="btn btn-info" data-toggle="modal" data-target="#proIMG">Upload Foto Profile</a> <a style="display: none;" class="btn btn-warning" data-toggle="modal" data-target="#logoIMG">Upload Logo Agent</a>
+                </div>
+            
+          </div>
                         </div>
-                        
+                        <div class="col-md-12">
+                             <a class="btn btn-primary mt-3" href="#" id="update_pro">Update Profile</a>
+                             <a class="btn btn-warning mt-3" href="#" id="update_password">Reset Password</a>
+                        </div>
+                        <?php //echo '<pre>'.print_r($data, true) .'</pre>'; ?>
+
                      
                     </div>
                   </div>
@@ -126,6 +174,102 @@
       <?php echo $part['footer']; ?>
       <!-- end footer -->
     </div>
+
+
+    <div class="modal fade" id="modal_profile" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+         <form id="form1" accept-charset="UTF-8" method="post" action="" enctype="multipart/form-data">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Profile Mahasiswa</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+              <div class="card">
+                <div class="card-header d-flex align-items-center">
+                 
+                </div>
+                <div class="card-body">
+                 
+                  <form>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Email Address" class="form-control">
+                    </div>
+                    <div class="form-group">       
+                      <label>Password</label>
+                      <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <div class="form-group">       
+                      <input type="submit" value="Signin" class="btn btn-primary">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+           <button type="Submit" class="btn btn-info" >Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+         </form>
+      </div>
+      
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="modal_password" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+         <form id="form1" accept-charset="UTF-8" method="post" action="" enctype="multipart/form-data">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Password</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+              <div class="card">
+                <div class="card-header d-flex align-items-center">
+                 
+                </div>
+                <div class="card-body">
+                 
+                  <form>
+                    <div class="form-group">
+                      <label>Password Lama</label>
+                      <input type="password" placeholder="Password Lama" name="password_old" class="form-control">
+                    </div>
+                    <div class="form-group">       
+                      <label>Password Baru</label>
+                      <input type="password" placeholder="Password baru" name="password_new" class="form-control">
+                    </div>
+                    <div class="form-group">       
+                      <label>Ulangi Password Baru</label>
+                      <input type="password" placeholder="Ulangi Password Baru" name="password_renew" class="form-control">
+                    </div>
+                    <div class="form-group">       
+                      <input type="submit" value="Signin" class="btn btn-primary">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+           <button type="Submit" class="btn btn-info" >Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+         </form>
+      </div>
+      
+    </div>
+  </div>
     <!-- JavaScript files-->
     <script src="<?php echo $url .'/assets/vendor/jquery/jquery.min.js'; ?>"></script>
     <script src="<?php echo $url .'/assets/vendor/popper.js/umd/popper.min.js'; ?>"> </script>
@@ -138,5 +282,10 @@
     <script src="<?php echo $url .'/assets/js/charts-home.js'; ?>"></script>
     <!-- Main File-->
     <script src="<?php echo $url .'/assets/js/front.js'; ?>"></script>
+    <script type="text/javascript">
+      $('#update_pro').on('click', function(){
+        $('#modal_profile').modal('show');
+      });
+    </script>
   </body>
 </html>

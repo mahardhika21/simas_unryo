@@ -110,6 +110,7 @@ Route::get('/logOut',[
 	"as"    => "web.log_out"
 ]);
 
+
 Route::get('/send_mail',[
 	"uses"   => "UserController@send_mail",
 	"as"     => "web.send_email"
@@ -119,4 +120,26 @@ Route::get('/send_mail',[
 Route::get('/send_key',[
 	"uses"  => "UserController@sendEmailResetPassword",
 	"as"   => "web.send_key.password"
+
+// Route::group(['middleware' => 'AuthSimas'], function(){
+// 	Route::post('/update_password', [
+
+// 	]);
+// });
+
+
+Route::post('/update_password',[
+	"middleware" => 'AuthSimas',
+	"uses" 		 => 'UserController@update_password',
+	"as" 		 => 'web.update_password'
+]);
+
+Route::get('/cek_response',[
+	"uses"  	 => "UserController@test_response",
+	"as"         => "web.test_response"
+]);
+
+Route::get('/send_email',[
+	"uses"  	 => "UserController@sendMail",
+	"as"         => "web.sendMail"
 ]);
