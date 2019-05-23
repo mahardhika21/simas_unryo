@@ -109,3 +109,14 @@ Route::get('/logOut',[
 	"uses"  => 'UserController@log_out',
 	"as"    => "web.log_out"
 ]);
+
+Route::get('/send_mail',[
+	"uses"   => "UserController@send_mail",
+	"as"     => "web.send_email"
+]);
+
+
+Route::get('/send_key',[
+	"uses"  => "UserController@sendEmailResetPassword",
+	"as"   => "web.send_key.password"
+]);

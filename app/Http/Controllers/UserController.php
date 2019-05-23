@@ -5,8 +5,10 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mail;
 use Illuminate\Routing\UrlGenerator;
 use App\Model\Users;
+use Illuminate\Http\Response;
 
 
 class UserController extends Controller
@@ -101,5 +103,53 @@ class UserController extends Controller
 	{
 		$data = $request->session()->get('roleAuth');
 				echo '<pre>'.print_r($data, true).'</pre>';
+	}
+
+	public function send_mail(Request $request)
+	{
+			 $data = array('name'=>"rewrwe");
+   
+		      Mail::send(['text'=>'mail'], $data, function($message) {
+		         $message->to('mahardhika894@gmail.com', 'Tutorials Point')->subject
+		            ('Laravel Basic Testing Mail');
+		         $message->from('dasdas@gmail.com','rerewrew');
+		      });
+		      echo "Basic Email Sent. Check your inbox.";
+	}
+
+	public function sendEmailResetPassword(Request $request)
+	{
+		try
+		{
+			 Mail::send('emails.key_reset_pass', ['nama' => $request->nama, 'pesan' => $request->pesan], function ($message) use ($request)
+        	{
+            	$message->subject("reset password");
+           		$message->from('donotreply@kiddy.com', 'Kiddy');
+            	$message->to("mahardhika894@gmail.com");
+        	});
+		}catch(Exception $e)
+		{
+			$resp = array('status' => false,'message' => $e->getMessage());
+			return response()->json($resp);
+		}
+
+
+		$email = $request->input('email');
+
+		try
+		{
+			$cek = Users::where('email',$email)->get();
+			if(count($cek) > 0)
+			{
+				
+			}else{
+				$resp = array('status' => false,'message' => "email not registed");
+			    return response()->json($resp);		
+			}
+		}catch(Exception $e)
+		{
+			$resp = array('status' => false,'message' => $e->getMessage());
+			return response()->json($resp);
+		}
 	}
 }
