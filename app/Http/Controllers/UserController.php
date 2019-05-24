@@ -43,13 +43,12 @@ class UserController extends Controller
 
 		try
 		{
-			$data = User::where('username',$username)
+			$data = Users::where('username',$username)
 						->where('password',$password)
 						->get();
 			
 
-			// echo count($data);
-			// die();
+		
 			if(count($data)> 0)
 			{
 				$arr_ses = array
@@ -164,9 +163,10 @@ class UserController extends Controller
 	{
 		try
 		{
-			 Mail::send('emails.email_reset_pass', ['nama' => "mahar", 'pesan' => "sss"], function ($message) use ($request)
+			$data = array("nama" => "narto");
+			 Mail::send('emails.email_reset_pass', $data, function ($message) use ($request)
         {
-            $message->subject($request->judul);
+            $message->subject("sdada");
             $message->from('donotreply@kiddy.com', 'Kiddy');
             $message->to("mahardhika894@gmail.com");
         });

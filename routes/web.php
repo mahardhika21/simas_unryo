@@ -31,6 +31,12 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"    => 'web.admin',
 		]);
 
+		ROute::get('/admin/profile',[
+			"uses"  => 'AdminController@profile',
+			"as"    => 'web.admin.profile'
+
+		]);
+
 	});
 
 	// route mahasiswa \\
@@ -112,7 +118,7 @@ Route::get('/logOut',[
 
 
 Route::get('/send_mail',[
-	"uses"   => "UserController@send_mail",
+	"uses"   => "UserController@sendMail",
 	"as"     => "web.send_email"
 ]);
 
@@ -120,6 +126,7 @@ Route::get('/send_mail',[
 Route::get('/send_key',[
 	"uses"  => "UserController@sendEmailResetPassword",
 	"as"   => "web.send_key.password"
+]);
 
 // Route::group(['middleware' => 'AuthSimas'], function(){
 // 	Route::post('/update_password', [

@@ -46,7 +46,7 @@
 									<td>
 										<div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;padding-left:20px;padding-right:20px;border-bottom:thin solid #f0f0f0;color:rgba(0,0,0,0.87);font-size:18px;padding-bottom:38px;padding-top:40px;text-align:center;word-break:break-word">
 											<div class="m_-2808442637224144261m_2977001422146193064v2sp">
-												Tagihan pembayaran listrik (PLN) dengan nomor meter/nomor pelanggan 521540099367 atas nama TARYOTO sebesar Rp. 191.760 sudah terbayarkan												
+												Tagihan pembayaran listrik (PLN) dengan nomor meter/nomor pelanggan 521540099367 atas nama TARYOTO sebesar Rp. 191.760 sudah terbayarkan <?php echo $data['nama']; ?>												
 											</div>
 										</div>
 										
