@@ -27,4 +27,21 @@ class AdminController extends Controller
 		echo "hai";
 	}
 	
+
+
+	public function profile(Request $request)
+	{
+			$data = array
+					(
+						"url"  => $this->url->to('/'),
+						"part" => array
+									(
+
+									),
+					);
+	}
+
+
+
+
 }

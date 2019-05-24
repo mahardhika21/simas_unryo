@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
+use App\Model\Users;
 
 
 class AdminController extends Controller
@@ -39,9 +40,12 @@ class AdminController extends Controller
 
 	public function profile(Request $request)
 	{
+		$sessi = $request->session()->get('roleAuth');
+
 		$data = array
 				(
 					"url"   => $this->url->to('/'),
+					"data"  => $Users::where('username',$sessi['username'])->firstOrFail(),
 					"part"  => array
 								(
 									"header"   => view('base/header-admin'),
