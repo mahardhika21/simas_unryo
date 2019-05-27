@@ -38,9 +38,19 @@ class AdminBackend extends Controller
 
 	public function insert_data_kamar(Request $request)
 	{
-			$file       = $request->file('image');
-			$sessi      = $request->session()->get('roleAuth');
-			$file_name  = $file->getClientOriginalName() .'.'.$file->getClientOriginalExtension();
+		
+
+		$sesi = $request->session()->get('roleAuth');
+
+		$file = $request->file('image');
+
+		$name_img = $file->getClientOriginalName();
+		$extn     = $file->getClientOriginalExtension();
+		$path     = "img/room";
+
+		try
+		{
+			$file_name = $this->cek_exits_file($path,$name_img,$pat);
 			$arr_data = array
 						(
 							"nomor_kamar"      => $request->input('lantai_kamar'),
@@ -50,20 +60,48 @@ class AdminBackend extends Controller
 							"harga_perbulan"   => $request->input('harga_perbulan'),
 							"status_kamar"     => 'N',
 						);
+			Kamar::insert($arr_data);
+			$file->move($path,$file_name);
+
+			redirect('admin/kamar');
+
+		}catch(Exception $e)
+		{
+
+		}
 
 
-			try
-			{
+	
 
-				 $destinationPath = 'uploads';
-      			 if($file->move($destinationPath,$file->getClientOriginalName()))
-      			 {
-      			 	Kamar::insert($arr_data);
-      			 	redirect('admin/kamar');
-      			 }
-			}catch(Exception $e)
-			{
-				die("File did not upload: ". $e->getMessage());
-			}
+	}
+
+
+	public function update_data_kamar(Request $request)
+	{
+		
+	}
+
+
+	private function cek_exits_file($path,$name,$extn)
+	{
+		  $stat = false;
+
+		  while ($stat == false) 
+		  {
+		  	 if(!file_exists(public_path($path.'/'.$name)))
+		  	 {
+		  	 	$result = $name;
+
+		  	 	$stat = true;
+		  	 }else
+		  	 {
+		  	 	$str = rand();
+		  	 	$name = md5($str);
+
+		  	 	$stat = false;
+		  	 }
+		  }
+
+		  return $result;
 	}
 }
