@@ -50,6 +50,7 @@ class AdminBackend extends Controller
 		$extn     = $file->getClientOriginalExtension();
 		$path     = "img/room";
 
+		DB::beginTransaction();
 		try
 		{
 			$file_name = $this->cek_exits_file($path,$name_img,$pat);
@@ -65,11 +66,17 @@ class AdminBackend extends Controller
 			Kamar::insert($arr_data);
 			$file->move($path,$file_name);
 
+			$flash= array("type" => "success","message" => "success insert data kamar");
+			$request->session()->flash('msg',$flash);
+			
+
 			redirect('admin/kamar');
 
 		}catch(Exception $e)
 		{
-
+			$flash= array("type" => "error","message" => $e->getMessage());
+			$request->session()->flash('msg',$flash);
+			redirect('admin/kamar');
 		}
 
 
@@ -78,10 +85,7 @@ class AdminBackend extends Controller
 	}
 
 
-	public function update_data_kamar(Request $request)
-	{
-		
-	}
+	
 
 
 	private function cek_exits_file($path,$name,$extn)
@@ -135,7 +139,10 @@ class AdminBackend extends Controller
 
 		}catch(Exception $e)
 		{
-				   return redirect('admin/kamar')->with(['error' => $e->getMessage()]);
+				 
+			$flash= array("type" => "error","message" => $e->getMessage());
+			$request->session()->flash('msg',$flash);
+			redirect('admin/kamar');
 		}
 	}
 
