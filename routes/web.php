@@ -31,11 +31,23 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"    => 'web.admin',
 		]);
 
-		ROute::get('/admin/profile',[
-			"uses"  => 'AdminController@profile',
+		Route::get('/admin/profile',[
+			"uses"  => 'Admin\AdminController@profile',
 			"as"    => 'web.admin.profile'
 
 		]);
+
+		Route::get('/admin/room', [
+			"uses" 	=> 'Admin\AdminController@room',
+			"as" 	=> 'web.admin.kamar',
+		]);
+
+		//Route::get('/admin/')
+
+
+		// proses 
+
+
 
 	});
 

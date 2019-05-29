@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB:
 use Illuminate\Support\Facades\Storages;
-use App\Model\User;
+use App\Model\Users;
 use App\Model\Kamar;
+use APp\Model\Mahasiswa;
 
 
 class AdminBackend extends Controller
@@ -79,13 +80,8 @@ class AdminBackend extends Controller
 			redirect('admin/kamar');
 		}
 
-
-	
-
 	}
 
-
-	
 
 
 	private function cek_exits_file($path,$name,$extn)
@@ -109,6 +105,20 @@ class AdminBackend extends Controller
 		  }
 
 		  return $result;
+	}
+
+
+	private function delete_file($path,$name)
+	{
+		  if(file_exists((public_path($path.'/'.$name))))
+		  {
+		  	  unlink(file_exists(public_path($path.'/'.$name)));
+
+		  	  return true;
+		  }else
+		  {
+		  	  return false;
+		  }
 	}
 
 
@@ -150,12 +160,149 @@ class AdminBackend extends Controller
 
 	public function update_foto_kamar(Request $request, $id_kamar)
 	{
-		try {
-			$room = Kamar::where('id_kamar')->get();
+		$room = Kamar::where('id_kamar',$id_kamar)->get();
+
+		if(! count($kamar) > 0 )
+		{
+			$flash = array
+					(
+						"type"    => "error",
+						"message" => "data room not fount",
+					);
+			$request->session()->flash('msg',$flash);
+			redirect('admin/kamar');
+		}
+
+
+		$name_img = $file->getClientOriginalName();
+		$extn     = $file->getClientOriginalExtension();
+		$path     = "img/room";
+
+		$file = $request->file('img_up');
+		$file_name = $this->cek_exits_file($path,$name_img,$pat);
+
+		DB::beginTransaction();
+		
+		try 
+		{
 			
+			$arr_data = array
+						(
+							"foto_kamar"       => $file_name,
+						);
+			Kamar::where('id_kamar',$id_kamar)->update($arr_data);
+			$file->move($path,$file_name);
+			$flash = array("type" => "success","message" => "success update img");
 			
-		} catch (Exception $e) {
+			$request->session()->flash('msg',$flash);
+			redirect('admin/kamar');	
 			
+		} catch (Exception $e) 
+		{
+			$flash= array("type" => "error","message" => $e->getMessage());
+			$request->session()->flash('msg',$flash);
+			redirect('admin/kamar');
+		}
+	}
+
+
+
+	public function insert_data_mahasiswa(Request $request)
+	{
+		$nim = $request->input('nim');
+
+		if(count(Mahasiswa::where('username',$nim)) > 0 or count(Users::where('username', $nim)->get()) > 0)
+		{
+				$flash= array("type" => "error","message" => "nim/username already exits");
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');
+		}
+		
+		$arr_data = array
+					(
+						"nim"   		=> $nim,
+						"nama"  		=> $request->input('nama'),
+						"fakultas"		=> $request->input('fakultas'),
+						"prodi"     	=> $request->input('prodi'),
+						"tahun_masuk"	=> $request->input('tahun_masuk'),
+						"time_insert"   => date('Y-m-d H:i:s'),
+					);
+
+		$user_arr = array
+					(
+						"username"     => $nim,
+						"email"        => $request->input('email'),
+						"password"     => md5($nim),
+						"level"        => "mahasiswa",
+					);
+		DB::beginTransaction();
+
+		try
+		{
+			if(Users::insert($user_arr) and Mahasiswa::insert($arr_data))
+			{
+				$flash= array("type" => "success","message" => "success registed data mahasiswa");
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');		
+			}else
+			{
+				$flash= array("type" => "error","message" => "error registed data mahasiswa");
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');
+			}
+		}catch(Exception $e)
+		{
+			$flash= array("type" => "error","message" => $e->getMessage());
+			$request->session()->flash('msg',$flash);
+			redirect('admin/mahasiswa');
+		}
+
+	}
+
+
+	public function registed_user(Request $request)
+	{
+		$username = $request->input('mahasiswa');
+
+		if(count(User::where('username',$username)->get()) > 0)
+		{
+			    $flash= array("type" => "error","message" => "user already exits");
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');
+		}
+
+		$arr_data = array
+					(
+						"username"  	=> $username,
+						"email"     	=> $request->input('email'),
+						"password"  	=> md5($username),
+						"level"			=> $request->input('level'),
+						"access_lev"	=> $request->input('level'),,
+						"insert_time"   => date('Y-m-d H:i:s'),
+					);
+		DB::beginTransaction();
+
+		try
+		{
+			if(Users::insert($arr_data))
+			{
+
+				$flash= array("type" => "success","message" => "success registed data user " . $request->input('level'));
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');		
+			}else{
+
+				$flash= array("type" => "error","message" => "failed registed data user ".$request->input('level'));
+				$request->session()->flash('msg',$flash);
+				redirect('admin/mahasiswa');		
+			}
+
+		}catch(Exception $e)
+		{
+			$flash = array("type" => "error", "message" => $e->getMessage());
+
+			$request->session()->flash('msg', $flash);
+			redirect('admin/user');
 		}
 	}
 }
