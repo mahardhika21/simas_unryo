@@ -241,6 +241,7 @@ class AdminBackend extends Controller
 		{
 			if(Users::insert($user_arr) and Mahasiswa::insert($arr_data))
 			{
+				DB::commit();
 				$flash= array("type" => "success","message" => "success registed data mahasiswa");
 				$request->session()->flash('msg',$flash);
 				redirect('admin/mahasiswa');		
@@ -286,7 +287,7 @@ class AdminBackend extends Controller
 		{
 			if(Users::insert($arr_data))
 			{
-
+				DB::commit();
 				$flash= array("type" => "success","message" => "success registed data user " . $request->input('level'));
 				$request->session()->flash('msg',$flash);
 				redirect('admin/mahasiswa');		
