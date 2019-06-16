@@ -7,7 +7,7 @@ class Users extends Model
 {
 	protected $table = "users";
 
-	protected $filelable = ['id_user','username','email','password','level','insert_time'];
+	protected $filelable = ['id_user','username','email','level','insert_time'];
 
-	protected $hidden =['updated_at'];
+	protected $hidden =['updated_at','password'];
 }

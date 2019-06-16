@@ -11,9 +11,10 @@
 |
 */
 //use App\Http\middleware\Authenticate;
-Route::get('/', function () {
-   return view('welcome');
-	//echo "dasdasda";
+Route::get('/', function (){
+
+	return Redirect::to('home');
+
 });
 
 //Route::
@@ -45,7 +46,12 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 		//Route::get('/admin/')
 
 
-		// proses 
+		// proses  post data \\
+
+		Route::post('admin/update_profile', [
+			"uses"	=> 'Admin\AdminBackend@updateProfile',
+			"as"	=>  'web.update_profile_admin',
+		]);
 
 
 

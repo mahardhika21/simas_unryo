@@ -108,42 +108,74 @@ class UserController extends Controller
 
 	public function update_password(Request $request)
 	{
-		$password_old   = $request->input('password_old');
-		$password_new   = $request->input('password_new');
-		$password_renew = $request->input('password_renew');
+		$password       = $request->input('data');
 
+		$password_old   = $password['password_old'];
+		$password_new   = $password['password_new'];
+		$password_renew = $password['password_renew'];
+		$sessi 			= $request->session()->get('roleAuth');
 
-		$cek = User::where('password',md5($password_old));
+		$whereDta = array("username" => $sessi['username'],"password" => md5($password_old));
 
-		if(count($cek) > 0)
+		$cek = Users::where('password',$whereDta)->get();
+		// echo 
+		// response()->json($cek); die();
+
+		if(count($cek)>0)
 		{
-			if($password_new === $password_renew)
+			if(strlen($password_new) < 6)
 			{
-				$username = $request->session('roleAuth');
-				$proses = User::whre('password',md5($password_new))->where('username',$username['username']);
-
-				if($proses === true)
-				{
 					$message = array
-						(
-							"code"    => "1",
-							"message" => "upadate Passsword Sukses",
-						);
-				return response()->json($message);
-				}
+									  (
+									  	  "success"     => "true",
+									  	  "message"		=> "panjang karakter password harus lebih dari 5 karakter",
+									  	  "detail"		=> "" 
+									  );
+						return response()->json($message);			
+			}
+			elseif($password_new === $password_renew)
+			{
+					
+				
+
+						try
+						{
+							
+							$proses = Users::whre('password',md5($password_new))->where('username',$username['username']);
+
+							$message = array
+									  (
+									  	  "success"     => "true",
+									  	  "message"		=> "success update password",
+									  	  "detail"		=> "" 
+									  );
+
+						}catch(\Illuminate\Database\QueryException $e)
+						{
+							$message = array
+									  (
+									  	  "success"     => "false",
+									  	  "message"		=> $e->getMessage(),
+									  	  "detail"		=> $e 
+									  );
+						}
+
+						return response()->json($message);
+				
 			}else
 			{
 				$message = array
 						(
-							"code"    => "00",
+							"success" => "false",
 							"message" => "Passsword Baru tidak sama",
+							"resp"	  => $cek,
 						);
 				return response()->json($message);
 			}
 		}else{
 				$message = array
 						(
-							"code"    => "00",
+							"success" => "false",
 							"message" => "Passsword Lama yang dimasukkan salah",
 						);
 				return response()->json($message);

@@ -21,7 +21,6 @@ class AdminController extends Controller
 	public function index(Request $request)
 	{
 
-//die();
 		$data = array
 				(
 					"url" => $this->url->to('/'),
@@ -41,11 +40,12 @@ class AdminController extends Controller
 	public function profile(Request $request)
 	{
 		$sessi = $request->session()->get('roleAuth');
-
+		//echo $sessi['username'];
 		$data = array
 				(
 					"url"   => $this->url->to('/'),
-					"data"  => $Users::where('username',$sessi['username'])->firstOrFail(),
+					"data"  => Users::where('username',$sessi['username'])->firstOrFail(),
+					"title" => "Admin | Profile",
 					"part"  => array
 								(
 									"header"   => view('base/header-admin'),
