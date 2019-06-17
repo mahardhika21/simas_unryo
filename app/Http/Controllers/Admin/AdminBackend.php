@@ -20,12 +20,6 @@ class AdminBackend extends Controller
 	public function updateProfile(Request $request)
 	{
 		$profile = $request->input('data');
-
-
-//		echo '<pre>'.print_r($profile, true) .'</pre>';
-
-		// return response()->json($profile);
-		// die();
 		$arr_data = array
 					(
 						"nama"   		=> $profile['nama'],

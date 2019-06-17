@@ -234,10 +234,8 @@
             <div class="col-lg-12 col-sm-12 col-md-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                 
                 </div>
                 <div class="card-body">
-                 
                   <form>
                     <div class="form-group">
                       <label>Password Lama</label>
@@ -250,9 +248,6 @@
                     <div class="form-group">       
                       <label>Ulangi Password Baru</label>
                       <input type="password" placeholder="Ulangi Password Baru" id="password_renew" class="form-control">
-                    </div>
-                    <div class="form-group">       
-                      <input type="submit" value="Signin" class="btn btn-primary">
                     </div>
                   </form>
                 </div>

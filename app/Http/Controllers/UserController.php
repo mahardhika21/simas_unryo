@@ -103,6 +103,12 @@ class UserController extends Controller
 	{
 		$data = $request->session()->get('roleAuth');
 				echo '<pre>'.print_r($data, true).'</pre>';
+		$sessi 			= $request->session()->get('roleAuth');
+		$whereDta = array("username" => $sessi['username'],"password" => md5("123456"));
+
+		$cek = Users::where($whereDta)->get();
+
+		echo '<pre>'.print_r($cek, true).'</pre>';
 	}
 
 
@@ -115,9 +121,9 @@ class UserController extends Controller
 		$password_renew = $password['password_renew'];
 		$sessi 			= $request->session()->get('roleAuth');
 
-		$whereDta = array("username" => $sessi['username'],"password" => md5($password_old));
+		$whereData 		= array("username" => $sessi['username'],"password" => md5($password_old));
 
-		$cek = Users::where('password',$whereDta)->get();
+		$cek = Users::where($whereData)->get();
 		// echo 
 		// response()->json($cek); die();
 
@@ -131,17 +137,15 @@ class UserController extends Controller
 									  	  "message"		=> "panjang karakter password harus lebih dari 5 karakter",
 									  	  "detail"		=> "" 
 									  );
+									  
 						return response()->json($message);			
 			}
 			elseif($password_new === $password_renew)
 			{
-					
-				
-
 						try
 						{
-							
-							$proses = Users::whre('password',md5($password_new))->where('username',$username['username']);
+							$up_data = array('password' => md5($password_new),'updated_at'=> date('Y-m-d H:i:s'));
+							$proses = Users::where($whereData)->update($up_data);
 
 							$message = array
 									  (
@@ -177,6 +181,7 @@ class UserController extends Controller
 						(
 							"success" => "false",
 							"message" => "Passsword Lama yang dimasukkan salah",
+							"data"	  => $cek,
 						);
 				return response()->json($message);
 		}
