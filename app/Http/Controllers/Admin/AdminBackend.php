@@ -5,7 +5,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB:
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storages;
 use App\Model\Users;
 use App\Model\Kamar;
@@ -14,29 +14,37 @@ use APp\Model\Mahasiswa;
 
 class AdminBackend extends Controller
 {
-	function __construct()
-	{
 
-	}
 
 
 	public function updateProfile(Request $request)
 	{
+		$profile = $request->input('data');
 		$arr_data = array
 					(
-						"nama"   => $request->input('nama'),
-						"email"  => $request->input('email'),
-						"phone"  => $request->input('phone'),
+						"nama"   		=> $profile['nama'],
+						"email"  		=> $profile['email'],
+						"phone"  		=> $profile['phone'],
+						"updated_at"	=> date('Y-m-d H:i:s'),
 					);
 		try
 		{
 				$sessi = $request->session()->get('roleAuth');
 				Users::where('username',$sessi['username'])->update($arr_data);
-				redirect('admin/profile');
-		}catch(Exection $e)
-		{
+				
+			    $resp['success'] = 'true';
+				$resp['message'] = 'success update profile'; 
 
-		}
+			
+		}catch(\Illuminate\Database\QueryException $e)
+		{
+				$resp['success'] = 'false';
+				$resp['message'] = $e->getMessage();
+				$resp['detail']  = $e;
+		}	
+
+
+		return response()->json($resp);
 	}
 
 	public function insert_data_kamar(Request $request)
@@ -263,47 +271,47 @@ class AdminBackend extends Controller
 
 	public function registed_user(Request $request)
 	{
-		$username = $request->input('mahasiswa');
+		// $username = $request->input('mahasiswa');
 
-		if(count(User::where('username',$username)->get()) > 0)
-		{
-			    $flash= array("type" => "error","message" => "user already exits");
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');
-		}
+		// if(count(User::where('username',$username)->get()) > 0)
+		// {
+		// 	    $flash= array("type" => "error","message" => "user already exits");
+		// 		$request->session()->flash('msg',$flash);
+		// 		redirect('admin/mahasiswa');
+		// }
 
-		$arr_data = array
-					(
-						"username"  	=> $username,
-						"email"     	=> $request->input('email'),
-						"password"  	=> md5($username),
-						"level"			=> $request->input('level'),
-						"access_lev"	=> $request->input('level'),,
-						"insert_time"   => date('Y-m-d H:i:s'),
-					);
-		DB::beginTransaction();
+		// $arr_data = array
+		// 			(
+		// 				"username"  	=> $username,
+		// 				"email"     	=> $request->input('email'),
+		// 				"password"  	=> md5($username),
+		// 				"level"			=> $request->input('level'),
+		// 				"access_lev"	=> $request->input('level'),,
+		// 				"insert_time"   => date('Y-m-d H:i:s'),
+		// 			);
+		// DB::beginTransaction();
 
-		try
-		{
-			if(Users::insert($arr_data))
-			{
-				DB::commit();
-				$flash= array("type" => "success","message" => "success registed data user " . $request->input('level'));
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');		
-			}else{
+		// try
+		// {
+		// 	if(Users::insert($arr_data))
+		// 	{
+		// 		DB::commit();
+		// 		$flash= array("type" => "success","message" => "success registed data user " . $request->input('level'));
+		// 		$request->session()->flash('msg',$flash);
+		// 		redirect('admin/mahasiswa');		
+		// 	}else{
 
-				$flash= array("type" => "error","message" => "failed registed data user ".$request->input('level'));
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');		
-			}
+		// 		$flash= array("type" => "error","message" => "failed registed data user ".$request->input('level'));
+		// 		$request->session()->flash('msg',$flash);
+		// 		redirect('admin/mahasiswa');		
+		// 	}
 
-		}catch(Exception $e)
-		{
-			$flash = array("type" => "error", "message" => $e->getMessage());
+		// }catch(Exception $e)
+		// {
+		// 	$flash = array("type" => "error", "message" => $e->getMessage());
 
-			$request->session()->flash('msg', $flash);
-			redirect('admin/user');
-		}
+		// 	$request->session()->flash('msg', $flash);
+		// 	redirect('admin/user');
+		// }
 	}
 }

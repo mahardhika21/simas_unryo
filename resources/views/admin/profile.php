@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home || Mahasiswa</title>
+    <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -25,20 +25,18 @@
     <link rel="stylesheet" href="<?php echo $url .'/assets/css/custom.css'; ?>">
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.ico">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  
   </head>
   <body>
     <!-- Side Navbar -->
-    <?php echo $part['sidebar']; ?>
+    <?php  echo $part['sidebar']; ?>
 
     <!-- end side navbar -->
     <div class="page">
       <!-- navbar header-->
         <?php echo $part['header']; ?>
       <!-- navbar header-->
-
+      <?php // echo '<pre>' .print_r($data, true).'</pre>'; ?>
       <!-- Counts Section -->
       <section class="dashboard-counts section-padding" style="display: none;">
         <div class="container-fluid">
@@ -107,35 +105,35 @@
                         <div class="col-sm-12">
                            <div class="panel panel-info">
                                 <div class="panel-heading">
-                                  <h3 class="panel-title text-center">Detail Profile Mahasiswa</h3>
+                                  <h3 class="panel-title text-center">Detail Profile Admin</h3>
                                 </div>
                                 <div class="panel-body">
                                   <div class="row">
                                     <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" style="max-height: 120px;" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png" class="img-circle img-responsive"> </div>
 
                                     <div class=" col-md-9 col-lg-9 "> 
-                                      <table class="table table-user-information">
+                                      <table class="table table-user-information" style=" text-align: left;">
                                         <tbody>
                                           <tr>
-                                            <td width="130px">Ninm (Username)</td>
-                                            <td><?php echo $data[0]->nim; ?></td>
+                                            <td width="130px">Username </td>
+                                            <td><?php echo $data['username']; ?></td>
                                           </tr>
                                           <tr>
                                             <td>Nama </td>
-                                            <td><?php echo $data[0]->nama; ?></td>
+                                            <td><?php echo $data['nama']; ?></td>
                                           </tr>
                                           <tr>
-                                            <td>Fakultas </td>
-                                            <td><?php echo $data[0]->fakultas; ?></td>
+                                            <td>E-mail </td>
+                                            <td><?php  echo $data['email']; ?></td>
                                           </tr>
                                           <tr>
-                                            <td>Prodi </td>
-                                            <td><?php echo $data[0]->prodi; ?></td>
+                                            <td>Phone </td>
+                                            <td><?php echo $data['phone']; ?></td>
                                           </tr>
                                           
                                              <tr>
-                                            <td>Tahun Masuk</td>
-                                            <td> <?php echo $data[0]->tahun_masuk; ?></td>
+                                            <td>Level</td>
+                                            <td> <?php echo $data['level'] .'('.$data['access_lev'].')'; ?></td>
                                           </tr>
                                         
                                          
@@ -179,10 +177,10 @@
     <div class="modal fade" id="modal_profile" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
-         <form id="form1" accept-charset="UTF-8" method="post" action="" enctype="multipart/form-data">
+         <form id="form1" accept-charset="UTF-8" method="post" action="<?php echo $url.'/admin/update_profile'; ?>">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Profile Mahasiswa</h4>
+          <h4 class="modal-title">Update Profile Admin</h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -193,55 +191,26 @@
                 </div>
                 <div class="card-body">
                  
-                  <form>
                     <div class="form-group">
                       <label>Nama</label>
-                      <input type="text" placeholder="Email Address" class="form-control">
+                      <input type="text" placeholder="Nama Admin" class="form-control" value="<?php echo $data['nama']; ?>" id="nama_admin">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group">       
                       <label>E-Mail</label>
-                      <input type="hidden" placeholder="Email Address" class="form-control">
-                      <input type="email" placeholder="Email Address" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label>phone</label>
-                      <input type="text" placeholder="Email Address" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label>Fakultas</label>
-                      <select class="form-control">
-                        
-                      </select>
-                    </div>
-
-                    <div class="form-group">       
-                      <label>Prodi</label>
-                      <select class="form-control">
-
-                      </select>
-                    </div>
-                     <div class="form-group">       
-                      <label>Tahun Mausk</label>
-                      <select class="form-control">
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                        <option value="2015">2015</option>
-                        <option value="2014">2014</option>
-                        <option value="2013">2013</option>
-                      </select>
+                      <input type="email" placeholder="Email Admin" class="form-control" value="<?php echo $data['email']; ?>" id="email_admin">
                     </div>
                     <div class="form-group">       
-                      <input type="submit" value="Signin" class="btn btn-primary">
+                      <label>Phone</label>
+                      <input type="text" placeholder="Nomor Hanphone Admin" class="form-control" value="<?php echo $data['phone']; ?>" id="phone_admin">
                     </div>
-                  </form>
+                
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-            <a class="btn btn-info" id="btn_update_profile">Update Profile</a>
+          <a class="btn btn-info" id="btn_update_profile">Update Profile</a>
           <button hidden="" type="Submit" class="btn btn-info" >Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -255,7 +224,7 @@
   <div class="modal fade" id="modal_password" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
-         <form id="form1" accept-charset="UTF-8" method="post" action="" enctype="multipart/form-data">
+         <form id="form1" method="post" action="" >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Update Password</h4>
@@ -265,27 +234,20 @@
             <div class="col-lg-12 col-sm-12 col-md-12">
               <div class="card">
                 <div class="card-header d-flex align-items-center">
-                 
                 </div>
                 <div class="card-body">
-                 
                   <form>
                     <div class="form-group">
                       <label>Password Lama</label>
-                      <input type="password" placeholder="Password Lama" name="password_old" class="form-control">
+                      <input type="password" placeholder="Password Lama" id="password_old" class="form-control">
                     </div>
                     <div class="form-group">       
                       <label>Password Baru</label>
-                      <input type="password" placeholder="Password baru" name="password_new" class="form-control">
+                      <input type="password" placeholder="Password baru" id="password_new" class="form-control">
                     </div>
                     <div class="form-group">       
                       <label>Ulangi Password Baru</label>
-                      <input type="password" placeholder="Ulangi Password Baru" name="password_renew" class="form-control">
-                    </div>
-                    <div class="form-group">       
-                       <button type="Submit" class="btn btn-info" hidden="" >Submit</button>
-                       <a class="btn btn-info" id="btn_update_password">Update Password</a>
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <input type="password" placeholder="Ulangi Password Baru" id="password_renew" class="form-control">
                     </div>
                   </form>
                 </div>
@@ -294,7 +256,8 @@
           </div>
         </div>
         <div class="modal-footer">
-           <button type="Submit" class="btn btn-info" >Submit</button>
+           <button type="Submit" class="btn btn-info" hidden="" >Submit</button>
+           <a class="btn btn-info" id="btn_update_password">Update Password</a>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
          </form>
@@ -314,11 +277,6 @@
     <script src="<?php echo $url .'/assets/js/charts-home.js'; ?>"></script>
     <!-- Main File-->
     <script src="<?php echo $url .'/assets/js/front.js'; ?>"></script>
-    <script type="text/javascript">
-      $('#update_pro').on('click', function(){
-        $('#modal_profile').modal('show');
-      });
-    </script>
     <script type="text/javascript">
       $('#update_pro').on('click', function(){
             $('#modal_profile').modal('show');

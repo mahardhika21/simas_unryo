@@ -103,48 +103,85 @@ class UserController extends Controller
 	{
 		$data = $request->session()->get('roleAuth');
 				echo '<pre>'.print_r($data, true).'</pre>';
+		$sessi 			= $request->session()->get('roleAuth');
+		$whereDta = array("username" => $sessi['username'],"password" => md5("123456"));
+
+		$cek = Users::where($whereDta)->get();
+
+		echo '<pre>'.print_r($cek, true).'</pre>';
 	}
 
 
 	public function update_password(Request $request)
 	{
-		$password_old   = $request->input('password_old');
-		$password_new   = $request->input('password_new');
-		$password_renew = $request->input('password_renew');
+		$password       = $request->input('data');
 
+		$password_old   = $password['password_old'];
+		$password_new   = $password['password_new'];
+		$password_renew = $password['password_renew'];
+		$sessi 			= $request->session()->get('roleAuth');
 
-		$cek = User::where('password',md5($password_old));
+		$whereData 		= array("username" => $sessi['username'],"password" => md5($password_old));
 
-		if(count($cek) > 0)
+		$cek = Users::where($whereData)->get();
+		// echo 
+		// response()->json($cek); die();
+
+		if(count($cek)>0)
 		{
-			if($password_new === $password_renew)
+			if(strlen($password_new) < 6)
 			{
-				$username = $request->session('roleAuth');
-				$proses = User::whre('password',md5($password_new))->where('username',$username['username']);
-
-				if($proses === true)
-				{
 					$message = array
-						(
-							"code"    => "1",
-							"message" => "upadate Passsword Sukses",
-						);
-				return response()->json($message);
-				}
+									  (
+									  	  "success"     => "true",
+									  	  "message"		=> "panjang karakter password harus lebih dari 5 karakter",
+									  	  "detail"		=> "" 
+									  );
+									  
+						return response()->json($message);			
+			}
+			elseif($password_new === $password_renew)
+			{
+						try
+						{
+							$up_data = array('password' => md5($password_new),'updated_at'=> date('Y-m-d H:i:s'));
+							$proses = Users::where($whereData)->update($up_data);
+
+							$message = array
+									  (
+									  	  "success"     => "true",
+									  	  "message"		=> "success update password",
+									  	  "detail"		=> "" 
+									  );
+
+						}catch(\Illuminate\Database\QueryException $e)
+						{
+							$message = array
+									  (
+									  	  "success"     => "false",
+									  	  "message"		=> $e->getMessage(),
+									  	  "detail"		=> $e 
+									  );
+						}
+
+						return response()->json($message);
+				
 			}else
 			{
 				$message = array
 						(
-							"code"    => "00",
+							"success" => "false",
 							"message" => "Passsword Baru tidak sama",
+							"resp"	  => $cek,
 						);
 				return response()->json($message);
 			}
 		}else{
 				$message = array
 						(
-							"code"    => "00",
+							"success" => "false",
 							"message" => "Passsword Lama yang dimasukkan salah",
+							"data"	  => $cek,
 						);
 				return response()->json($message);
 		}
