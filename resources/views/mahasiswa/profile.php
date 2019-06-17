@@ -117,7 +117,7 @@
                                       <table class="table table-user-information">
                                         <tbody>
                                           <tr>
-                                            <td width="130px">Ninm </td>
+                                            <td width="130px">Ninm (Username)</td>
                                             <td><?php echo $data[0]->nim; ?></td>
                                           </tr>
                                           <tr>
@@ -195,12 +195,41 @@
                  
                   <form>
                     <div class="form-group">
-                      <label>Email</label>
+                      <label>Nama</label>
+                      <input type="text" placeholder="Email Address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>E-Mail</label>
+                      <input type="hidden" placeholder="Email Address" class="form-control">
                       <input type="email" placeholder="Email Address" class="form-control">
                     </div>
+                    <div class="form-group">
+                      <label>phone</label>
+                      <input type="text" placeholder="Email Address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Fakultas</label>
+                      <select class="form-control">
+                        
+                      </select>
+                    </div>
+
                     <div class="form-group">       
-                      <label>Password</label>
-                      <input type="password" placeholder="Password" class="form-control">
+                      <label>Prodi</label>
+                      <select class="form-control">
+
+                      </select>
+                    </div>
+                     <div class="form-group">       
+                      <label>Tahun Mausk</label>
+                      <select class="form-control">
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                      </select>
                     </div>
                     <div class="form-group">       
                       <input type="submit" value="Signin" class="btn btn-primary">
@@ -212,7 +241,8 @@
           </div>
         </div>
         <div class="modal-footer">
-           <button type="Submit" class="btn btn-info" >Submit</button>
+            <a class="btn btn-info" id="btn_update_profile">Update Profile</a>
+          <button hidden="" type="Submit" class="btn btn-info" >Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
          </form>
@@ -253,7 +283,9 @@
                       <input type="password" placeholder="Ulangi Password Baru" name="password_renew" class="form-control">
                     </div>
                     <div class="form-group">       
-                      <input type="submit" value="Signin" class="btn btn-primary">
+                       <button type="Submit" class="btn btn-info" hidden="" >Submit</button>
+                       <a class="btn btn-info" id="btn_update_password">Update Password</a>
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                   </form>
                 </div>
@@ -286,6 +318,82 @@
       $('#update_pro').on('click', function(){
         $('#modal_profile').modal('show');
       });
+    </script>
+    <script type="text/javascript">
+      $('#update_pro').on('click', function(){
+            $('#modal_profile').modal('show');
+      });
+
+      $('#update_password').on('click', function(){
+            $('#modal_password').modal('show');
+      });
+
+      $('#btn_update_profile').on('click', function(){
+
+            let profile = Object();
+            profile.nama  = $('#nama_admin').val();
+            profile.email = $('#email_admin').val();
+            profile.phone = $('#phone_admin').val();
+
+            console.log(profile); 
+            let baseUrl = '<?php echo $url .'/admin/update_profile'; ?>'
+            ajax_post_update(profile,baseUrl,"up_profile");
+
+      });
+
+
+      $('#btn_update_password').on('click', function()
+      {
+          let password = new Object();
+              password.password_new         = $('#password_new').val();
+              password.password_renew       = $('#password_renew').val();
+              password.password_old         = $('#password_old').val();
+
+              console.log(password);
+
+              let baseUrl = '<?php echo $url .'/update_password'; ?>';
+              //alert(baseUrl);
+              ajax_post_update(password,baseUrl,"update_password");
+
+      });
+
+      function ajax_post_update(data,baseUrl,type)
+      {
+           $.ajax({
+              url       : baseUrl,
+              type      : 'POST',
+              dataType  : 'JSON',
+              data      : {data:data},
+              success   : function(response)
+              {
+                        console.log(response);
+
+                        if(response.success == "true")
+                        {
+                              alert(response.message);
+
+                              window.location.reload()
+                        }
+                        else
+                        {
+                              console.log(response);
+                              if(type == "up_profile")
+                              {
+                                  alert(response.detail.errorInfo[2])
+                              }else
+                              {
+                                  alert(response.message)
+                              }
+                              
+                        }
+
+              },error   : function(response)
+              {
+                        console.log(response);
+                        alert("proses update data gagal, kesalahan jaringan");
+              }
+           });
+      }
     </script>
   </body>
 </html>
