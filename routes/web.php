@@ -101,23 +101,6 @@ Route::get('/home',[
 ]);
 
 
-Route::get('/view',[
-	"middleware" => "CekRole:guest",
-	"uses"  	 => "UserController@view",
-	"as"         => "web.view"
-]);
-
-Route::get('/set_session',[
-	"uses"  	 => "UserController@set_session",
-	"as"         => "web.view"
-]);
-
-Route::get('/see_session',[
-	"uses"  	 => "UserController@see_session",
-	"as"         => "web.view"
-]);
-
-
 Route::post('/userLogin', [
 	"uses" => 'UserController@set_login',
 	"as"   => "web.login",
@@ -139,6 +122,26 @@ Route::get('/send_key',[
 	"uses"  => "UserController@sendEmailResetPassword",
 	"as"   => "web.send_key.password"
 ]);
+
+
+Route::get('/view',[
+	"middleware" => "CekRole:guest",
+	"uses"  	 => "UserController@view",
+	"as"         => "web.view"
+]);
+
+Route::get('/set_session',[
+	"uses"  	 => "UserController@set_session",
+	"as"         => "web.view"
+]);
+
+Route::get('/see_session',[
+	"uses"  	 => "UserController@see_session",
+	"as"         => "web.view"
+]);
+
+
+
 
 // Route::group(['middleware' => 'AuthSimas'], function(){
 // 	Route::post('/update_password', [
