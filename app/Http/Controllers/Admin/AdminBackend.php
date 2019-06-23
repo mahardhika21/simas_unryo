@@ -15,7 +15,7 @@ use APp\Model\Mahasiswa;
 class AdminBackend extends Controller
 {
 
-
+ 
 
 	public function updateProfile(Request $request)
 	{

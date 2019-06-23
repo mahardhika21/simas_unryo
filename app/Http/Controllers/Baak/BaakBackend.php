@@ -17,38 +17,33 @@ class BaakBackend extends Controller
 	}
 
 
-	function update_profile(Request $request)
+	public function updateProfile(Request $request)
 	{
+		$profile = $request->input('data');
 		$arr_data = array
 					(
-						"nama"	=> $request->input('nama'),
-						"email" => $request->input('email'),
-						"phone" => $request->input('phone'),
+						"nama"   		=> $profile['nama'],
+						"email"  		=> $profile['email'],
+						"phone"  		=> $profile['phone'],
+						"updated_at"	=> date('Y-m-d H:i:s'),
 					);
-
 		try
 		{
-			if(Admisi::where('username',$sessi['username'])->update($arr_data));
-			{
 				$sessi = $request->session()->get('roleAuth');
-
-				$flash = array("type" => "success","messsage" => $e->getMessage());
-			    $request->session()->flash('msg',$flash);
-
-			redirect('Baak/profile');
-			}else{
+				Users::where('username',$sessi['username'])->update($arr_data);
 				
-				$flash = array("type" => "error","messsage" => "update data gagal");
-				$request->session()->flash('msg',$flash);
+			    $resp['success'] = 'true';
+				$resp['message'] = 'success update profile'; 
 
-				redirect('Baak/profile');
-			}
-		}catch(Illuminate\Support\Database\QueryExection $e)
+			
+		}catch(\Illuminate\Database\QueryException $e)
 		{
-			$flash = array("type" => "error","messsage" => $e->getMessage());
-			$request->session()->flash('msg',$flash);
+				$resp['success'] = 'false';
+				$resp['message'] = $e->getMessage();
+				$resp['detail']  = $e;
+		}	
 
-			redirect('Baak/profile');
-		}
+
+		return response()->json($resp);
 	}
 }

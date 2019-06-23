@@ -16,7 +16,7 @@ Route::get('/', function (){
 	return Redirect::to('home');
 
 });
-
+ 
 //Route::
 
 Route::group(['middleware' => 'AuthSimas'], function(){
