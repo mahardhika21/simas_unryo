@@ -26,9 +26,9 @@ class AdminController extends Controller
 					"url" => $this->url->to('/'),
 					"part" => array
 							(
-								"header"  => view('base/header-admin'),
+								"header"  => view('base/header-admin', $this->baseUrl()),
 								"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
-								"footer"  => view('base/footer')
+								//"footer"  => view('base/footer')
 							),
 				);
 
