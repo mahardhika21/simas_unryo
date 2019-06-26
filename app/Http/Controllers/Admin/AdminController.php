@@ -48,12 +48,12 @@ class AdminController extends Controller
 					"title" => "Admin | Profile",
 					"part"  => array
 								(
-									"header"   => view('base/header-admin'),
+									"header"   => view('base/header-admin',$this->baseUrl()),
 									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
 									"footer"   => view('base/footer')
 								),
 				);
-		return view('admin/profile',$data);
+		return view('admin/profile_new',$data);
 	}
 
 	public function room_list(Request $request)

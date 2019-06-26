@@ -37,6 +37,8 @@
           <?php echo $part['header']; ?>
 
         <!-- end header -->
+        <div class="pcoded-main-container">
+<div class="pcoded-wrapper">
                 <?php echo $part['sidebar']; ?>
         <!-- end sidebar -->
                     <div class="pcoded-content">
@@ -57,10 +59,8 @@
                                             <li class="breadcrumb-item">
                                                 <a href="index-2.html"><i class="feather icon-home"></i></a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">Maintenance</a>
-                                            </li>
-                                            <li class="breadcrumb-item"><a href="#!">Error</a>
-                                            </li>
+                                            <li class="breadcrumb-item"><a href="#!">Beranda</a>
+                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                                 <div class="card-body">
                                                 <div class="row align-items-center m-b-30">
                                                 <div class="col">
-                                                        <h6 class="m-b-5 text-white">Total Profit</h6>
+                                                        <h6 class="m-b-5 text-white">Total Kamar</h6>
                                                         <h3 class="m-b-0 f-w-700 text-white">$1,783</h3>
                                                 </div>
                                                 <div class="col-auto">
@@ -95,7 +95,7 @@
                                                 <div class="card-body">
                                                 <div class="row align-items-center m-b-30">
                                                 <div class="col">
-                                                        <h6 class="m-b-5 text-white">Total Profit</h6>
+                                                        <h6 class="m-b-5 text-white">Total Kamar Ter isi</h6>
                                                         <h3 class="m-b-0 f-w-700 text-white">$1,783</h3>
                                                 </div>
                                                 <div class="col-auto">
@@ -112,7 +112,7 @@
                                                 <div class="card-body">
                                                 <div class="row align-items-center m-b-30">
                                                 <div class="col">
-                                                        <h6 class="m-b-5 text-white">Total Profit</h6>
+                                                        <h6 class="m-b-5 text-white"> Penghuni Asrama</h6>
                                                         <h3 class="m-b-0 f-w-700 text-white">$1,783</h3>
                                                 </div>
                                                 <div class="col-auto">
@@ -129,7 +129,7 @@
                                                 <div class="card-body">
                                                 <div class="row align-items-center m-b-30">
                                                 <div class="col">
-                                                        <h6 class="m-b-5 text-white">Total Profit</h6>
+                                                        <h6 class="m-b-5 text-white">Harga Perkamar</h6>
                                                         <h3 class="m-b-0 f-w-700 text-white">$1,783</h3>
                                                 </div>
                                                 <div class="col-auto">
