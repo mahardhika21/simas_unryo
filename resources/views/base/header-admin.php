@@ -1,5 +1,5 @@
 <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
+     <div class="navbar-wrapper">
                     <div class="navbar-logo">
                         <a href="index-2.html">
                             <img class="img-fluid" src="<?php echo $url .'/assets/images/logo.png'; ?>" alt="Theme-Logo" />
@@ -10,10 +10,9 @@
                         <a class="mobile-options waves-effect waves-light">
                             <i class="feather icon-more-horizontal"></i>
                         </a>
-                    </div>
-                    <div class="navbar-container container-fluid">
-                       
-                        <ul class="nav-right">
+     </div>
+     <div class="navbar-container container-fluid">  
+                <ul class="nav-right">
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -38,11 +37,6 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="auth-lock-screen.html">
-                                                <i class="feather icon-lock"></i> Lock Screen
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="auth-sign-in-social.html">
                                                 <i class="feather icon-log-out"></i> Logout
                                             </a>
@@ -51,6 +45,6 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
                 </div>
+     </div>
 </nav>
