@@ -27,9 +27,8 @@
 <body>
 
     <div class="loader-bg">
-        <div class="loader-bar"></div>
+            <div class="loader-bar"></div>
     </div>
-
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
@@ -38,7 +37,7 @@
 
         <!-- end header -->
         <div class="pcoded-main-container">
-<div class="pcoded-wrapper">
+        <div class="pcoded-wrapper">
                 <?php echo $part['sidebar']; ?>
         <!-- end sidebar -->
                     <div class="pcoded-content">
@@ -48,8 +47,8 @@
                                     <div class="page-header-title">
                                         <i class="feather icon-home bg-c-blue"></i>
                                         <div class="d-inline">
-                                            <h5>Dashboard</h5>
-                                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                                            <h5>Admin</h5>
+                                            <span>Selamat Datang di Beranda admin</span>
                                         </div>
                                     </div>
                                 </div>
