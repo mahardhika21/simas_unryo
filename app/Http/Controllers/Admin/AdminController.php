@@ -56,6 +56,86 @@ class AdminController extends Controller
 		return view('admin/profile_new',$data);
 	}
 
+	public function list_mahasiswa(Request $request)
+	{
+		$sessi = $request->session()->get('roleAuth');
+
+		$data = array
+				(
+					"url"	=> $this->url->to('/'),
+					"data"  => "",
+					"title" => "Admin | List Mahasiswa",
+					"part"  => array
+								(
+									"header"  => view('base/header-admin',$this->baseUrl()),
+									"sidebar" => view('base/side-menu-admin',$this->baseUrl())
+								),
+				);
+
+		return view('admin/list-mahasiswa',$data);
+
+	}
+
+
+	public function list_baak(Request $request)
+	{
+		$sessi = $request->session()->get('roleAuth');
+
+		$data = array
+				(
+					"url"	=> $this->url->to('/'),
+					"data"  => "",
+					"title" => "Admin | List Mahasiswa",
+					"part"  => array
+								(
+									"header"  => view('base/header-admin',$this->baseUrl()),
+									"sidebar" => view('base/side-menu-admin',$this->baseUrl())
+								),
+				);
+
+		return view('admin/list-baak',$data);
+
+	}
+
+	public function list_admin(Request $request)
+	{
+		$sessi = $request->session()->get('roleAuth');
+
+		$data = array
+				(
+					"url"	=> $this->url->to('/'),
+					"data"  => "",
+					"title" => "Admin | List Mahasiswa",
+					"part"  => array
+								(
+									"header"  => view('base/header-admin',$this->baseUrl()),
+									"sidebar" => view('base/side-menu-admin',$this->baseUrl())
+								),
+				);
+
+		return view('admin/list-admin',$data);
+
+	}
+
+
+	public function detail_mahasiswa(Request $request, $nim='')
+	{
+		$sessi = $request->session()->get('roleAuth');
+
+		$data = array
+				(
+					"url"   => $this->url->to('/'),
+					"title" => "Admin | Detail Data Mahasiswa",
+					"type"  => "mahasiswa",
+					"data"  => Mahasiswa::where('nim', $nim)->get(),
+					"part"  => array
+								(
+									"header" 	=> view('base/header-admin',$this->baseUrl()),
+									"sidebar"	=> view('base/side-menu-admin', $this->baseUrl()),
+								)
+				);
+		return view('admin/detail-data-mahasiswa',$data);
+	}
 	public function room_list(Request $request)
 	{
 		$data = array

@@ -81,32 +81,7 @@
                                                             <div class="card-header">
                                                             <h5>Profile User Admin</h5>
                                                             </div>
-                                                            <div class="card-block">
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Nama</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['nama']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Username</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['username']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['email']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['phone']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Level</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label">  <?php echo $data['level'] .'('.$data['access_lev'].')'; ?></label>
-                                                            </div>
+                                                           
 
                                                            <!--  <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Capitalize Text</label>
@@ -181,85 +156,9 @@
                 </div>
             </div>
         </div>
-    </div>
+ 
 
-    <div class="modal fade" id="update-profile" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">update Profile</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-      
-        <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Nama</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="<?php echo $data['nama']; ?>" id="nama_admin">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">E-Mail</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="email anda" value="<?php echo $data['email']; ?>" id="email_admin">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Phone Number</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="<?php echo $data['phone']; ?>" id="phone_admin">
-                                                            </div>
-                                                            </div>
-                                                            
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_update_profile">Update Data</button>
-        </div>
-        </div>
-        </div>
-    </div>
 
-     <div class="modal fade" id="update-password" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">Update Password</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-       
-        <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Password Lama</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="password lama" id="password_old">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Password Baru</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="password baru" id="password_new">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Ulangi  Passowrd Baru</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="Ulangi password baru" id="password_renew">
-                                                            </div>
-                                                            </div>
-                                                            
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light " id="btn_update_password">Snmpan</button>
-        </div>
-        </div>
-        </div>
-    </div>
 
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery/js/jquery.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery-ui/js/jquery-ui.min.js'; ?>"></script>
@@ -278,72 +177,7 @@
     <script type="text/javascript">
     
 
-      $('#btn_update_profile').on('click', function(){
 
-            let profile = Object();
-            profile.nama  = $('#nama_admin').val();
-            profile.email = $('#email_admin').val();
-            profile.phone = $('#phone_admin').val();
-
-            console.log(profile); 
-            let baseUrl = '<?php echo $url .'/admin/update_profile'; ?>'
-            ajax_post_update(profile,baseUrl,"up_profile");
-
-      });
-
-
-      $('#btn_update_password').on('click', function()
-      {
-          let password = new Object();
-              password.password_new         = $('#password_new').val();
-              password.password_renew       = $('#password_renew').val();
-              password.password_old         = $('#password_old').val();
-
-              console.log(password);
-
-              let baseUrl = '<?php echo $url .'/update_password'; ?>';
-              //alert(baseUrl);
-              ajax_post_update(password,baseUrl,"update_password");
-
-      });
-
-      function ajax_post_update(data,baseUrl,type)
-      {
-           $.ajax({
-              url       : baseUrl,
-              type      : 'POST',
-              dataType  : 'JSON',
-              data      : {data:data},
-              success   : function(response)
-              {
-                        console.log(response);
-
-                        if(response.success == "true")
-                        {
-                              alert(response.message);
-
-                              window.location.reload()
-                        }
-                        else
-                        {
-                              console.log(response);
-                              if(type == "up_profile")
-                              {
-                                  alert(response.detail.errorInfo[2])
-                              }else
-                              {
-                                  alert(response.message)
-                              }
-                              
-                        }
-
-              },error   : function(response)
-              {
-                        console.log(response);
-                        alert("proses update data gagal, kesalahan jaringan");
-              }
-           });
-      }
     </script>
 </body>
 </html>

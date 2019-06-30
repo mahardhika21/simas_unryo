@@ -17,12 +17,12 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class="">
-                                                <a href="index-2.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/profile'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Profile</span>
                                                 </a>
                                             </li>
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/profile'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Reset Password</span>
                                                 </a>
                                             </li>
@@ -45,23 +45,19 @@
                                             <span class="pcoded-mtext">User</span>
                                         </a>
                                         <ul class="pcoded-submenu">
-                                            <li class="">
-                                                <a href="index-2.html" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">List Pengguna</span>
-                                                </a>
-                                            </li>
+                                           
                                             <li class="">
                                                 <a href="dashboard-crm.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Admin</span>
                                                 </a>
                                             </li>
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">List Mahasiwa</span>
+                                                <a href="<?php echo $url .'/admin/list_mahasiswa'; ?>" class="waves-effect waves-dark">
+                                                    <span class="pcoded-mtext">List Mahasiswa</span>
                                                 </a>
                                             </li>
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/list_baak'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Baak</span>
                                                 </a>
                                             </li>

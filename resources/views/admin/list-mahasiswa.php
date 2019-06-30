@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/style.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/pages.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/widget.css'; ?>">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -46,10 +47,10 @@
                             <div class="row align-items-end">
                                 <div class="col-lg-8">
                                     <div class="page-header-title">
-                                        <i class="feather icon-user bg-c-blue"></i>
+                                        <i class="feather icon-users bg-c-blue"></i>
                                         <div class="d-inline">
-                                            <h5>Profile</h5>
-                                            <span>Update Profile User</span>
+                                            <h5>Data</h5>
+                                            <span>List Mahasiswa</span>
                                         </div>
                                     </div>
                                 </div>
@@ -74,93 +75,27 @@
 
                                      
                                         <div class="row d-flex justify-content-center">
-                                            <div class="col-sm-8 col-offset-sm-2">
+                                            <div class="col-sm-12 col-offset-sm-2">
                                                 <div class="card">
                                            
                                             <div class="card-block ">
                                                             <div class="card-header">
-                                                            <h5>Profile User Admin</h5>
+                                                            <h5>List Mahasiswa</h5>
                                                             </div>
-                                                            <div class="card-block">
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Nama</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['nama']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Username</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['username']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['email']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label"><?php echo $data['phone']; ?></label>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Level</label>
-                                                            <label class="col-sm-1 col-form-label">:</label>
-                                                             <label class="col-sm-7 col-form-label">  <?php echo $data['level'] .'('.$data['access_lev'].')'; ?></label>
-                                                            </div>
-
-                                                           <!--  <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Capitalize Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-capitalize" placeholder=".form-control-capitalize">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Uppercase Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-uppercase" placeholder=".form-control-uppercase">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Lowercase Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-lowercase" placeholder=".form-control-lowercase">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Varient Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-variant" placeholder=".form-control-variant">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Left-Align Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-left" placeholder=".form-control-left">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Center-Align Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-center" placeholder=".form-control-center">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Right-Align Text</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control form-control-right" placeholder=".form-control-right">
-                                                            </div>
-                                                            </div> -->
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-5 col-form-label"></label>
-                                                            <div class="col-sm-7">
-                                                            <!-- <button class="btn btn-info btn-sm" id="update_profile">Update Profile</button> -->
-                                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#update-profile">Update Profile</button>
-                                                            <button type="button" class="btn btn-warning waves-effect" data-toggle="modal" data-target="#update-password">Update Password</button>
-                                                            </div>
-                                                            </div>
-                                                           
-                                                            </div>
-                                                           
+                                                            
+                                                            <table class="table" id="table-mahasiswa">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Nim</th>
+                                                                        <th>Nama</th>
+                                                                        <th>Prod</th>
+                                                                        <th>Fakultas</th>
+                                                                        <th>Tahun Masuk</th>
+                                                                        <th>Option</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                
+                                                            </table> 
                                                    
                                                 
                                                
@@ -197,19 +132,19 @@
         <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Nama</label>
                                                             <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="<?php echo $data['nama']; ?>" id="nama_admin">
+                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_admin">
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">E-Mail</label>
                                                             <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="email anda" value="<?php echo $data['email']; ?>" id="email_admin">
+                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email_admin">
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Phone Number</label>
                                                             <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="<?php echo $data['phone']; ?>" id="phone_admin">
+                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone_admin">
                                                             </div>
                                                             </div>
                                                             
@@ -275,75 +210,84 @@
     <script src="<?php echo $url .'/assets/js/jquery.mCustomScrollbar.concat.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
+     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-    
+        $(function(){
 
-      $('#btn_update_profile').on('click', function(){
+            var baseUrl = '<?php $url; ?>';
 
-            let profile = Object();
-            profile.nama  = $('#nama_admin').val();
-            profile.email = $('#email_admin').val();
-            profile.phone = $('#phone_admin').val();
+                $('#table-mahasiswa').DataTable({
+                    processing : true,
+                    ServerSide : true,
+                    searching  : true,
+                    language   : {
+                                searchPlaceholder: "Search records"
+                                 },
+                    oSearch      : {sSearch: "1"},
+                    ajax       : 'data/list_mahasiswa',
+                    columns : [
+                            // render: function (data, type) {
+                            // return meta.row + meta.settings._iDisplayStart + 1;
+                            //     },
+                            {data : 'nim', name : 'nim'},
+                            {data : 'nama', name : 'nama'},
+                            {data : 'prodi', name : 'prodi'},
+                            {data : 'fakultas', name : 'fakultas'},
+                            {data : 'tahun_masuk', name : 'tahun_masuk'},
+                            {render : function(data, type, full, meta)
+                                {
+                                    console.log(full);
+                                     return  "<button id='btnDetails' href='ss' data-id="+full.nim+" class='btn btn-info btnDetails'>Detail</button>"+" <button id='btnDelete' href='ss' data-id="+full.nim+" class='btn btn-danger btnDetails'>Delet Data</button>";
+                                }},
+                        ],
 
-            console.log(profile); 
-            let baseUrl = '<?php echo $url .'/admin/update_profile'; ?>'
-            ajax_post_update(profile,baseUrl,"up_profile");
-
-      });
 
 
-      $('#btn_update_password').on('click', function()
-      {
-          let password = new Object();
-              password.password_new         = $('#password_new').val();
-              password.password_renew       = $('#password_renew').val();
-              password.password_old         = $('#password_old').val();
+                });
 
-              console.log(password);
+           
 
-              let baseUrl = '<?php echo $url .'/update_password'; ?>';
-              //alert(baseUrl);
-              ajax_post_update(password,baseUrl,"update_password");
+            $('#table-mahasiswa tbody').on('click', '[id=btnDetails]', function () {
+                    let nim = $(this).data('id');
+                  
 
-      });
+                    window.location.href= baseUrl +"/admin/detail_mahasiswa/"+nim;
+            });
 
-      function ajax_post_update(data,baseUrl,type)
-      {
-           $.ajax({
-              url       : baseUrl,
-              type      : 'POST',
-              dataType  : 'JSON',
-              data      : {data:data},
-              success   : function(response)
-              {
-                        console.log(response);
-
-                        if(response.success == "true")
+            $('#table-mahasiswa tbody').on('click','[id=btnDelete]', function(){
+                let nim = $(this).data('id');
+                let cnf = confirm("Apakah Anda Yakin Menghapus Data Mahasiswa Dengan Nim"+ nim +" ?");
+                if(cnf)
+                {
+                    $.ajax({
+                        url  : baseUrl +"/admin/delete_mahasiswa",
+                        type : "POST",
+                        dataType : "text",
+                        data     : {id:nim},
+                        success  : function(response)
                         {
-                              alert(response.message);
-
-                              window.location.reload()
-                        }
-                        else
+                            if(response == "ok")
+                            {
+                                alert("Proses Delete Data Mahasiswa dengan Nim/Username "+nim+" Berhasil");
+                                window.location.reload();
+                            }else{
+                                alert("Proses Delete Data Mahasiswa dengan Nim/Username "+nim+" Gagal message("+response+")");
+                            }
+                        }, error : function(response)
                         {
-                              console.log(response);
-                              if(type == "up_profile")
-                              {
-                                  alert(response.detail.errorInfo[2])
-                              }else
-                              {
-                                  alert(response.message)
-                              }
-                              
+                            alert("Proses Delete Data Mahasiswa dengan Nim/Username "+nim+" Gagal, Periksa Jaringan Anda");
                         }
+                    });
+                }
+            });
+        });
 
-              },error   : function(response)
-              {
-                        console.log(response);
-                        alert("proses update data gagal, kesalahan jaringan");
-              }
-           });
-      }
+
+ // $('.btnDetails').on('click', function(){
+ //                let id = $(this).data('id');
+ //                alert(id);
+ //            });
+
     </script>
 </body>
 </html>

@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storages;
 use App\Model\Users;
 use App\Model\Kamar;
-use APp\Model\Mahasiswa;
+use App\Model\Mahasiswa;
+use DataTables;
 
 
 class AdminBackend extends Controller
@@ -45,6 +46,33 @@ class AdminBackend extends Controller
 
 
 		return response()->json($resp);
+	}
+
+
+	public function list_mahasiswa_json()
+	{
+		return Datatables::of(Mahasiswa::all())->make('true');
+	}
+
+
+	public function delete_data_mahasiswa(Request $request)
+	{
+		$nim = $request->input('id');
+
+		DB::beginTransaction();
+
+		try
+		{
+			Users::where('username',$nim)->delete();
+			Mahasiswa::where('nim',$nim)->delete();
+
+			DB::commit();
+
+			echo "ok";
+		}catch(\Illuminate\Database\QueryException $e)
+		{
+			echo $e->getMessage();
+		}
 	}
 
 	public function insert_data_kamar(Request $request)

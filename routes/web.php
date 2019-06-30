@@ -43,6 +43,34 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as" 	=> 'web.admin.kamar',
 		]);
 
+		Route::get('/admin/list_mahasiswa', [
+			"uses"  => 'Admin\AdminController@list_mahasiswa',
+			"as"	=> 'web.admin.list_mahasiswa'
+		]);
+
+		Route::get('/admin/list_baak',[
+			"uses" => "Admin\AdminController@list_baak",
+			"as"   => "web.admin.list_baak"
+		]);
+
+		Route::get('/admin/list_admin', [
+			"uses" => "Admin\AdminController@list_admin",
+			"as"   => 'web.admin.list_admin',
+		]);
+
+		// list datatables \\
+
+		Route::get('/admin/data/list_mahasiswa',[
+			"uses"	=> "Admin\AdminBackend@list_mahasiswa_json",
+			"as"	=> "web.admin.json_list_mahasiswa",
+		]);
+
+		// detail \\
+		Route::get('admin/detail_mahasiswa/{nim?}',[
+			"uses" => "Admin\AdminController@detail_mahasiswa",
+			"as"   => "web.admin.detail_mahasiswa",
+		]);
+
 		//Route::get('/admin/')
 
 
