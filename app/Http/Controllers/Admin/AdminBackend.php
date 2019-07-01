@@ -54,6 +54,15 @@ class AdminBackend extends Controller
 		return Datatables::of(Mahasiswa::all())->make('true');
 	}
 
+	public function list_baak_json()
+	{
+		return Datatables::of(Users::where('level','baak')->all())->make('true');
+	}
+
+	public function list_json_json()
+	{
+		return Datatables::of(Users::where('level','admin')->all())->make('true');
+	}
 
 	public function delete_data_mahasiswa(Request $request)
 	{
@@ -73,6 +82,44 @@ class AdminBackend extends Controller
 		{
 			echo $e->getMessage();
 		}
+	}
+
+	public function get_data_detail(Request $request, $type='')
+	{
+
+		if(!empty($type))
+		{
+			$nim = $request->input('nim');
+
+			try
+			{
+				if($type === "mahasiswa")
+				{
+					$data = DB::table('mahasiswa')
+						->join('users','mahasiswa.nim','=','users.username')
+						->select('mahasiswa.*','users.email','users.phone')
+						->get();
+				}
+				
+				$resp['success'] = 'true';
+				$resp['message'] = 'success data get data';
+				$resp['data']	 = $data;
+				
+			}catch(\Illuminate\Database\QueryException $e)
+			{
+				$resp['success'] = 'false';
+				$resp['message'] = 'failed get data';
+				$resp['data']	 = NULL;
+			}
+		}
+		else
+		{
+		   $resp['success'] = "false";
+		   $resp['message'] = "type data cannot empty";
+		   $resp['data']	= NULL;
+		}
+
+		return response()->json($resp, 200);
 	}
 
 	public function insert_data_kamar(Request $request)

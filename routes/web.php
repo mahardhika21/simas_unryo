@@ -43,6 +43,8 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as" 	=> 'web.admin.kamar',
 		]);
 
+		// admin list view
+
 		Route::get('/admin/list_mahasiswa', [
 			"uses"  => 'Admin\AdminController@list_mahasiswa',
 			"as"	=> 'web.admin.list_mahasiswa'
@@ -65,13 +67,32 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> "web.admin.json_list_mahasiswa",
 		]);
 
-		// detail \\
-		Route::get('admin/detail_mahasiswa/{nim?}',[
-			"uses" => "Admin\AdminController@detail_mahasiswa",
-			"as"   => "web.admin.detail_mahasiswa",
+		Route::get('/admin/data/list_baak',[
+			"uses" => "Admin\AdminBackend@list_baak_json",
+			"as"   => "web.admin.json_list_baak",
 		]);
 
-		//Route::get('/admin/')
+		Route::get('/admin/data/list_admin',[
+			"uses" => "Admin\AdminBackend@list_admin_json",
+			"as"   => "web.admin.json_list_admin",
+		]);
+
+		// detail \\
+		// Route::get('admin/detail_mahasiswa/{nim?}',[
+		// 	"uses" => "Admin\AdminController@detail_mahasiswa",
+		// 	"as"   => "web.admin.detail_mahasiswa",
+		// ]);
+
+		// Route admin get detail
+
+		Route::post('admin/get_data_detail/{type}', [
+			"uses"  => "Admin\AdminBackend@get_data_detail",
+			"as"	=> "web.admin.get_data_detail"
+		]);
+
+		//Route admin delete data
+
+
 
 
 		// proses  post data \\
