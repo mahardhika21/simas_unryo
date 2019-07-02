@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
 use App\Model\Users;
-
+use App\Http\Repository\CurlOpenRepo;
 
 class AdminController extends Controller
 {
@@ -59,17 +59,18 @@ class AdminController extends Controller
 	public function list_mahasiswa(Request $request)
 	{
 		$sessi = $request->session()->get('roleAuth');
-
+		$openLib = new CurlOpenRepo();
 		$data = array
 				(
-					"url"	=> $this->url->to('/'),
-					"data"  => "",
-					"title" => "Admin | List Mahasiswa",
-					"part"  => array
-								(
-									"header"  => view('base/header-admin',$this->baseUrl()),
-									"sidebar" => view('base/side-menu-admin',$this->baseUrl())
-								),
+					"url"		=> $this->url->to('/'),
+					"data"  	=> "",
+					"title" 	=> "Admin | List Mahasiswa",
+					"province"  => $openLib->get_province(),
+					"part"  	=> array
+									(
+										"header"   => view('base/header-admin',$this->baseUrl()),
+										"sidebar"  => view('base/side-menu-admin',$this->baseUrl()),
+									),
 				);
 
 		return view('admin/list-mahasiswa',$data);

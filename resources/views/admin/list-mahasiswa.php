@@ -134,49 +134,77 @@
                                                             <label class="col-sm-4 col-form-label">Nama</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_mhs">
+                                                            <input type="text" class="form-control" placeholder="input Nama Mahasiswa" value="" id="nama_mhs">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Fakultas</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="fakultas_mhs">
+                                                             <select class="form-control" name="datum[fakultas]" id="fak" onselect="pilih(this)">
+                                                                    <option value="FST">Pilih Fakultas</option>
+                                                                    <option value="FST">FST</option>
+                                                                    <option value="FIKES">FIKES</option>
+                                                                    <option value="FISE">FISE</option>
+                                                             </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Prodi</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="prodi_mhs">
+                                                            <select class="form-control" name="datum[prodi]" id="prodi">
+                                                             <option value="<?php//echo $profile[0]['prodi']; ?>"><?php //echo $profile[0]['prodi']; ?></option> 
+                 
+                                                             </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Tahun Masuk</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="tahun masuk" value="" id="tahun_masuk_mhs">
+                                                            <select class="form-control" id="tahun_masuk_mhs">
+                                                                <option value="2013">2013</option>
+                                                                <option value="2014">2014</option>
+                                                                <option value="2015">2015</option>
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                            </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Provinsi</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="provinsi_mhs">
+                                                            <select class="form-control form-control-sm" name="datum[province]" id="province">
+                                                            <option value="">Pilih Provinsi</option>
+                                                             <?php 
+                                                              if($province['error'] == FAlSE){ 
+                                                                foreach($province['semuaprovinsi'] as $province){
+                                                                ?>
+                                                              <option value="<?php echo $province['id']; ?>"><?php echo $province['nama']; ?></option>
+                                                            <?php } }else{ ?>
+                                                               <option value="">API Province error</option>
+                                                               <?php } ?>}
+                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Kabupaten</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="kabupaten">
+                                                            <select class="form-control form-control-sm" name="datum[city]" id="city_mhs">
+                             
+                                                             </select>  
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Alamat</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                           <textarea type="text" class="form-control" placeholder="input nama anda" value="" id="alamat_mhs"></textarea>
+                                                           <textarea type="text" class="form-control" placeholder="Input Alamat Mahasiswa" value="" id="alamat_mhs"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -310,7 +338,7 @@
     <script src="<?php echo $url .'/assets/js/jquery.mCustomScrollbar.concat.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
-    <script type="text/javascript" src="<?php ehco $url .'/assets/js/datum.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo $url .'/assets/js/datum.js'; ?>"></script>
      <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -428,10 +456,47 @@
         });
 
 
- // $('.btnDetails').on('click', function(){
- //                let id = $(this).data('id');
- //                alert(id);
- //            });
+    $("#fak").change(function() {
+            let fak = $(this).val();
+            pilih(fak);
+      });
+
+    $('#province').change(function()
+    {
+        let baseUrl = '<?php echo $url; ?>';
+        let id = $(this).val();
+        
+        $.ajax({
+            url         : baseUrl +"/admin/data/lib/city",
+            type        : 'POST',
+            dataType    : 'JSON',
+            data        : {id:id},
+            success     : function(response)
+            {
+                    console.log(response);
+                    if(response.error === false)
+                    {
+                       let op = "";
+                        response.kabupatens.forEach(function(arrDt)
+                        {
+                            console.log(arrDt);
+                            op += '<option>'+arrDt.nama+'</option>'; 
+                            $('#city_mhs').html(op);
+                        });
+
+
+                    }
+                    else
+                    {
+                        alert(response.message);
+                    }
+            },error     : function(response)
+            {
+                alert('galat, kegalan jaringan');
+            }     
+        });
+
+    });
 
     </script>
 </body>

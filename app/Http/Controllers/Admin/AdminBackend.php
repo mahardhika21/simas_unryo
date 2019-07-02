@@ -11,6 +11,7 @@ use App\Model\Users;
 use App\Model\Kamar;
 use App\Model\Mahasiswa;
 use DataTables;
+use App\Http\Repository\CurlOpenRepo;
 
 
 class AdminBackend extends Controller
@@ -120,6 +121,34 @@ class AdminBackend extends Controller
 		}
 
 		return response()->json($resp, 200);
+	}
+
+
+	public function city_openLib(Request $request)
+	{
+		$id 	 = $request->input('id');
+		$openLib = new CurlOpenRepo();
+		return response()->json($openLib->get_city($id), 200);
+	}
+
+
+	public function insert_data(Request $request, $type)
+	{
+		if($type === "mhs")
+		{
+			$arr_data = array
+						(
+							"nim"  => $request->input('input'),
+						);
+			DB::beginTransaction();
+			try
+			{
+					
+			}catch(\Illuminate\Database\QueryException $e)
+			{
+				
+			}
+		}
 	}
 
 	public function insert_data_kamar(Request $request)

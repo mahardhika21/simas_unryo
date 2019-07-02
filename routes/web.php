@@ -102,6 +102,17 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=>  'web.update_profile_admin',
 		]);
 
+		Route::post('admin/insert_data/{type}',[
+			"uses"  => 'Admin\AdminBackend@insert_data',
+			"as"	=> 'web.insert_data'
+		]);
+
+		// data openLib
+		Route::post('admin/data/lib/city',[
+			"uses"  => 'Admin\AdminBackend@city_openLib',
+			"as"    => 'web.data.openLib.city',
+		]);
+
 
 
 	});
