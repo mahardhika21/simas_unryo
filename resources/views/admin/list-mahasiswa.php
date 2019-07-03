@@ -211,7 +211,14 @@
                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="email_mhs">
+                                                            <input type="text" class="form-control" placeholder="input email anda" value="" id="email_mhs">
+                                                            </div>
+                                                        </div>
+                                                         <div class="form-group row">
+                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
+                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-7">
+                                                            <input type="text" class="form-control" placeholder="input Nomor Telephone" value="" id="phone_mhs">
                                                             </div>
                                                         </div>
 
@@ -268,7 +275,7 @@
                                                             <label class="col-sm-4 col-form-label">Prodi</label>
                                                             <di class="col-sm-1">:</di>
                                                             <div class="col-sm-7">
-                                                            <strong id="prodi"></strong>
+                                                            <strong id="prodi2"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -400,7 +407,7 @@
                                             $('#nim').html(response.data[0].nim);
                                             $('#nama').html(response.data[0].nama);
                                             $('#fakultas').html(response.data[0].fakultas);
-                                            $('#prodi').html(response.data[0].prodi);
+                                            $('#prodi2').html(response.data[0].prodi);
                                             $('#tahun_masuk').html(response.data[0].tahun_masuk);
                                             $('#provinsi').html(response.data[0].provinsi);
                                             $('#kabupaten').html(response.data[0].kabupaten);
@@ -494,6 +501,46 @@
             {
                 alert('galat, kegalan jaringan');
             }     
+        });
+
+    });
+
+
+    $('#insert_data').on('click', function(){
+        let baseUrl = '<?php echo $url; ?>';
+        let obj     = new Object();
+
+        obj.nim         = $('#nim_mhs').val();
+        obj.nama        = $('#nama_mhs').val();
+        obj.Fakultas    = $('#fak').val();
+        obj.prodi       = $('#prodi').val();
+        obj.tahun_masuk = $('#tahun_masuk_mhs').val();
+        obj.provinsi    = $('#province').val();
+        obj.kabupaten   = $('#city_mhs').val();
+        obj.alamat      = $('#alamat_mhs').val();
+        obj.email       = $('#email_mhs').val();
+        obj.phone       = $('#phone_mhs').val();
+
+        $.ajax({
+            url         : baseUrl +'/admin/insert_data/mahasiswa',
+            type        : 'POST',
+            dataType    : 'JSON',
+            data        : {datum:obj},
+            success     : function(resp)
+            {
+                        console.log(resp);
+                        if(resp.success === "true")
+                        {
+                            window.location.reload();
+                        }
+                        else
+                        {
+                            alert(resp.message);
+                        }
+            },error     : function(resp)
+            {
+                alert('');
+            }
         });
 
     });

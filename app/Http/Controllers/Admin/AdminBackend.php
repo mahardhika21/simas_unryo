@@ -132,23 +132,68 @@ class AdminBackend extends Controller
 	}
 
 
-	public function insert_data(Request $request, $type)
+	public function insert_data_mahasiswa(Request $request)
 	{
-		if($type === "mhs")
+		$data = $request->input('datum');
+
+		echo '<pre>'.print_r($data, true) .'</pre>';
+		$nim = $datum['nim'];
+
+		if(count(Mahasiswa::where('username',$nim)) > 0 or count(Users::where('username', $nim)->get()) > 0)
+		{
+				// $flash= array("type" => "error","message" => "nim/username already exits");
+				// $request->session()->flash('msg',$flash);
+				// redirect('admin/mahasiswa');
+				$resp['success'] = 'false';
+				$resp['message'] = 'userrname or nim already exits';
+
+		}
+		else
 		{
 			$arr_data = array
-						(
-							"nim"  => $request->input('input'),
-						);
+					(
+						"nim"   		=> $nim,
+						"nama"  		=> $datum['nama'],
+						"fakultas"		=> $datum['fakultas'],
+						"prodi"     	=> $datum['prodi'],
+						"tahun_masuk"	=> $datum['tahun_masuk'],
+						"provinsi"		=> $datum['provinsi'],
+						"kabupaten"		=> $datum['kabupaten'],
+						"alamat"        => $datum['alamat'],			
+						"time_insert"   => date('Y-m-d H:i:s'),
+					);
+
+			$user_arr = array
+					(
+						"username"     => $nim,
+						"email"        => $datum['email'],
+						"phone"		   => $datum['phone'],
+						"password"     => md5($nim),
+						"level"        => "mahasiswa",
+					);
+
 			DB::beginTransaction();
+
 			try
 			{
-					
-			}catch(\Illuminate\Database\QueryException $e)
-			{
+				Users::insert($user_arr);
+				Mahasiswa::insert($arr_data)
 				
+
+				DB::commit();
+
+				$resp['success'] = 'success';
+				$resp['message'] = 'success insert data';
+			}catch(Exception $e)
+			{
+				$resp['success'] = 'false';
+				$resp['message'] = $e->getMessage();
 			}
+
 		}
+
+		return response()->json($resp, 200);
+		
 	}
 
 	public function insert_data_kamar(Request $request)
@@ -319,58 +364,7 @@ class AdminBackend extends Controller
 
 
 
-	public function insert_data_mahasiswa(Request $request)
-	{
-		$nim = $request->input('nim');
-
-		if(count(Mahasiswa::where('username',$nim)) > 0 or count(Users::where('username', $nim)->get()) > 0)
-		{
-				$flash= array("type" => "error","message" => "nim/username already exits");
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');
-		}
-		
-		$arr_data = array
-					(
-						"nim"   		=> $nim,
-						"nama"  		=> $request->input('nama'),
-						"fakultas"		=> $request->input('fakultas'),
-						"prodi"     	=> $request->input('prodi'),
-						"tahun_masuk"	=> $request->input('tahun_masuk'),
-						"time_insert"   => date('Y-m-d H:i:s'),
-					);
-
-		$user_arr = array
-					(
-						"username"     => $nim,
-						"email"        => $request->input('email'),
-						"password"     => md5($nim),
-						"level"        => "mahasiswa",
-					);
-		DB::beginTransaction();
-
-		try
-		{
-			if(Users::insert($user_arr) and Mahasiswa::insert($arr_data))
-			{
-				DB::commit();
-				$flash= array("type" => "success","message" => "success registed data mahasiswa");
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');		
-			}else
-			{
-				$flash= array("type" => "error","message" => "error registed data mahasiswa");
-				$request->session()->flash('msg',$flash);
-				redirect('admin/mahasiswa');
-			}
-		}catch(Exception $e)
-		{
-			$flash= array("type" => "error","message" => $e->getMessage());
-			$request->session()->flash('msg',$flash);
-			redirect('admin/mahasiswa');
-		}
-
-	}
+	
 
 
 	public function registed_user(Request $request)

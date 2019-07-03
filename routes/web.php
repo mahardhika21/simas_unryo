@@ -102,8 +102,8 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=>  'web.update_profile_admin',
 		]);
 
-		Route::post('admin/insert_data/{type}',[
-			"uses"  => 'Admin\AdminBackend@insert_data',
+		Route::post('admin/insert_data/mahasiswa',[
+			"uses"  => 'Admin\AdminBackend@insert_data_mahasiswa',
 			"as"	=> 'web.insert_data'
 		]);
 
