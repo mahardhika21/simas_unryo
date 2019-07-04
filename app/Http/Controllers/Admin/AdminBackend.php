@@ -78,11 +78,16 @@ class AdminBackend extends Controller
 
 			DB::commit();
 
-			echo "ok";
+			$resp['success'] = "true";
+			$resp['message'] = "success delete data mahasiswa dengan nim dan username ".$nim;
 		}catch(\Illuminate\Database\QueryException $e)
 		{
-			echo $e->getMessage();
+			
+			$resp['success'] = "false";
+			$resp['message'] = "Proses Delete Data Mahasiswa dengan Nim/Username "+$nim+" Gagal message( "+$e->getMessage();+" )";
 		}
+
+		return response()->json($resp, 200);
 	}
 
 	public function get_data_detail(Request $request, $type='')
@@ -99,6 +104,7 @@ class AdminBackend extends Controller
 					$data = DB::table('mahasiswa')
 						->join('users','mahasiswa.nim','=','users.username')
 						->select('mahasiswa.*','users.email','users.phone')
+						->where('mahasiswa.nim',$nim)
 						->get();
 				}
 				
@@ -134,12 +140,15 @@ class AdminBackend extends Controller
 
 	public function insert_data_mahasiswa(Request $request)
 	{
-		$data = $request->input('datum');
+		 $datum = json_decode($request->input('datum'), true);
+		//$datum = $request->input('datum');
+		// echo '<pre>'.print_r($datum, true) .'</pre>';
+		 //echo "asdada";
+		$nim = $datum['nim']; 
+		//echo $nim;
+		// die();
 
-		echo '<pre>'.print_r($data, true) .'</pre>';
-		$nim = $datum['nim'];
-
-		if(count(Mahasiswa::where('username',$nim)) > 0 or count(Users::where('username', $nim)->get()) > 0)
+		if(count(Mahasiswa::where('nim',$nim)->get()) > 0 or count(Users::where('username', $nim)->get()) > 0)
 		{
 				// $flash= array("type" => "error","message" => "nim/username already exits");
 				// $request->session()->flash('msg',$flash);
@@ -165,19 +174,21 @@ class AdminBackend extends Controller
 
 			$user_arr = array
 					(
-						"username"     => $nim,
+						"username"     => $datum['nim'],
 						"email"        => $datum['email'],
 						"phone"		   => $datum['phone'],
 						"password"     => md5($nim),
 						"level"        => "mahasiswa",
 					);
 
+			//echo '<pre>'.print_r($user_arr, true) .'</pre>';die();
+
 			DB::beginTransaction();
 
 			try
 			{
 				Users::insert($user_arr);
-				Mahasiswa::insert($arr_data)
+				Mahasiswa::insert($arr_data);
 				
 
 				DB::commit();

@@ -92,10 +92,13 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 
 		//Route admin delete data
 
+		Route::post('admin/delete_mahasiswa', [
+			"uses"  => "Admin\AdminBackend@delete_data_mahasiswa",
+			"as"   	=> "web.admin.delete_mahasiswa",
+		]);
 
 
-
-		// proses  post data \\
+		// Proses  post data \\
 
 		Route::post('admin/update_profile', [
 			"uses"	=> 'Admin\AdminBackend@updateProfile',
@@ -231,3 +234,4 @@ Route::get('/send_email',[
 	"uses"  	 => "UserController@sendMail",
 	"as"         => "web.sendMail"
 ]);
+

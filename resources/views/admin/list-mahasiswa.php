@@ -228,7 +228,7 @@
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_update_profile">Update Data</button>
+        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data_mhs">Insert Data</button>
         </div>
         </div>
         </div>
@@ -352,7 +352,7 @@
 
             var baseUrl = '<?php $url; ?>';
 
-                $('#table-mahasiswa').DataTable({
+             var table =  $('#table-mahasiswa').DataTable({
                     processing : true,
                     ServerSide : true,
                     searching  : true,
@@ -362,10 +362,7 @@
                     oSearch      : {sSearch: "1"},
                     ajax       : 'data/list_mahasiswa',
                     columns : [
-                            //render: function (data, type)
-                            // {
-                            //return meta.row + meta.settings._iDisplayStart + 1;
-                            //  },
+                            
                             {data : 'nim', name : 'nim'},
                             {data : 'nama', name : 'nama'},
                             {data : 'prodi', name : 'prodi'},
@@ -385,9 +382,11 @@
            
 
             $('#table-mahasiswa tbody').on('click', '[id=btnDetails]', function () {
-                    let nim = $(this).data('id');
                     
-
+                    let data = table.row($(this).parents('tr')).data();
+                   
+                    console.log(data['nim']);
+                    let nim = data['nim'];
                    // window.location.href= baseUrl +"/admin/detail_mahasiswa/"+nim;
 
                     $.ajax({
@@ -434,19 +433,19 @@
 
             $('#table-mahasiswa tbody').on('click','[id=btnDelete]', function(){
                 let nim = $(this).data('id');
-                let cnf = confirm("Apakah Anda Yakin Menghapus Data Mahasiswa Dengan Nim"+ nim +" ?");
+                let cnf = confirm("Apakah Anda Yakin Menghapus Data Mahasiswa Dengan Nim "+ nim +" ?");
                 if(cnf)
                 {
                     $.ajax({
                         url  : baseUrl +"/admin/delete_mahasiswa",
                         type : "POST",
-                        dataType : "text",
+                        dataType : "JSON",
                         data     : {id:nim},
                         success  : function(response)
                         {
-                            if(response === "ok")
+                            if(response.success === "true")
                             {
-                                alert("Proses Delete Data Mahasiswa dengan Nim/Username "+nim+" Berhasil");
+                                alert(response.message);
                                 window.location.reload();
                             }
                             else
@@ -506,13 +505,13 @@
     });
 
 
-    $('#insert_data').on('click', function(){
+    $('#btn_insert_data_mhs').on('click', function(){
         let baseUrl = '<?php echo $url; ?>';
         let obj     = new Object();
 
         obj.nim         = $('#nim_mhs').val();
         obj.nama        = $('#nama_mhs').val();
-        obj.Fakultas    = $('#fak').val();
+        obj.fakultas    = $('#fak').val();
         obj.prodi       = $('#prodi').val();
         obj.tahun_masuk = $('#tahun_masuk_mhs').val();
         obj.provinsi    = $('#province').val();
@@ -521,14 +520,18 @@
         obj.email       = $('#email_mhs').val();
         obj.phone       = $('#phone_mhs').val();
 
+        console.log(obj);
+        let dt = JSON.stringify(obj);
+
         $.ajax({
             url         : baseUrl +'/admin/insert_data/mahasiswa',
             type        : 'POST',
             dataType    : 'JSON',
-            data        : {datum:obj},
+            data        : {datum:dt},
             success     : function(resp)
             {
                         console.log(resp);
+                        //let res = JSON.parse(resp)
                         if(resp.success === "true")
                         {
                             window.location.reload();
@@ -539,7 +542,7 @@
                         }
             },error     : function(resp)
             {
-                alert('');
+                alert('error, kesalahan jaringan');
             }
         });
 
