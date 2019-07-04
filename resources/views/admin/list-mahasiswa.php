@@ -346,7 +346,7 @@
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/datum.js'; ?>"></script>
-     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(function(){
 

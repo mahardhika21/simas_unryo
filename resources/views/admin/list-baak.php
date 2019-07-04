@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/style.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/pages.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/widget.css'; ?>">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -82,7 +83,18 @@
                                                             <h5>List Mahasiswa</h5>
                                                             </div>
                                                             
-                                                           
+                                                      <table class="table table-bordered" id="table-baak">
+                                                          <thead>
+                                                              <tr>
+                                                                  <th>#</th>
+                                                                  <th>Username</th>
+                                                                  <th>Nama</th>
+                                                                  <th>Phone Number</th>
+                                                                  <th>E-MAil</th>
+                                                                  <th>Aksi</th>
+                                                              </tr>
+                                                          </thead>
+                                                      </table>     
                                                    
                                                 
                                                
@@ -197,9 +209,25 @@
     <script src="<?php echo $url .'/assets/js/jquery.mCustomScrollbar.concat.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-    
+        $(function(){
+            var baseUrl = '<?php echo $url; ?>';
 
+            var table = $('table-baak').DataTable({
+                    processing : true,
+                    serverSide : true,
+                    searching  : true,
+                    ajax       : 'data/list_baak',
+                    columns    : 
+                                [
+                                    {
+                                        
+                                    }
+                                ]
+            });
+
+        });
     </script>
 </body>
 </html>

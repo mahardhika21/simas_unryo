@@ -57,12 +57,12 @@ class AdminBackend extends Controller
 
 	public function list_baak_json()
 	{
-		return Datatables::of(Users::where('level','baak')->all())->make('true');
+		return Datatables::of(Users::where('level','baak')->get())->make('true');
 	}
 
-	public function list_json_json()
+	public function list_admin_json()
 	{
-		return Datatables::of(Users::where('level','admin')->all())->make('true');
+		return Datatables::of(Users::where('level','admin')->get())->make('true');
 	}
 
 	public function delete_data_mahasiswa(Request $request)
@@ -80,7 +80,8 @@ class AdminBackend extends Controller
 
 			$resp['success'] = "true";
 			$resp['message'] = "success delete data mahasiswa dengan nim dan username ".$nim;
-		}catch(\Illuminate\Database\QueryException $e)
+		}
+		catch(\Illuminate\Database\QueryException $e)
 		{
 			
 			$resp['success'] = "false";
