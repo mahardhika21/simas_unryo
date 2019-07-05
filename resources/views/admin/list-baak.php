@@ -49,8 +49,8 @@
                                     <div class="page-header-title">
                                         <i class="feather icon-users bg-c-blue"></i>
                                         <div class="d-inline">
-                                            <h5>Profile</h5>
-                                            <span>List Mahasiswa</span>
+                                            <h5>BAAK</h5>
+                                            <span>List Baak</span>
                                         </div>
                                     </div>
                                 </div>
@@ -80,10 +80,11 @@
                                            
                                             <div class="card-block ">
                                                             <div class="card-header">
-                                                            <h5>List Mahasiswa</h5>
+                                                            <h5>List Baak</h5>
+                                                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-baak"><i class="fa fa-plus-circle" ></i>Tambah Data Baak</button>
                                                             </div>
                                                             
-                                                      <table class="table table-bordered" id="table-baak">
+                                                      <table class="table" id="table-baak">
                                                           <thead>
                                                               <tr>
                                                                   <th>#</th>
@@ -117,7 +118,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="update-profile" tabindex="-1" role="dialog">
+    <div class="modal fade" id="add-data-baak" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -127,65 +128,91 @@
         </button>
         </div>
         <div class="modal-body">
-      
-        <div class="form-group row">
+            <form class="" id="form"  method="post" novalidate>
+                                                            <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Username</label>
+                                                            <div class="col-sm-10">
+                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_admin">
+                                                            <div class="messages"></div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Nama</label>
                                                             <div class="col-sm-10">
                                                             <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_admin">
+                                                            <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">E-Mail</label>
                                                             <div class="col-sm-10">
                                                             <input type="text" class="form-control" placeholder="email anda" value="" id="email_admin">
+                                                            <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Phone Number</label>
                                                             <div class="col-sm-10">
                                                             <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone_admin">
+                                                            <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_update_profile">Update Data</button>
+            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data">Update Data</button>
         </div>
+        </form>
         </div>
         </div>
     </div>
 
-     <div class="modal fade" id="update-password" tabindex="-1" role="dialog">
+     <div class="modal fade" id="profile-detail-baak" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-        <h4 class="modal-title">Update Password</h4>
+        <h4 class="modal-title">Profile User Baak</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-       
-        <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Password Lama</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="password lama" id="password_old">
+                                                <div class="container">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-12">
+                                                              <img id="img_mhs" style="max-height: 150px;" src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" class="rounded mx-auto d-block" alt="Cinque Terre">
                                                             </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-4 col-form-label">Username</label>
+                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-7">
+                                                              <p id="username"></p>
                                                             </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Password Baru</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="password baru" id="password_new">
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-4 col-form-label">Nama</label>
+                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-7">
+                                                            <strong id="nama"></strong>
                                                             </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-4 col-form-label">E-Mail</label>
+                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-7">
+                                                            <strong id="email"></strong>
                                                             </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Ulangi  Passowrd Baru</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="password" class="form-control" placeholder="Ulangi password baru" id="password_renew">
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
+                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-7">
+                                                            <strong id="phone"></strong>
                                                             </div>
-                                                            </div>
-                                                            
+                                                        </div>   
+                                                </div>                            
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
@@ -203,29 +230,47 @@
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery-slimscroll/js/jquery.slimscroll.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/modernizr/js/modernizr.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/modernizr/js/css-scrollbars.js'; ?>"></script>
-    <script type="text/javascript" src="<?php echo $url .'/bower_components/classie/js/classie.html'; ?>"></script>
+
     <script src="<?php echo $url .'/assets/js/pcoded.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/vertical/vertical-layout.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mCustomScrollbar.concat.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script type="text/javascript">
         $(function(){
             var baseUrl = '<?php echo $url; ?>';
 
-            var table = $('table-baak').DataTable({
+            var table = $('#table-baak').DataTable({
                     processing : true,
                     serverSide : true,
                     searching  : true,
                     ajax       : 'data/list_baak',
                     columns    : 
                                 [
+                                   {data : 'username', name : 'username'},
+                                   {data : 'username', name : 'username'},
+                                   {data : 'nama',     name : 'name'},
+                                   {data : 'phone',    name : 'phone'},
+                                   {data : 'email',    name : 'email'},
+                                   {render : function(data, type, full, meta)
                                     {
-                                        
-                                    }
+                                        return  "<button id='btnDetails' href='ss' data-id="+full.username+" class='btn btn-info btnDetails'>Detail</button>"+" <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delet Data</button>";
+                                    }},
                                 ]
             });
+
+            // fungsi untuk menambah nomor indexing \\
+            table.on('order.dt search.dt',function(){
+                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                });
+            }).draw();
+
+
+            
 
         });
     </script>

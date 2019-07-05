@@ -91,6 +91,39 @@ class AdminBackend extends Controller
 		return response()->json($resp, 200);
 	}
 
+		public function delete_user(Request $request)
+		{
+			$sessi 		= $request->session()->get('roleAuth');
+			$username 	= $request->input('username');
+			
+			if($sessi['acess'] === 'root')
+			{
+				DB::beginTransaction();
+				try
+				{
+					Users::where('username', $username)->delete();
+
+					DB::commit();
+
+					$resp['success'] = 'true';
+					$resp['message'] = "success delete ". $username;
+				}
+				catch(\Illuminate\Database\QueryException $e)
+				{
+					$resp['success'] = 'false';
+					$resp['message'] = $e->getMessage();
+				}
+			}
+			else
+			{
+				$resp['success'] = 'false';
+				$resp['message'] = 'failed delete user, your access level not root admin';
+			}
+
+			return response()->json($resp, true);
+		}
+
+
 	public function get_data_detail(Request $request, $type='')
 	{
 
@@ -107,6 +140,12 @@ class AdminBackend extends Controller
 						->select('mahasiswa.*','users.email','users.phone')
 						->where('mahasiswa.nim',$nim)
 						->get();
+				}
+				else
+				{
+					$username = $request->input('username');
+					$whereData = array('username' => $username,'level'=> $type);
+					$data = Users::where($whereData)->get();
 				}
 				
 				$resp['success'] = 'true';
@@ -129,6 +168,7 @@ class AdminBackend extends Controller
 
 		return response()->json($resp, 200);
 	}
+
 
 
 	public function city_openLib(Request $request)
@@ -206,6 +246,59 @@ class AdminBackend extends Controller
 
 		return response()->json($resp, 200);
 		
+	}
+
+
+	public function insert_data_user(Request $request)
+	{
+		$data = json_decode($request->input('datum'), true);
+
+		$username = $data['username'];
+
+		if(count(Users::where('username', $username)->get()) > 0)
+		{
+				
+				$resp['success'] = 'false';
+				$resp['message'] = 'userrname already exits';
+
+		}
+		else
+		{
+			
+
+			$user_arr = array
+					(
+						"username"     => $datum['username'],
+						"nama"		   => $datum['nama'],
+						"email"        => $datum['email'],
+						"phone"		   => $datum['phone'],
+						"password"     => md5($datum['username']),
+						"level"        => $datum['level'],
+						"access_lev"   => $datum['access_lev']
+					);
+
+			//echo '<pre>'.print_r($user_arr, true) .'</pre>';die();
+
+			DB::beginTransaction();
+
+			try
+			{
+				Users::insert($user_arr);
+
+				DB::commit();
+
+				$resp['success'] = 'success';
+				$resp['message'] = 'success insert data user';
+			}catch(Exception $e)
+			{
+				$resp['success'] = 'false';
+				$resp['message'] = $e->getMessage();
+			}
+
+		}
+
+		return response()->json($resp, 200);
+
 	}
 
 	public function insert_data_kamar(Request $request)

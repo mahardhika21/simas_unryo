@@ -37,10 +37,7 @@ class UserController extends Controller
 	{
 		$username  = $request->input('username');
 		$password  = md5($request->input('password'));
-
-
-		//echo $username .' '. $password;
-
+		
 		try
 		{
 			$data = Users::where('username',$username)
@@ -55,6 +52,7 @@ class UserController extends Controller
 							(
 								"username" => $username,
 								"level"    => $data[0]->level,
+								"acess"    => $data[0]->access_lev,
 							);
 				$request->session()->put('roleAuth',$arr_ses);
 

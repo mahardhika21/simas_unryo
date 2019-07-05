@@ -370,7 +370,7 @@
                             {data : 'tahun_masuk', name : 'tahun_masuk'},
                             {render : function(data, type, full, meta)
                                 {
-                                    console.log(full);
+                                  //  console.log(full);
                                      return  "<button id='btnDetails' href='ss' data-id="+full.nim+" class='btn btn-info btnDetails'>Detail</button>"+" <button id='btnDelete' href='ss' data-id="+full.nim+" class='btn btn-danger btnDetails'>Delet Data</button>";
                                 }},
                         ],
