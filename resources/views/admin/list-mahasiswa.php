@@ -125,21 +125,21 @@
                                                         
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">NIM</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                               <input type="text" class="form-control" placeholder="input nim mahasiswa" value="" id="nim_mhs">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Nama</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <input type="text" class="form-control" placeholder="input Nama Mahasiswa" value="" id="nama_mhs">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Fakultas</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                              <select class="form-control" name="datum[fakultas]" id="fak" onselect="pilih(this)">
                                                                     <option value="FST">Pilih Fakultas</option>
@@ -151,17 +151,17 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Prodi</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <select class="form-control" name="datum[prodi]" id="prodi">
-                                                             <option value="<?php//echo $profile[0]['prodi']; ?>"><?php //echo $profile[0]['prodi']; ?></option> 
+                                                             <option value="<?php //echo $profile[0]['prodi']; ?>"><?php //echo $profile[0]['prodi']; ?></option> 
                  
                                                              </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Tahun Masuk</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <select class="form-control" id="tahun_masuk_mhs">
                                                                 <option value="2013">2013</option>
@@ -176,7 +176,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Provinsi</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <select class="form-control form-control-sm" name="datum[province]" id="province">
                                                             <option value="">Pilih Provinsi</option>
@@ -193,7 +193,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Kabupaten</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <select class="form-control form-control-sm" name="datum[city]" id="city_mhs">
                              
@@ -202,21 +202,21 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Alamat</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                            <textarea type="text" class="form-control" placeholder="Input Alamat Mahasiswa" value="" id="alamat_mhs"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <input type="text" class="form-control" placeholder="input email anda" value="" id="email_mhs">
                                                             </div>
                                                         </div>
                                                          <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <input type="text" class="form-control" placeholder="input Nomor Telephone" value="" id="phone_mhs">
                                                             </div>
@@ -252,70 +252,70 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">NIM</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                               <p id="nim"></p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Nama</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="nama"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Fakultas</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="fakultas"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Prodi</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="prodi2"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Tahun Masuk</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="tahun_masuk"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Provinsi</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="provinsi"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Kabupaten</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="Kabupaten"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Alamat</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="alamat"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="email"></strong>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <di class="col-sm-1">:</di>
+                                                            <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
                                                             <strong id="phone"></strong>
                                                             </div>

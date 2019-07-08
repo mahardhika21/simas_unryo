@@ -23,8 +23,15 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/pages.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/widget.css'; ?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+   
 </head>
-
+<style>
+p.note 
+{
+  font-size: 1rem;
+  color: red;
+}
+</style>
 <body>
 <?php // echo '<pre>'.print_r($data, true) .'</pre>'; ?>
     <div class="loader-bg">
@@ -128,32 +135,36 @@
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="form"  method="post" novalidate>
+            <form class="" id="form"  method="post" novalidate id="main">
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Username</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_admin">
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="username" name="username">
                                                             <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Nama</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama_admin">
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama" name="nama">
                                                             <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">E-Mail</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email_admin">
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email">
                                                             <div class="messages"></div>
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Phone Number</label>
-                                                            <div class="col-sm-10">
-                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone_admin">
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone">
                                                             <div class="messages"></div>
                                                             </div>
                                                             </div>
@@ -167,60 +178,19 @@
         </div>
         </div>
     </div>
-
-     <div class="modal fade" id="profile-detail-baak" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">Profile User Baak</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-                                                <div class="container">
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-12">
-                                                              <img id="img_mhs" style="max-height: 150px;" src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" class="rounded mx-auto d-block" alt="Cinque Terre">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Username</label>
-                                                            <di class="col-sm-1">:</di>
-                                                            <div class="col-sm-7">
-                                                              <p id="username"></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Nama</label>
-                                                            <di class="col-sm-1">:</di>
-                                                            <div class="col-sm-7">
-                                                            <strong id="nama"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <di class="col-sm-1">:</di>
-                                                            <div class="col-sm-7">
-                                                            <strong id="email"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <di class="col-sm-1">:</di>
-                                                            <div class="col-sm-7">
-                                                            <strong id="phone"></strong>
-                                                            </div>
-                                                        </div>   
-                                                </div>                            
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light " id="btn_update_password">Snmpan</button>
-        </div>
-        </div>
-        </div>
-    </div>
+    <form id="basic-form" action="" method="post">
+        <p>
+        <label for="name">Name <span>(required, at least 3 characters)</span></label>
+        <input id="name" name="name" minlength="3" type="text" required><br>
+        </p>
+        <p>
+        <label for="email">E-Mail <span>(required)</span></label>
+        <input id="email" type="email" name="email" required>
+        </p>
+        <p>
+        <input class="submit" type="submit" value="SUBMIT">
+        </p>
+    </form>
 
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery/js/jquery.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery-ui/js/jquery-ui.min.js'; ?>"></script>
@@ -237,8 +207,7 @@
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script type="text/javascript">
         $(function(){
             var baseUrl = '<?php echo $url; ?>';
@@ -257,7 +226,7 @@
                                    {data : 'email',    name : 'email'},
                                    {render : function(data, type, full, meta)
                                     {
-                                        return  "<button id='btnDetails' href='ss' data-id="+full.username+" class='btn btn-info btnDetails'>Detail</button>"+" <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delet Data</button>";
+                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delet Data</button>";
                                     }},
                                 ]
             });
@@ -269,10 +238,40 @@
                 });
             }).draw();
 
+        
+          
 
-            
 
         });
+        $(document).ready(function() {
+  $("#basic-form").validate({
+    rules: {
+      name : {
+        required: true,
+        minlength: 4
+      },
+      age: {
+        required: true,
+        number: true,
+        min: 18
+      },
+      email: {
+        required: true,
+        email: true
+      },
+      weight: {
+        required: {
+          depends: function(elem) {
+            return $("#age").val() > 50
+          }
+        },
+        number: true,
+        min: 0
+      }
+    }
+  });
+});
+       
     </script>
 </body>
 </html>
