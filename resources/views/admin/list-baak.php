@@ -129,19 +129,19 @@ p.note
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-        <h4 class="modal-title">update Profile</h4>
+        <h4 class="modal-title">Tambah Data Baak</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="form"  method="post" novalidate id="main">
+            <form class="" id="form1"  method="post">
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Username</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="username" name="username">
-                                                            <div class="messages"></div>
+                                                            <input type="text" required class="form-control" placeholder="input nama anda" value="" id="username" name="username">
+                                                            
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -149,7 +149,7 @@ p.note
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                             <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama" name="nama">
-                                                            <div class="messages"></div>
+                                                            
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -157,7 +157,7 @@ p.note
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                             <input type="text" class="form-control" placeholder="email anda" value="" id="email">
-                                                            <div class="messages"></div>
+                                                           
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -165,7 +165,7 @@ p.note
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                             <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone">
-                                                            <div class="messages"></div>
+                                                           
                                                             </div>
                                                             </div>
                                                             
@@ -178,19 +178,7 @@ p.note
         </div>
         </div>
     </div>
-    <form id="basic-form" action="" method="post">
-        <p>
-        <label for="name">Name <span>(required, at least 3 characters)</span></label>
-        <input id="name" name="name" minlength="3" type="text" required><br>
-        </p>
-        <p>
-        <label for="email">E-Mail <span>(required)</span></label>
-        <input id="email" type="email" name="email" required>
-        </p>
-        <p>
-        <input class="submit" type="submit" value="SUBMIT">
-        </p>
-    </form>
+  
 
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery/js/jquery.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery-ui/js/jquery-ui.min.js'; ?>"></script>
@@ -207,7 +195,7 @@ p.note
     <script src="<?php echo $url .'/assets/js/jquery.mousewheel.min.js'; ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script type="text/javascript">
         $(function(){
             var baseUrl = '<?php echo $url; ?>';
@@ -243,34 +231,7 @@ p.note
 
 
         });
-        $(document).ready(function() {
-  $("#basic-form").validate({
-    rules: {
-      name : {
-        required: true,
-        minlength: 4
-      },
-      age: {
-        required: true,
-        number: true,
-        min: 18
-      },
-      email: {
-        required: true,
-        email: true
-      },
-      weight: {
-        required: {
-          depends: function(elem) {
-            return $("#age").val() > 50
-          }
-        },
-        number: true,
-        min: 0
-      }
-    }
-  });
-});
+      
        
     </script>
 </body>
