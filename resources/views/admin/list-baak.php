@@ -31,6 +31,10 @@ p.note
   font-size: 1rem;
   color: red;
 }
+
+.error {
+    color : red;
+}
 </style>
 <body>
 <?php // echo '<pre>'.print_r($data, true) .'</pre>'; ?>
@@ -135,7 +139,7 @@ p.note
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="form1"  method="post">
+            <form class="" id="formBaak"  method="post">
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Username</label>
                                                             <div class="col-sm-1">:</div>
@@ -156,7 +160,7 @@ p.note
                                                             <label class="col-sm-2 col-form-label">E-Mail</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email">
+                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email" name="email">
                                                            
                                                             </div>
                                                             </div>
@@ -164,7 +168,7 @@ p.note
                                                             <label class="col-sm-2 col-form-label">Phone Number</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone">
+                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone" name="phone">
                                                            
                                                             </div>
                                                             </div>
@@ -196,6 +200,7 @@ p.note
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="<?php echo $url .'/assets/js/validate.js'; ?>"></script>
     <script type="text/javascript">
         $(function(){
             var baseUrl = '<?php echo $url; ?>';
@@ -225,13 +230,24 @@ p.note
                         cell.innerHTML = i+1;
                 });
             }).draw();
-
-        
-          
-
-
         });
       
+      $(document).ready(function(){
+        
+        
+       validate_baak();
+
+       $('#btn_insert_data').on('click', function(){
+            let vd = $('#formBaak').valid();
+            console.log(vd);
+            if(vd === true)
+            {
+                alert('true');
+            }
+       });
+
+        });
+        
        
     </script>
 </body>
