@@ -55,7 +55,7 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => "web.admin.list_baak"
 		]);
 
-		Route::get('/admin/list_admin', [
+		Route::get('admin/list_admin', [
 			"uses" => "Admin\AdminController@list_admin",
 			"as"   => 'web.admin.list_admin',
 		]);
@@ -97,6 +97,16 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   	=> "web.admin.delete_mahasiswa",
 		]);
 
+		Route::post('admin/delete_data_user', [
+			"uses"  => "Admin\AdminBackend@delete_data_user",
+			"as"   	=> "web.admin.delete_mahasiswa",
+		]);
+
+		// Route::post('admin/delete_data_user', [
+		// 	"user"  => "Admin\AdminBackend@delete_data_mahasiswa",
+		// 	"as"	=> "web.admin.delete_user_data",
+		// ]);
+
 
 		// Proses  post data \\
 
@@ -110,13 +120,16 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> 'web.insert_data'
 		]);
 
+		Route::post('admin/insert_data/user', [
+			"uses"	=> 'Admin\AdminBackend@insert_data_user',
+			"as"	=> 'web.insert_data.user',
+		]);
+
 		// data openLib
 		Route::post('admin/data/lib/city',[
 			"uses"  => 'Admin\AdminBackend@city_openLib',
 			"as"    => 'web.data.openLib.city',
 		]);
-
-
 
 	});
 

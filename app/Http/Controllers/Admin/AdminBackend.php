@@ -67,60 +67,83 @@ class AdminBackend extends Controller
 
 	public function delete_data_mahasiswa(Request $request)
 	{
-		$nim = $request->input('id');
+		$sessi 		= $request->session()->get('roleAuth');
 
-		DB::beginTransaction();
+		// echo '<pre>'.print_r($sessi, true) .'</pre>';
+		// die();
 
-		try
-		{
-			Users::where('username',$nim)->delete();
-			Mahasiswa::where('nim',$nim)->delete();
+		if($sessi['acess'] === 'root'){
+			$nim = $request->input('id');
 
-			DB::commit();
+			DB::beginTransaction();
 
-			$resp['success'] = "true";
-			$resp['message'] = "success delete data mahasiswa dengan nim dan username ".$nim;
-		}
-		catch(\Illuminate\Database\QueryException $e)
-		{
-			
-			$resp['success'] = "false";
-			$resp['message'] = "Proses Delete Data Mahasiswa dengan Nim/Username "+$nim+" Gagal message( "+$e->getMessage();+" )";
-		}
+			try
+			{
+				Users::where('username',$nim)->delete();
+				Mahasiswa::where('nim',$nim)->delete();
+
+				DB::commit();
+
+				$resp['success'] = "true";
+				$resp['message'] = "success delete data mahasiswa dengan nim dan username ".$nim;
+			}
+			catch(\Illuminate\Database\QueryException $e)
+			{
+				
+				$resp['success'] = "false";
+				$resp['message'] = "Proses Delete Data Mahasiswa dengan Nim/Username "+$nim+" Gagal message( "+$e->getMessage();+" )";
+			}
+	   }
+	   else
+	   {
+	   		$resp['success'] = 'false';
+	   		$resp['message'] = 'failed delete user, your access level not root admin';
+	   }
 
 		return response()->json($resp, 200);
 	}
 
-		public function delete_user(Request $request)
+		public function delete_data_user(Request $request)
 		{
 			$sessi 		= $request->session()->get('roleAuth');
 			$username 	= $request->input('username');
-			
-			if($sessi['acess'] === 'root')
-			{
-				DB::beginTransaction();
-				try
-				{
-					Users::where('username', $username)->delete();
 
-					DB::commit();
+			// echo '<pre>'.print_r($sessi, true).'</pre>';die();
 
-					$resp['success'] = 'true';
-					$resp['message'] = "success delete ". $username;
-				}
-				catch(\Illuminate\Database\QueryException $e)
-				{
-					$resp['success'] = 'false';
-					$resp['message'] = $e->getMessage();
-				}
-			}
-			else
+			if($sessi['username'] === $username)
 			{
 				$resp['success'] = 'false';
-				$resp['message'] = 'failed delete user, your access level not root admin';
-			}
+				$resp['message'] = 'failed, admin caanot delete user self';
+			}else
+			{
+				if($sessi['acess'] === 'root')
+				{
+					DB::beginTransaction();
+					try
+					{
+						Users::where('username',$username)->delete();
 
-			return response()->json($resp, true);
+						DB::commit();
+
+						$resp['success'] = 'true';
+						$resp['message'] = "success delete ". $username;
+					}
+					catch(\Illuminate\Database\QueryException $e)
+					{
+						$resp['success'] = 'false';
+						$resp['message'] = $e->getMessage();
+					}
+				}
+				else
+				{
+					$resp['success'] = 'false';
+					$resp['message'] = 'failed delete user, your access level not root admin';
+				}
+			}
+			
+			
+
+			return response()->json($resp, 200);
 		}
 
 
@@ -182,13 +205,8 @@ class AdminBackend extends Controller
 	public function insert_data_mahasiswa(Request $request)
 	{
 		 $datum = json_decode($request->input('datum'), true);
-		//$datum = $request->input('datum');
-		// echo '<pre>'.print_r($datum, true) .'</pre>';
-		 //echo "asdada";
-		$nim = $datum['nim']; 
-		//echo $nim;
-		// die();
-
+		 $nim = $datum['nim']; 
+		
 		if(count(Mahasiswa::where('nim',$nim)->get()) > 0 or count(Users::where('username', $nim)->get()) > 0)
 		{
 				// $flash= array("type" => "error","message" => "nim/username already exits");
@@ -234,7 +252,7 @@ class AdminBackend extends Controller
 
 				DB::commit();
 
-				$resp['success'] = 'success';
+				$resp['success'] = 'true';
 				$resp['message'] = 'success insert data';
 			}catch(Exception $e)
 			{
@@ -251,11 +269,11 @@ class AdminBackend extends Controller
 
 	public function insert_data_user(Request $request)
 	{
-		$data = json_decode($request->input('datum'), true);
+		//$datum = json_decode($request->input('datum'), true);
 
-		$username = $data['username'];
+		$datum   = $request->input('datum');
 
-		if(count(Users::where('username', $username)->get()) > 0)
+		if(count(Users::where('username', $datum['username'])->get()) > 0)
 		{
 				
 				$resp['success'] = 'false';
@@ -265,7 +283,6 @@ class AdminBackend extends Controller
 		else
 		{
 			
-
 			$user_arr = array
 					(
 						"username"     => $datum['username'],
@@ -277,7 +294,7 @@ class AdminBackend extends Controller
 						"access_lev"   => $datum['access_lev']
 					);
 
-			//echo '<pre>'.print_r($user_arr, true) .'</pre>';die();
+			// echo '<pre>'.print_r($user_arr, true) .'</pre>';die();
 
 			DB::beginTransaction();
 
@@ -287,9 +304,10 @@ class AdminBackend extends Controller
 
 				DB::commit();
 
-				$resp['success'] = 'success';
+				$resp['success'] = 'true';
 				$resp['message'] = 'success insert data user';
-			}catch(Exception $e)
+			}
+			catch(Exception $e)
 			{
 				$resp['success'] = 'false';
 				$resp['message'] = $e->getMessage();

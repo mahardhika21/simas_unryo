@@ -2,7 +2,7 @@
                     <nav class="pcoded-navbar">
                         <div class="nav-list">
                             <div class="pcoded-inner-navbar main-menu">
-                                <div class="pcoded-navigation-label">MENU NAVIGASI</div>
+                                <div class="pcoded-navigation-label">MENU NAVIGASI ADMIN</div>
                                 <ul class="pcoded-item pcoded-left-item">
                                     <li class="">
                                         <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -27,13 +27,13 @@
                                                 </a>
                                             </li>
                                              <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'admin/slide'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">slide</span>
                                                 </a>
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'admin/about'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">about</span>
                                                 </a>
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'admin/news' ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">News</span>
                                                 </a>
                                             </li>
@@ -47,7 +47,7 @@
                                         <ul class="pcoded-submenu">
                                            
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/list_admin'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Admin</span>
                                                 </a>
                                             </li>
@@ -72,20 +72,39 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class="">
-                                                <a href="index-2.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/list_kamar'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Kamar</span>
                                                 </a>
                                             </li>
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/list_sewa'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Sewa</span>
                                                 </a>
                                             </li>
                                             <li class="">
-                                                <a href="dashboard-crm.html" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">Add  Kamar</span>
+                                                <a href="<?php echo $url .'/admin/harga_sewa'; ?>" class="waves-effect waves-dark">
+                                                    <span class="pcoded-mtext">Add  Harga</span>
                                                 </a>
                                             </li>
+                                        </ul>
+                                    </li>
+                                    <li class="pcoded-hasmenu">
+                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="feather icon-file"></i></span>
+                                            <span class="pcoded-mtext">Laporan</span>
+                                        </a>
+                                        <ul class="pcoded-submenu">
+                                            <li class="">
+                                                <a href="<?php echo $url .'/admin/list_kamar'; ?>" class="waves-effect waves-dark">
+                                                    <span class="pcoded-mtext">Report Sewa</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="<?php echo $url .'/admin/list_sewa'; ?>" class="waves-effect waves-dark">
+                                                    <span class="pcoded-mtext">Report Kamar</span>
+                                                </a>
+                                            </li>
+                                            
                                         </ul>
                                     </li>
                                 </ul> 

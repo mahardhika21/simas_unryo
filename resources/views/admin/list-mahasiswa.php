@@ -23,7 +23,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/widget.css'; ?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 </head>
-
+<style type="text/css">
+    .error {
+    color : red;   
+            }
+</style>
 <body>
 <?php // echo '<pre>'.print_r($data, true) .'</pre>'; ?>
     <div class="loader-bg">
@@ -122,12 +126,13 @@
         </div>
         <div class="modal-body"> 
                     <div class="container">
+                        <form id="formmhs" method="post">
                                                         
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">NIM</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                              <input type="text" class="form-control" placeholder="input nim mahasiswa" value="" id="nim_mhs">
+                                                              <input type="text" class="form-control" placeholder="input nim mahasiswa" value="" id="nim_mhs" name="nim_mhs">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -141,7 +146,7 @@
                                                             <label class="col-sm-4 col-form-label">Fakultas</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                             <select class="form-control" name="datum[fakultas]" id="fak" onselect="pilih(this)">
+                                                             <select class="form-control" name="fak" id="fak" onselect="pilih(this)">
                                                                     <option value="FST">Pilih Fakultas</option>
                                                                     <option value="FST">FST</option>
                                                                     <option value="FIKES">FIKES</option>
@@ -153,7 +158,7 @@
                                                             <label class="col-sm-4 col-form-label">Prodi</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <select class="form-control" name="datum[prodi]" id="prodi">
+                                                            <select class="form-control" name="prodi_mhs" id="prodi">
                                                              <option value="<?php //echo $profile[0]['prodi']; ?>"><?php //echo $profile[0]['prodi']; ?></option> 
                  
                                                              </select>
@@ -163,7 +168,7 @@
                                                             <label class="col-sm-4 col-form-label">Tahun Masuk</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <select class="form-control" id="tahun_masuk_mhs">
+                                                            <select class="form-control" id="tahun_masuk_mhs" name="tahun_masuk_mhs">
                                                                 <option value="2013">2013</option>
                                                                 <option value="2014">2014</option>
                                                                 <option value="2015">2015</option>
@@ -178,7 +183,7 @@
                                                             <label class="col-sm-4 col-form-label">Provinsi</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <select class="form-control form-control-sm" name="datum[province]" id="province">
+                                                            <select class="form-control form-control-sm" name="province_mhs" id="province">
                                                             <option value="">Pilih Provinsi</option>
                                                              <?php 
                                                               if($province['error'] == FAlSE){ 
@@ -195,7 +200,7 @@
                                                             <label class="col-sm-4 col-form-label">Kabupaten</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <select class="form-control form-control-sm" name="datum[city]" id="city_mhs">
+                                                            <select class="form-control form-control-sm" name="city_mhs" id="city_mhs">
                              
                                                              </select>  
                                                             </div>
@@ -204,23 +209,24 @@
                                                             <label class="col-sm-4 col-form-label">Alamat</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                           <textarea type="text" class="form-control" placeholder="Input Alamat Mahasiswa" value="" id="alamat_mhs"></textarea>
+                                                           <textarea type="text" class="form-control" placeholder="Input Alamat Mahasiswa" value="" id="alamat_mhs" name="alamat_mhs"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">E-Mail</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input email anda" value="" id="email_mhs">
+                                                            <input type="text" class="form-control" placeholder="input email anda" value="" id="email_mhs" name="email_mhs">
                                                             </div>
                                                         </div>
                                                          <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label">Phone Number</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input Nomor Telephone" value="" id="phone_mhs">
+                                                            <input type="text" class="form-control" placeholder="input Nomor Telephone" value="" id="phone_mhs" name="phone_mhs">
                                                             </div>
                                                         </div>
+                                    </form>
 
                                                             
                      </div>
@@ -347,6 +353,8 @@
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/assets/js/datum.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="<?php echo $url .'/assets/js/config-jqvalidate.js'; ?>"></script>
     <script type="text/javascript">
         $(function(){
 
@@ -505,7 +513,13 @@
     });
 
 
-    $('#btn_insert_data_mhs').on('click', function(){
+    $('#btn_insert_data_mhs2').on('click', function(){
+        
+
+    });
+
+    function ajx_insert_data_mhs()
+    {
         let baseUrl = '<?php echo $url; ?>';
         let obj     = new Object();
 
@@ -539,13 +553,28 @@
                         else
                         {
                             alert(resp.message);
+                            window.location.reload();
                         }
             },error     : function(resp)
             {
                 alert('error, kesalahan jaringan');
             }
         });
+    }
 
+    $(document).ready(function(){
+          validate_mhs();
+
+         $('#btn_insert_data_mhs').on('click', function(){
+            let vd = $('#formmhs').valid();
+            console.log(vd);
+            if(vd === true)
+            {
+               // alert('true');
+               ajx_insert_data_mhs();
+            }
+          });
+        
     });
 
     </script>

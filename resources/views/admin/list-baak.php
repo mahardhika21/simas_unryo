@@ -139,7 +139,7 @@ p.note
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="formBaak"  method="post">
+            <form class="" id="formUser"  method="post">
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Username</label>
                                                             <div class="col-sm-1">:</div>
@@ -200,7 +200,7 @@ p.note
     <script type="text/javascript" src="<?php echo $url .'/assets/js/script.js'; ?>"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-    <script src="<?php echo $url .'/assets/js/validate.js'; ?>"></script>
+    <script src="<?php echo $url .'/assets/js/config-jqvalidate.js'; ?>"></script>
     <script type="text/javascript">
         $(function(){
             var baseUrl = '<?php echo $url; ?>';
@@ -219,7 +219,7 @@ p.note
                                    {data : 'email',    name : 'email'},
                                    {render : function(data, type, full, meta)
                                     {
-                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delet Data</button>";
+                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delete Data</button>";
                                     }},
                                 ]
             });
@@ -230,19 +230,87 @@ p.note
                         cell.innerHTML = i+1;
                 });
             }).draw();
+
+           // fungsi delete di datatable
+           $('#table-baak').on('click','[id=btnDelete]', function(){
+                let uname = $(this).data('id');
+
+                cnf = confirm("Apakah Anda Yakin Menghapus Data Mahasiswa Dengan Nim "+ uname +" ?");
+                if(cnf)
+                {
+                    $.ajax({
+                            url      : baseUrl + '/admin/delete_data_user',
+                            type     : 'POST',
+                            dataType : 'JSON',
+                            data     : {username:uname}, 
+                            success  : function(resp)
+                            {
+                                    if(resp.message == 'true')
+                                    {
+                                        alert(resp.message);
+                                        window.location.reload();
+                                    }
+                                    else
+                                    {
+                                        alert(resp.message);
+                                        window.location.reload();
+                                    }
+                            },error : function(resp)
+                            {
+                                  alert('Kesalahan, jaringan');
+                            }
+                    });
+                }
+           });
+
         });
-      
+
+        function ajx_insert_data()
+        {
+            let baseUrl = '<?php echo $url; ?>';
+            let obj          = new Object();
+                obj.nama        = $('#nama').val();
+                obj.username    = $('#username').val();
+                obj.email       = $('#email').val();
+                obj.phone       = $('#phone').val();
+                obj.level       = 'baak';
+                obj.access_lev  = 'baak';
+                console.log(obj);
+                $.ajax({
+                    url      : baseUrl +'/admin/insert_data/user',
+                    type     : 'POST',
+                    dataType : 'JSON',
+                    data     : {datum:obj},
+                    success  : function(respond)
+                    {
+                        if(respond.success == 'true')
+                        {
+                            window.location.reload();
+                        }
+                        else
+                        {
+                            alert(respond.message);
+                            window.location.reload();
+                        }
+
+                    },error : function(respond)
+                    {
+                        alert("Kesalahn jaringan");
+                    }
+                });
+        }
+
+
       $(document).ready(function(){
-        
-        
-       validate_baak();
+       validate_user();
 
        $('#btn_insert_data').on('click', function(){
-            let vd = $('#formBaak').valid();
+            let vd = $('#formUser').valid();
             console.log(vd);
             if(vd === true)
             {
-                alert('true');
+                // alert('true');
+                ajx_insert_data();
             }
        });
 
