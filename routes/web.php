@@ -77,6 +77,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => "web.admin.json_list_admin",
 		]);
 
+		Route::get('admin/slide', [
+			"uses" => 'Admin\AdminController@slide',
+			"as"   => "web.admin.slide",
+		]);
+
 		// detail \\
 		// Route::get('admin/detail_mahasiswa/{nim?}',[
 		// 	"uses" => "Admin\AdminController@detail_mahasiswa",
@@ -123,6 +128,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 		Route::post('admin/insert_data/user', [
 			"uses"	=> 'Admin\AdminBackend@insert_data_user',
 			"as"	=> 'web.insert_data.user',
+		]);
+
+		Route::post('admin/upload_slide', [
+			'uses' => 'Admin\AdminBackend@upload_slide',
+			'as'	=> 'web.upload.slied',
 		]);
 
 		// data openLib

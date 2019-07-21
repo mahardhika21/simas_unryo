@@ -105,7 +105,6 @@ class AdminController extends Controller
 		$data = array
 				(
 					"url"	=> $this->url->to('/'),
-					"data"  => "",
 					"title" => "Admin | List Mahasiswa",
 					"part"  => array
 								(
@@ -119,24 +118,22 @@ class AdminController extends Controller
 	}
 
 
-	public function detail_mahasiswa(Request $request, $nim='')
+	public function slide(Request $request)
 	{
-		$sessi = $request->session()->get('roleAuth');
-
 		$data = array
 				(
-					"url"   => $this->url->to('/'),
-					"title" => "Admin | Detail Data Mahasiswa",
-					"type"  => "mahasiswa",
-					"data"  => Mahasiswa::where('nim', $nim)->get(),
-					"part"  => array
-								(
-									"header" 	=> view('base/header-admin',$this->baseUrl()),
-									"sidebar"	=> view('base/side-menu-admin', $this->baseUrl()),
-								)
+					"url" 		=> $this->url->to('/'),
+					"title"		=> "Admin | List Slide",
+					"part"		=> array
+									(
+										"header"	=> view('base/header-admin', $this->baseUrl()),
+										"sidebar"	=> view('base/side-menu-admin', $this->baseUrl())
+									)
 				);
-		return view('admin/detail-data-mahasiswa',$data);
+
+		return view('admin/list-slide', $data);
 	}
+
 	public function room_list(Request $request)
 	{
 		$data = array

@@ -313,9 +313,108 @@ class AdminBackend extends Controller
 				$resp['message'] = $e->getMessage();
 			}
 
-		}
+		} 
 
 		return response()->json($resp, 200);
+
+	}
+
+	public function upload_slide(Request $request)
+	{
+		$file = $request->file('slide');
+	   
+	   echo "name file ".$file->getClientOriginalName();
+
+		echo '<pre>'.print_r($file, true) .'</pre>';
+
+		echo $file->getSize()/1024;
+		echo 'File Mime Type: '.$file->getMimeType();
+
+		$filename = pathinfo($file);
+        // $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+		echo '<pre>'.print_r($filename, true) .'</pre>';
+		echo 'File Extension: '.$file->getClientOriginalExtension();
+		echo '<br>';
+		$filename = strtotime(date('Y-m-d H:i:s')) .'.JPG';
+		 $pathDestination = 'assets/upload/slide';
+
+
+
+
+		// $res = $file->move($pathDestination,$filename);
+
+		 // echo '<pre>'.print_r($res, true) .'</pre>';
+		 // echo $file->getSize();
+
+		 // if($res)
+		 // {
+
+		 // }
+
+
+
+
+      //  echo $filename . ' ' . $extension; // 'qwe jpg'
+		//return response()->json(array("stat"=>"ok","files"=>$file->getClientOriginalName()), 200);
+
+
+		 if(!empty($file))
+		 {
+		 	$fXtension = strtolower($file->getClientOriginalExtension());
+		 	$fileSize     = (int)$file->getSize()/1024;
+		 	if($fXtension === 'png' or $fXtension == 'jpg' or $fXtension == 'jpeg')
+		 	{
+		 		if($fileSize < 2500)
+		 		{
+		 				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
+		 				$fpath = 'assets/upload/slide';
+
+		 				if($file->move($fpath, $fname))
+		 				{ 
+		 					DB::beginTransaction();
+		 					try
+		 					{
+		 						$arr_data = array
+		 									(
+		 										"nama"  => $fname,
+		 										"type"  => 'slide',
+		 										"url"   => $fpath,
+		 										"insert_time" => date('Y-m-d H:i:s'),
+		 									);
+		 						DB::table('extra')->insert($arr_data);
+		 						DB::commit();
+		 					}catch(\Illuminate\Database\QueryException $e)
+		 					{
+		 						$resp['status']   = 'false';
+		 						$resp['message']  = $e->getMessage();
+		 					}
+
+		 				}
+		 				else
+		 				{
+		 					$resp['status']  = 'false';
+		 					$resp['message'] = 'file is galat upload';
+
+		 				}
+		 		}else
+		 		{
+		 			$resp['status']  = 'false';
+		 			$resp['message'] = 'file is large';
+
+		 		}
+		 	}else
+		 	{
+		 		$resp['status']  = 'false';
+		 		$resp['message'] = 'file extension must png,jpg or jpeg';
+		 	}
+		 }else
+		 {
+		 	$resp['status']  = 'false';
+		 	$resp['message'] = 'file canot by null';
+		 }
+
+
 
 	}
 

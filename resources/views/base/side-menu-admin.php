@@ -27,13 +27,17 @@
                                                 </a>
                                             </li>
                                              <li class="">
-                                                <a href="<?php echo $url .'admin/slide'; ?>" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/slide'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">slide</span>
                                                 </a>
-                                                <a href="<?php echo $url .'admin/about'; ?>" class="waves-effect waves-dark">
+                                            </li>
+                                            <li class="">
+                                                <a href="<?php echo $url .'/admin/about'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">about</span>
                                                 </a>
-                                                <a href="<?php echo $url .'admin/news' ?>" class="waves-effect waves-dark">
+                                            </li>
+                                            <li class="">
+                                                <a href="<?php echo $url .'/admin/news' ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">News</span>
                                                 </a>
                                             </li>
