@@ -348,8 +348,16 @@ class AdminBackend extends Controller
 				 										"url"   	  => $fpath,
 				 										"insert_time" => date('Y-m-d H:i:s'),
 				 									);
+
+				 						echo '<pre>'.print_r($arr_data, true) .'</pre>';
+				 						//die();
 				 						DB::table('extra')->insert($arr_data);
 				 						DB::commit();
+
+				 						$resp['status']   = 'true';
+				 						$resp['message']  = 'success insert data slide';
+
+				 						//die();
 				 					}catch(\Illuminate\Database\QueryException $e)
 				 					{
 				 						$resp['status']   = 'false';
@@ -470,7 +478,7 @@ class AdminBackend extends Controller
 
 
 		 $request->session()->flash('msg',$resp);
-		 redirect('admin/slide');
+		 return redirect('admin/slide')->with(['msg'=> $resp]);
 
 	}
 

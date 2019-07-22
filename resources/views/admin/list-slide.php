@@ -87,6 +87,21 @@ p.note
                                      
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-12 col-offset-sm-2">
+                                                <div class="alert alert-success">
+                                                    <?php 
+                                                       // echo '<pre>'.print_r($msg, true) .'</pre>';
+                                                    $msg = Session::get('msg'); 
+      echo '<pre>'.print_r($msg, true) .'</pre>';
+
+      if(!empty($msg)){
+                                                    ?>
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+
+<div class="alert alert-danger">
+    <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
+  </div>
+<?php } ?>
                                                 <div class="card">
                                            
                                             <div class="card-block ">
@@ -94,16 +109,16 @@ p.note
                                                             <h5>List Slide</h5>
                                                              <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-slide"><i class="fa fa-plus-circle" ></i>Tambah Data Slide</button>
                                                             </div>
+
                                                             
-                                                      <table class="table" id="table-baak">
+                                                      <table class="table" id="table-slide">
                                                           <thead>
                                                               <tr>
                                                                   <th>#</th>
-                                                                  <th>Username</th>
-                                                                  <th>Nama</th>
-                                                                  <th>Phone Number</th>
-                                                                  <th>E-MAil</th>
-                                                                  <th>Aksi</th>
+                                                                  <th>nama</th>
+                                                                  <th>gambar Slide</th>
+                                                                  <th>aksi</th>
+                                                                 
                                                               </tr>
                                                           </thead>
                                                       </table>         
@@ -244,6 +259,37 @@ ajax_upload_slide();
             }
         });
   }
+</script>
+
+<script type="text/javascript">
+    var baseUrl = '<?php echo $url; ?>';
+
+    $(function(){
+        let table = $('#table-slide').DataTable({
+                 processing : true,
+                    serverSide : true,
+                    searching  : true,
+                    ajax       : 'data/list_baak',
+                    columns    : 
+                                [
+                                   {data : 'username', name : 'username'},
+                                   {data : 'username', name : 'username'},
+                                   {data : 'nama',     name : 'name'},
+                                   {data : 'phone',    name : 'phone'},
+                                   {data : 'email',    name : 'email'},
+                                   {render : function(data, type, full, meta)
+                                    {
+                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delete Data</button>";
+                                    }},
+                                ]
+        });
+
+          table.on('order.dt search.dt',function(){
+                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                        cell.innerHTML = i+1;
+                });
+            }).draw();
+    });
 </script>
 </body>
 </html>
