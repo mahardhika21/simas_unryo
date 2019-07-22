@@ -319,145 +319,233 @@ class AdminBackend extends Controller
 
 	}
 
-	public function upload_slide(Request $request)
+	public function upload_slide(Request $request, $type)
 	{
 		$file = $request->file('slide');
-	   
-	   echo "name file ".$file->getClientOriginalName();
 
-		echo '<pre>'.print_r($file, true) .'</pre>';
-
-		echo $file->getSize()/1024;
-		echo 'File Mime Type: '.$file->getMimeType();
-
-		$filename = pathinfo($file);
-        // $extension = pathinfo($file, PATHINFO_EXTENSION);
-
-		echo '<pre>'.print_r($filename, true) .'</pre>';
-		echo 'File Extension: '.$file->getClientOriginalExtension();
-		echo '<br>';
-		$filename = strtotime(date('Y-m-d H:i:s')) .'.JPG';
-		 $pathDestination = 'assets/upload/slide';
-
-
-
-
-		// $res = $file->move($pathDestination,$filename);
-
-		 // echo '<pre>'.print_r($res, true) .'</pre>';
-		 // echo $file->getSize();
-
-		 // if($res)
-		 // {
-
-		 // }
-
-
-
-
-      //  echo $filename . ' ' . $extension; // 'qwe jpg'
-		//return response()->json(array("stat"=>"ok","files"=>$file->getClientOriginalName()), 200);
-
-
-		 if(!empty($file))
+		 if($type === 'insert')
 		 {
-		 	$fXtension = strtolower($file->getClientOriginalExtension());
-		 	$fileSize     = (int)$file->getSize()/1024;
-		 	if($fXtension === 'png' or $fXtension == 'jpg' or $fXtension == 'jpeg')
-		 	{
-		 		if($fileSize < 2500)
+		 		 if(!empty($file))
+				 {
+				 	$fXtension = strtolower($file->getClientOriginalExtension());
+				 	$fileSize     = (int)$file->getSize()/1024;
+				 	if($fXtension === 'png' or $fXtension == 'jpg' or $fXtension == 'jpeg')
+				 	{
+				 		if($fileSize < 2500)
+				 		{
+				 				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
+				 				$fpath = 'assets/upload/slide';
+
+				 				if($file->move($fpath, $fname))
+				 				{ 
+				 					DB::beginTransaction();
+				 					try
+				 					{
+				 						$arr_data = array
+				 									(
+				 										"nama"  	  => $fname,
+				 										"type"  	  => 'slide',
+				 										"url"   	  => $fpath,
+				 										"insert_time" => date('Y-m-d H:i:s'),
+				 									);
+				 						DB::table('extra')->insert($arr_data);
+				 						DB::commit();
+				 					}catch(\Illuminate\Database\QueryException $e)
+				 					{
+				 						$resp['status']   = 'false';
+				 						$resp['message']  = $e->getMessage();
+				 					}
+
+				 				}
+				 				else
+				 				{
+				 					$resp['status']  = 'false';
+				 					$resp['message'] = 'file is galat upload';
+
+				 				}
+				 		}else
+				 		{
+				 			$resp['status']  = 'false';
+				 			$resp['message'] = 'file is large';
+
+				 		}
+				 	}else
+				 	{
+				 		$resp['status']  = 'false';
+				 		$resp['message'] = 'file extension must png,jpg or jpeg';
+				 	}
+				 }
+				 else
+				 {
+				 	$resp['status']  = 'false';
+				 	$resp['message'] = 'file canot by null';
+				 }
+		 }
+		 elseif($type === 'delete')
+		 {
+		 		$data = DB::table('extra')->where('id_xtra',$request->input('id'))->get();
+
+		 		DB::beginTransaction();
+		 		try
 		 		{
-		 				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
-		 				$fpath = 'assets/upload/slide';
+		 			DB::table('extra')->where('id_xtra', $request->input('id'))->delete();
+						
+					//Storage::disk('public')->delete($data->url.'/'.$data->file);
+		 			Storage::delete($data->url.'/'.$data->nama);
 
-		 				if($file->move($fpath, $fname))
-		 				{ 
-		 					DB::beginTransaction();
-		 					try
-		 					{
-		 						$arr_data = array
-		 									(
-		 										"nama"  => $fname,
-		 										"type"  => 'slide',
-		 										"url"   => $fpath,
-		 										"insert_time" => date('Y-m-d H:i:s'),
-		 									);
-		 						DB::table('extra')->insert($arr_data);
-		 						DB::commit();
-		 					}catch(\Illuminate\Database\QueryException $e)
-		 					{
-		 						$resp['status']   = 'false';
-		 						$resp['message']  = $e->getMessage();
-		 					}
+		 			$resp['status']  = 'true';
+		 			$resp['message'] = 'image delete success';
 
-		 				}
-		 				else
-		 				{
-		 					$resp['status']  = 'false';
-		 					$resp['message'] = 'file is galat upload';
+		 			DB::commit();
 
-		 				}
-		 		}else
+		 		}catch(\Illuminate\Database\QueryException $e)
 		 		{
-		 			$resp['status']  = 'false';
-		 			$resp['message'] = 'file is large';
-
+		 			  $resp['status']  = 'false';
+		 			  $resp['message'] = $e->getMessage();
 		 		}
-		 	}else
-		 	{
-		 		$resp['status']  = 'false';
-		 		$resp['message'] = 'file extension must png,jpg or jpeg';
-		 	}
-		 }else
+		 }
+		 elseif($type === "update")
 		 {
-		 	$resp['status']  = 'false';
-		 	$resp['message'] = 'file canot by null';
+		 	 
+		 	  $id_xtra = $request->input('id');
+		 	  $data = DB::table('extra')->where('id_xtra', $id_xtra)->get();
+		 	  if(!empty($file) and empty($id) and count($data) > 0)
+				 {
+				 	$fXtension = strtolower($file->getClientOriginalExtension());
+				 	$fileSize     = (int)$file->getSize()/1024;
+				 	if($fXtension === 'png' or $fXtension == 'jpg' or $fXtension == 'jpeg')
+				 	{
+				 		if($fileSize < 2500)
+				 		{
+				 				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
+				 				$fpath = 'assets/upload/slide';
+
+				 				if($file->move($fpath, $fname))
+				 				{ 
+				 					DB::beginTransaction();
+				 					try
+				 					{
+				 						$arr_data = array
+				 									(
+				 										"nama"  	  => $fname,
+				 										"type"  	  => 'slide',
+				 										"url"   	  => $fpath,
+				 										"insert_time" => date('Y-m-d H:i:s'),
+				 									);
+				 						DB::table('extra')->where('id_xtra', $id_xtra)->update($arr_data);
+				 						DB::commit();
+
+				 						Storage::delete($data->url.'/'.$data->nama);
+				 					}catch(\Illuminate\Database\QueryException $e)
+				 					{
+				 						$resp['status']   = 'false';
+				 						$resp['message']  = $e->getMessage();
+				 					}
+
+				 				}
+				 				else
+				 				{
+				 					$resp['status']  = 'false';
+				 					$resp['message'] = 'file is galat upload';
+
+				 				}
+				 		}else
+				 		{
+				 			$resp['status']  = 'false';
+				 			$resp['message'] = 'file is large';
+
+				 		}
+				 	}else
+				 	{
+				 		$resp['status']  = 'false';
+				 		$resp['message'] = 'file extension must png,jpg or jpeg';
+				 	}
+				 }
+				 else
+				 {
+				 	$resp['status']  = 'false';
+				 	$resp['message'] = 'file canot by null';
+				 }
 		 }
 
 
+		 $request->session()->flash('msg',$resp);
+		 redirect('admin/slide');
 
 	}
+
 
 	public function insert_data_kamar(Request $request)
 	{
 		
 
-		$sesi = $request->session()->get('roleAuth');
+		// $sesi = $request->session()->get('roleAuth');
 
-		$file = $request->file('image');
+		// $file = $request->file('image');
 
-		$name_img = $file->getClientOriginalName();
-		$extn     = $file->getClientOriginalExtension();
-		$path     = "img/room";
+		// $name_img = $file->getClientOriginalName();
+		// $extn     = $file->getClientOriginalExtension();
+		// $path     = "img/room";
 
-		DB::beginTransaction();
-		try
-		{
-			$file_name = $this->cek_exits_file($path,$name_img,$pat);
-			$arr_data = array
-						(
-							"nomor_kamar"      => $request->input('lantai_kamar'),
-							"id_admin"         => $sessi['username'],
-							"lantai_kamar"     => $request->input('lantai_kamar'),
-							"foto_kamar"       => $file_name,
-							"harga_perbulan"   => $request->input('harga_perbulan'),
-							"status_kamar"     => 'N',
-						);
-			Kamar::insert($arr_data);
-			$file->move($path,$file_name);
+		// DB::beginTransaction();
+		// try
+		// {
+		// 	$file_name = $this->cek_exits_file($path,$name_img,$pat);
+		// 	$arr_data = array
+		// 				(
+		// 					"nomor_kamar"      => $request->input('lantai_kamar'),
+		// 					"id_admin"         => $sessi['username'],
+		// 					"lantai_kamar"     => $request->input('lantai_kamar'),
+		// 					"foto_kamar"       => $file_name,
+		// 					"harga_perbulan"   => $request->input('harga_perbulan'),
+		// 					"status_kamar"     => 'N',
+		// 				);
+		// 	Kamar::insert($arr_data);
+		// 	$file->move($path,$file_name);
 
-			$flash= array("type" => "success","message" => "success insert data kamar");
-			$request->session()->flash('msg',$flash);
+		// 	$flash= array("type" => "success","message" => "success insert data kamar");
+		// 	$request->session()->flash('msg',$flash);
 			
 
-			redirect('admin/kamar');
+		// 	redirect('admin/kamar');
 
-		}catch(Exception $e)
+		// }catch(Exception $e)
+		// {
+		// 	$flash= array("type" => "error","message" => $e->getMessage());
+		// 	$request->session()->flash('msg',$flash);
+		// 	redirect('admin/kamar');
+		// }
+
+		$file = $request->input('image');
+		if(empty($file))
 		{
-			$flash= array("type" => "error","message" => $e->getMessage());
-			$request->session()->flash('msg',$flash);
-			redirect('admin/kamar');
+			$resp['status']  ='failed';
+			$resp['message'] = 'image room canot by null';
+			$request->session()->flash('msg', $resp);
+			redirect('admin/room');
 		}
+
+		$fXtension = strtolower($file->getClientOriginalExtension());
+		$fsize     = (int)$file->getSize()/1024; 
+
+		if($fsize > 2500)
+		{
+			$resp['status']  ='failed';
+			$resp['message'] = 'image room is large, cannot  gratest than 2,5 MB';
+			$request->session()->flash('msg', $resp);
+			redirect('admin/room');
+		}
+
+		if($fXtension !=  "png" or $fXtension != "jpg" or $fXtension != "jpeg")
+		{
+			$resp['status']  ='failed';
+			$resp['message'] = 'image room file type must png, jpg or jpeg';
+			$request->session()->flash('msg', $resp);
+			redirect('admin/room');
+		}
+
+		//if($)
+
 
 	}
 

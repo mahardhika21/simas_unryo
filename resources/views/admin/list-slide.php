@@ -106,10 +106,7 @@ p.note
                                                                   <th>Aksi</th>
                                                               </tr>
                                                           </thead>
-                                                      </table>     
-                                                   
-                                                
-                                               
+                                                      </table>         
                                             </div>
                                         </div>
                                     </div>
@@ -139,13 +136,12 @@ p.note
         </button>
         </div>
         <div class="modal-body">
-            <form action="<?php echo $url .'/admin/upload_slide'; ?> " id="formSlide"  method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $url .'/admin/upload_slide/insert'; ?> " id="formSlide"  method="POST" enctype="multipart/form-data">
                                                             <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Username</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                             <input type="file" name="slide" id="fileSLide" accept="image/*" onchange="loadFile(event)">
-                                                        
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -153,13 +149,8 @@ p.note
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                            <img id="output"/>
-
-                                                            
                                                             </div>
-                                                            </div>
-                                                            
-                                                            
-            
+                                                            </div>  
                                                             
         </div>
         <div class="modal-footer">
@@ -190,7 +181,6 @@ p.note
             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data">Update Data</button>
         </div>
-       
         </div>
         </div>
     </div>

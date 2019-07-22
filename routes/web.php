@@ -130,7 +130,7 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> 'web.insert_data.user',
 		]);
 
-		Route::post('admin/upload_slide', [
+		Route::post('admin/upload_slide/{type}', [
 			'uses' => 'Admin\AdminBackend@upload_slide',
 			'as'	=> 'web.upload.slied',
 		]);
