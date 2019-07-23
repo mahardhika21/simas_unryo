@@ -87,21 +87,22 @@ p.note
                                      
                                         <div class="row d-flex justify-content-center">
                                             <div class="col-sm-12 col-offset-sm-2">
-                                                <div class="alert alert-success">
+                                                
                                                     <?php 
                                                        // echo '<pre>'.print_r($msg, true) .'</pre>';
                                                     $msg = Session::get('msg'); 
-      echo '<pre>'.print_r($msg, true) .'</pre>';
+      //echo '<pre>'.print_r($msg, true) .'</pre>';
 
       if(!empty($msg)){
-                                                    ?>
-  <strong>Success!</strong> Indicates a successful or positive action.
-</div>
-
-<div class="alert alert-danger">
-    <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
-  </div>
-<?php } ?>
+        if($msg['status'] == 'true'){  ?>
+            <div class="alert alert-success">
+                <strong>Success!</strong> <?php echo $msg['message']; ?>
+           </div>
+       <?php }elseif($msg['status'] == 'false'){ ?>
+            <div class="alert alert-danger">
+                    <strong>Danger!</strong> <?php echo $msg['message']; ?>
+            </div>
+    <?php } } ?>
                                                 <div class="card">
                                            
                                             <div class="card-block ">
@@ -145,7 +146,7 @@ p.note
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-        <h4 class="modal-title">Tambah Data Baak</h4>
+        <h4 class="modal-title">Tambah Data Slide</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -153,17 +154,17 @@ p.note
         <div class="modal-body">
             <form action="<?php echo $url .'/admin/upload_slide/insert'; ?> " id="formSlide"  method="POST" enctype="multipart/form-data">
                                                             <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Username</label>
+                                                            <label class="col-sm-2 col-form-label">File : Png/Jpg/Jpeg</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
                                                             <input type="file" name="slide" id="fileSLide" accept="image/*" onchange="loadFile(event)">
                                                             </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Nama</label>
+                                                            <label class="col-sm-2 col-form-label"></label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-9">
-                                                           <img id="output"/>
+                                                           <img style="max-height: 200px;" id="output"/>
                                                             </div>
                                                             </div>  
                                                             
@@ -187,15 +188,28 @@ p.note
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="formSlide"  method="post">
-                                                          
-             </form>
+            <form action="<?php echo $url .'/admin/upload_slide/update'; ?> " id="formSlide"  method="POST" enctype="multipart/form-data">
+                                                            <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">File : Png/Jpg/Jpeg</label>
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                            <input type="file" name="slide" id="fileSLide" accept="image/*" onchange="loadFile2(event)">
+                                                            </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label"></label>
+                                                            <div class="col-sm-1">:</div>
+                                                            <div class="col-sm-9">
+                                                           <img style="max-height: 200px;" id="output2"/>
+                                                            </div>
+                                                            </div>  
                                                             
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data">Update Data</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" id="btn_upload_img_data">Insert Slide Data</button>
         </div>
+        </form>
         </div>
         </div>
     </div>
@@ -224,13 +238,19 @@ p.note
        
     </script>
     <script>
-  var loadFile = function(event) {
+    var loadFile = function(event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
-  };
+    };
+
+    var  = function(event)
+    {
+        var output = document.getElementById('output2');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    }
 
   $('#btn_upload_img').on('click', function(){
-ajax_upload_slide();
+      ajax_upload_slide();
   });
 
 
@@ -269,17 +289,18 @@ ajax_upload_slide();
                  processing : true,
                     serverSide : true,
                     searching  : true,
-                    ajax       : 'data/list_baak',
+                    ajax       : 'data/list_slide',
                     columns    : 
                                 [
-                                   {data : 'username', name : 'username'},
-                                   {data : 'username', name : 'username'},
-                                   {data : 'nama',     name : 'name'},
-                                   {data : 'phone',    name : 'phone'},
-                                   {data : 'email',    name : 'email'},
+                                   {data : 'id_extra', name : 'id_extra'},
+                                   {data : 'type', name : 'type'},
+                                   //{data : 'nama', name : 'nama'},
+                                   {render: function(data, type, full, mete){
+                                        return "<img class='img' height='120px' style=' margin-left: auto; margin-right: auto;' src="+ baseUrl+'/'+full.url+'/'+ full.nama+" /> ";
+                                   }},
                                    {render : function(data, type, full, meta)
                                     {
-                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delete Data</button>";
+                                        return  " <button id='btnDelete' href='ss' data-id="+full.id_extra+" class='btn btn-danger btnDetails'>Delete Data</button>";
                                     }},
                                 ]
         });

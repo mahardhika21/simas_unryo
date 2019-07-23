@@ -12,6 +12,7 @@ use App\Model\Kamar;
 use App\Model\Mahasiswa;
 use DataTables;
 use App\Http\Repository\CurlOpenRepo;
+use App\Model\Extra;
 
 
 class AdminBackend extends Controller
@@ -63,6 +64,12 @@ class AdminBackend extends Controller
 	public function list_admin_json()
 	{
 		return Datatables::of(Users::where('level','admin')->get())->make('true');
+	}
+
+
+	public function list_slide_json()
+	{
+			return Datatables::of(Extra::where('type','slide')->get())->make('true');
 	}
 
 	public function delete_data_mahasiswa(Request $request)

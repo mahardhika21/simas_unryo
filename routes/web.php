@@ -60,6 +60,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => 'web.admin.list_admin',
 		]);
 
+		Route::get('admin/slide', [
+			"uses" => 'Admin\AdminController@slide',
+			"as"   => "web.admin.slide",
+		]);
+
 		// list datatables \\
 
 		Route::get('/admin/data/list_mahasiswa',[
@@ -77,10 +82,16 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => "web.admin.json_list_admin",
 		]);
 
-		Route::get('admin/slide', [
-			"uses" => 'Admin\AdminController@slide',
-			"as"   => "web.admin.slide",
+		Route::get('/admin/data/list_slide', [
+			"uses"	=> "Admin\AdminBackend@list_slide_json",
+			"as"	=> "web.admin.json_list_admin",
 		]);
+
+
+
+		
+
+
 
 		// detail \\
 		// Route::get('admin/detail_mahasiswa/{nim?}',[

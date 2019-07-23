@@ -101,7 +101,7 @@ class AdminController extends Controller
 	public function list_admin(Request $request)
 	{
 		$sessi = $request->session()->get('roleAuth');
-		$request->session()->flash('msg', $dt);
+		//$request->session()->flash('msg', $dt);
 		$data = array
 				(
 					"url"	=> $this->url->to('/'),
@@ -118,17 +118,10 @@ class AdminController extends Controller
 	}
 
 
-	// private function test_set_session(Request $request)
-	// {
-	// 	$dt = array("status" => 'true', "message" => "success flash session set");
-	// 	$request->session()->flash('msg', $dt);
-	// }
 
 
 	public function slide(Request $request)
 	{
-		// $dt = array("status" => 'true', "message" => "success flash session set");
-		// $request->session()->flash('msg', $dt);
 		$data = array
 				(
 					"url" 		=> $this->url->to('/'),
