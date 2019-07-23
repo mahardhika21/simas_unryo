@@ -106,6 +106,8 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> "web.admin.get_data_detail"
 		]);
 
+
+
 		//Route admin delete data
 
 		Route::post('admin/delete_mahasiswa', [
@@ -117,6 +119,16 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"uses"  => "Admin\AdminBackend@delete_data_user",
 			"as"   	=> "web.admin.delete_mahasiswa",
 		]);
+
+		Route::post('admin/delete/slide/{type}', [
+			'uses' => 'Admin\AdminBackend@upload_slide',
+			'as'   => 'web.delete.slide'
+		]);
+
+		// Route::get('admin/test_delete/', [
+		// 	"uses"  => "Admin\AdminBackend@test_delete",
+		// 	"as"	=> "web.admin.get_data_detail"
+		// ]);
 
 		// Route::post('admin/delete_data_user', [
 		// 	"user"  => "Admin\AdminBackend@delete_data_mahasiswa",

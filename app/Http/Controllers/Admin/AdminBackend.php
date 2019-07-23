@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storages;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Model\Users;
 use App\Model\Kamar;
 use App\Model\Mahasiswa;
@@ -398,25 +399,28 @@ class AdminBackend extends Controller
 		 }
 		 elseif($type === 'delete')
 		 {
-		 		$data = DB::table('extra')->where('id_xtra',$request->input('id'))->get();
+		 		$data = DB::table('extra')->where('id_extra',$request->input('id'))->get();
 
 		 		DB::beginTransaction();
 		 		try
 		 		{
-		 			DB::table('extra')->where('id_xtra', $request->input('id'))->delete();
+		 			DB::table('extra')->where('id_extra', $request->input('id'))->delete();
 						
-					//Storage::disk('public')->delete($data->url.'/'.$data->file);
-		 			Storage::delete($data->url.'/'.$data->nama);
-
+					// Storage::disk('public')->delete('1563898539.jpg');
+					// //echo '<pre>'.print_r($data, true) .'</pre>';
+		 			File::delete($data[0]->url.'/'.$data[0]->nama);
+		 			
 		 			$resp['status']  = 'true';
 		 			$resp['message'] = 'image delete success';
 
+		 			
 		 			DB::commit();
-
+		 			return response()->json($resp, 200);
 		 		}catch(\Illuminate\Database\QueryException $e)
 		 		{
 		 			  $resp['status']  = 'false';
 		 			  $resp['message'] = $e->getMessage();
+		 			  return response()->json($resp, 200);
 		 		}
 		 }
 		 elseif($type === "update")
@@ -450,7 +454,7 @@ class AdminBackend extends Controller
 				 						DB::table('extra')->where('id_xtra', $id_xtra)->update($arr_data);
 				 						DB::commit();
 
-				 						Storage::delete($data->url.'/'.$data->nama);
+				 						File::delete($data->url.'/'.$data->nama);
 				 					}catch(\Illuminate\Database\QueryException $e)
 				 					{
 				 						$resp['status']   = 'false';
@@ -737,4 +741,12 @@ class AdminBackend extends Controller
 		// 	redirect('admin/user');
 		// }
 	}
+
+
+
+	// function test_delete(Request $request)
+	// {
+	// 	$file_name = '1563898539.jpg';
+	// 	File::delete($file_name);
+	// }
 }

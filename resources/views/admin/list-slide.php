@@ -243,7 +243,7 @@ p.note
     output.src = URL.createObjectURL(event.target.files[0]);
     };
 
-    var  = function(event)
+    var loadFile2 = function(event)
     {
         var output = document.getElementById('output2');
         output.src = URL.createObjectURL(event.target.files[0]);
@@ -310,6 +310,38 @@ p.note
                         cell.innerHTML = i+1;
                 });
             }).draw();
+
+        $('#table-slide').on('click','[id=btnDelete]', function(){
+                let id = $(this).data('id');
+               // alert(id);
+
+                let conf = confirm("Apakah anda yakin menghpasu slide tersebut?");
+
+                if(conf)
+                {
+                    //window.location.href = baseUrl +'/admin/delete/slide/'+id;
+                    $.ajax({
+                        url : baseUrl +'/admin/delete/slide/delete',
+                        type : 'POST',
+                        dataType : 'JSON',
+                        data : {id:id},
+                        success : function(resp)
+                        {
+                            if(resp.status == 'true')
+                            {
+                                
+                                alert(resp.message);
+                                window.location.reload();
+                            }else{
+                                alert('gagal hapus data, ('+ resp.message +')');
+                            }
+                        }, error : function()
+                        {
+                            alert('kesalahan jaringan');
+                        }
+                    });
+                }
+        });
     });
 </script>
 </body>
