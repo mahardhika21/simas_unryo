@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<?php // echo '<pre>'.print_r($slide, true) .'</pre>'; ?>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,37 +30,33 @@
       <div class="row">
         <div class="col-md-8">
           <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"> </li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"> </li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"> </li>
+            <ol  class="carousel-indicators">
+              <?php
+              $nomor = 0;
+               foreach($slide as $slider){ ?>
+                 <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $nomor; ?>" class="<?php if($nomor == 0){ echo 'active'; } ?>"> </li>
+              <?php
+              $nomor++;
+               } ?>
             </ol>
             <div class="carousel-inner">
-              <div class="carousel-item active"> <img class="d-block img-fluid w-100" src="https://static.pingendo.com/cover-moon.svg">
+              <?php $nomor =0; foreach($slide as $slider){ ?>
+              <div class="carousel-item <?php if($nomor == 0){ echo 'active'; } ?>"> <img class="d-block img-fluid w-100" src="<?php echo $url .'/'.$slider->url .'/'.$slider->nama; ?>">
                 <div class="carousel-caption">
                   <h5 class="m-0">Carousel</h5>
                   <p>with indicators</p>
                 </div>
               </div>
-              <div class="carousel-item "> <img class="d-block img-fluid w-100" src="https://static.pingendo.com/cover-bubble-dark.svg">
-                <div class="carousel-caption">
-                  <h5 class="m-0">Carousel</h5>
-                  <p>with indicators</p>
-                </div>
-              </div>
-              <div class="carousel-item"> <img class="d-block img-fluid w-100" src="https://static.pingendo.com/cover-bubble-light.svg">
-                <div class="carousel-caption">
-                  <h5 class="m-0">Carousel</h5>
-                  <p>with indicators</p>
-                </div>
-              </div>
+            <?php $nomor++; } ?>
+              
+             
             </div>
           </div>
         </div>
         <div class="col-md-4 Card" style="">
           <?php 
-        $message = Session::get('success');
-          echo '<pre>'.print_r($message, true) .'</pre>'; ?>
+        $message = Session::get('msg');
+          //echo '<pre>'.print_r($message, true) .'</pre>'; ?>
           <form class="" action="<?php echo $url .'/userLogin'; ?>" method="post">
             <div class="form-group"> <label>Email address</label> <input type="text" class="form-control" placeholder="masukkan  username" required="" name="username"> <small class="form-text text-muted"></small> </div>
             <div class="form-group"> <label>Password</label> <input type="password" class="form-control" placeholder="Password" name="password" required=""> </div> <button type="submit" class="btn btn-primary">Submit</button>
@@ -70,7 +66,6 @@
              <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
-        
       </div>
     </div>
   </div>

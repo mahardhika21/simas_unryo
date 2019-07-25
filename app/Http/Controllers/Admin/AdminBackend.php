@@ -494,6 +494,76 @@ class AdminBackend extends Controller
 	}
 
 
+	public function about_crud(Request $request, $type)
+	{
+			if($type === 'insert')
+			{
+				DB::beginTransaction();
+				try
+				{
+					$arr_data = array
+									(
+										"type" 			=> "about",
+										"body" 			=> $request->input('body'),
+										"nama" 			=> "about",
+										"insert_time"	=> date('Y-m-d H:i:s')
+									);
+
+					Extra::insert($arr_data);
+
+					DB::commit();
+
+					$resp['status']  = 'success';
+					$resp['code']    = 'success';
+					$resp['message'] = 'success insert data about/tentang';
+				}
+				catch(\Illuminate\Database\QueryException $e)
+				{
+					$resp['status']  = 'error';
+					$resp['code']    = 'danger';
+					$resp['message'] = $e->getMessage();
+				}
+			}
+			elseif($type === 'update')
+			{
+				DB::beginTransaction();
+
+				try
+				{
+						$arr_data = array
+									(
+										"body" 		=> $request->input('body'),
+										"updated_at" => date('Y-m-d H:i:s'),	
+									);
+
+						Extra::where('id_extra', $request->input('id'))->update($arr_data);
+
+						DB::commit();
+
+						$resp['status']  = 'success';
+						$resp['code']    = 'success';
+						$resp['message'] = 'success update about';
+
+				}
+				catch(\Illuminate\Database\QueryException $e)
+				{
+					$resp['status']  = 'error';
+					$resp['code']    = 'danger';
+					$resp['message'] =  $e->getMessage();
+				}
+			}
+			else
+			{
+				$resp['status']   = 'error';
+				$resp['code']     = 'danger';
+				$resp['message']  = 'opertion error, type not found';
+			}
+
+			return redirect('admin/about')->with(['msg' => $resp]);
+
+	}
+
+
 	public function insert_data_kamar(Request $request)
 	{
 		

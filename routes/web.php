@@ -38,6 +38,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 
 		]);
 
+		Route::get('/admin/about', [
+			"uses"  => 'Admin\AdminController@about',
+			"as"	=> 'web.admin.about'
+		]);
+
 		Route::get('/admin/room', [
 			"uses" 	=> 'Admin\AdminController@room',
 			"as" 	=> 'web.admin.kamar',
@@ -65,6 +70,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"   => "web.admin.slide",
 		]);
 
+		Route::get('admin/news/', [
+			"uses"  => 'Admin\AdminController@news',
+			"as"    => 'web.admin.news'
+		]);
+
 		// list datatables \\
 
 		Route::get('/admin/data/list_mahasiswa',[
@@ -86,6 +96,9 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"uses"	=> "Admin\AdminBackend@list_slide_json",
 			"as"	=> "web.admin.json_list_admin",
 		]);
+
+
+
 
 
 
@@ -158,6 +171,12 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			'as'	=> 'web.upload.slied',
 		]);
 
+		Route::post('admin/about_crud/{type}',[
+			'uses'  => 'Admin\AdminBackend@about_crud',
+			'as'    => 'web.crud.about',
+		]);
+
+	
 		// data openLib
 		Route::post('admin/data/lib/city',[
 			"uses"  => 'Admin\AdminBackend@city_openLib',

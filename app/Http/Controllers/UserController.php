@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Mail;
 use Illuminate\Routing\UrlGenerator;
 use App\Model\Users;
-
+use App\Model\Extra;
 
 
 class UserController extends Controller
@@ -26,7 +26,8 @@ class UserController extends Controller
 	{
 		$data = array
 			(
-				"url"  => $this->url->to('/'),
+				"url"    => $this->url->to('/'),
+				"slide"  => Extra::where('type','slide')->get(),
 			);
 
 		return view('login', $data);

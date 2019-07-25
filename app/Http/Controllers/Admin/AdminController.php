@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
 use App\Model\Users;
 use App\Http\Repository\CurlOpenRepo;
+use App\Model\Extra;
 
 class AdminController extends Controller
 {
@@ -124,7 +125,7 @@ class AdminController extends Controller
 	{
 		$data = array
 				(
-					"url" 		=> $this->url->to('/'),
+					"url"	=> $this->url->to('/'),
 					"title"		=> "Admin | List Slide",
 					//"msg"       => Session::get('msg'),
 					"part"		=> array
@@ -135,6 +136,43 @@ class AdminController extends Controller
 				);
 
 		return view('admin/list-slide', $data);
+	}
+
+
+	public function about(Request $request)
+	{
+			$data = array
+					(
+					
+						"title" => "Admin | title",
+						"url"	=> $this->url->to('/'),
+						"about" => Extra::where('type','about')->get(),
+						"part"  => array
+									(
+										"header"  => view('base/header-admin', $this->baseUrl()),
+										"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
+										"footer"  => view('base/footer'),
+									)
+					);
+			return view('admin/about', $data);
+	}
+
+
+	public function news(Request $request)
+	{
+		   $data = array
+		   			(
+		   				"title" => "Admin | news",
+		   				"url"   => $this->url->to('/'),
+		   				"part"  => array
+		   							(
+		   								"header"  => view('base/header-admin', $this->baseUrl()),
+		   								"sidebar" => view('base/sidebar-admin', $this->baseUrl()),
+		   								"footer"  => view('base/footer'),
+		   							), 
+		   			);
+		   			
+		   return view('admin/news', $data);
 	}
 
 	public function room_list(Request $request)
@@ -164,6 +202,7 @@ class AdminController extends Controller
 									"footer"   => view('base/footer')
 								),
 				);
+
 		return view('admin/add_roomview_'.$type,$data);
 	}
 
