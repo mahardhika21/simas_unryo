@@ -73,6 +73,12 @@ class AdminBackend extends Controller
 			return Datatables::of(Extra::where('type','slide')->get())->make('true');
 	}
 
+	public function list_news_json()
+	{
+		    return Datatables::of(Extra::where('type','news')->get())->make('true');
+	}
+
+
 	public function delete_data_mahasiswa(Request $request)
 	{
 		$sessi 		= $request->session()->get('roleAuth');
@@ -561,6 +567,45 @@ class AdminBackend extends Controller
 
 			return redirect('admin/about')->with(['msg' => $resp]);
 
+	}
+
+
+	public function news(Request $request, $type)
+	{
+		  if($type === 'insert')
+		  {
+		  		DB::beginTransaction();
+		  		try
+		  		{
+
+		  		}
+		  		catch(\Illuminate\Database\QueryException $e)
+		  		{
+		  			$resp['status']   = 'error';
+		  			$resp['code']     = 'danger';
+		  			$resp['message']  = $e->getMessage();
+		  		}
+		  }
+		  elseif($type === 'update')
+		  {
+
+		  }
+		  elseif($type === 'get')
+		  {
+
+		  }
+		  elseif($type === 'delete')
+		  {
+
+		  }
+		  else
+		  {
+		  	  $resp['status']  = 'false';
+		  	  $resp['code']    = 'danger';
+		  	  $resp['message'] = 'operation type not found';
+
+		  	  return redirect('admin/news')->with(['msg', $resp]);
+		  }
 	}
 
 

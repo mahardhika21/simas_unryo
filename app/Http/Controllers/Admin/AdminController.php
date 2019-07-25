@@ -167,7 +167,7 @@ class AdminController extends Controller
 		   				"part"  => array
 		   							(
 		   								"header"  => view('base/header-admin', $this->baseUrl()),
-		   								"sidebar" => view('base/sidebar-admin', $this->baseUrl()),
+		   								"sidebar" => view('base/side-menu-admin', $this->baseUrl()),
 		   								"footer"  => view('base/footer'),
 		   							), 
 		   			);

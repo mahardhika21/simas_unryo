@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/pages.css'; ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo $url .'/assets/css/widget.css'; ?>">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
    
 </head>
 <style>
@@ -50,7 +51,7 @@ p.note
 
         <!-- end header -->
         <div class="pcoded-main-container">
-<div class="pcoded-wrapper">
+        <div class="pcoded-wrapper">
                 <?php echo $part['sidebar']; ?>
         <!-- end sidebar -->
                     <div class="pcoded-content">
@@ -60,8 +61,8 @@ p.note
                                     <div class="page-header-title">
                                         <i class="feather icon-users bg-c-blue"></i>
                                         <div class="d-inline">
-                                            <h5>BAAK</h5>
-                                            <span>List Baak</span>
+                                            <h5>NEWS (BERITA)</h5>
+                                            <span>List News</span>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +73,6 @@ p.note
                                                 <a href="index-2.html"><i class="feather icon-home"></i></a>
                                             </li>
                                             <li class="breadcrumb-item"><a href="<?php echo $url; ?>">Beranda</a></li>
-                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -91,18 +91,15 @@ p.note
                                            
                                             <div class="card-block ">
                                                             <div class="card-header">
-                                                            <h5>List Baak</h5>
-                                                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-baak"><i class="fa fa-plus-circle" ></i>Tambah Data Baak</button>
+                                                            <h5>List Berita (news)</h5>
+                                                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-news"><i class="fa fa-plus-circle" ></i>Tambah Data Berita</button>
                                                             </div>
                                                             
-                                                      <table class="table" id="table-baak">
+                                                      <table class="table" id="table-news">
                                                           <thead>
                                                               <tr>
                                                                   <th>#</th>
-                                                                  <th>Username</th>
-                                                                  <th>Nama</th>
-                                                                  <th>Phone Number</th>
-                                                                  <th>E-MAil</th>
+                                                                  <th>Judul</th>
                                                                   <th>Aksi</th>
                                                               </tr>
                                                           </thead>
@@ -129,54 +126,39 @@ p.note
         </div>
     </div>
 
-    <div class="modal fade" id="add-data-baak" tabindex="-1" role="dialog">
+    <div class="modal fade" id="add-data-news" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-        <h4 class="modal-title">Tambah Data Baak</h4>
+        <h4 class="modal-title">Tambah Data News (BERITA)</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-            <form class="" id="formUser"  method="post">
+            <form class="" action="<?php echo $url .'/admin/news_crud/insert'; ?>"  method="post">
                                                             <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Username</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-9">
-                                                            <input type="text" required class="form-control" placeholder="input nama anda" value="" id="username" name="username">
+                                                            <label class="col-sm-8 col-form-label">Judul</label>
+                                                            <div class="col-sm-12">
+                                                            <input type="text" required class="form-control" placeholder="input nama anda" value="" id="title" name="title">    
+                                                            </div>
+                                                            </div>
+                                                             <div class="form-group row">
+                                                            <label class="col-sm-8 col-form-label">Berita</label>
+                                                            <div class="col-sm-12">
+                                                            <textarea class="form-control" name="body">
+                                                                
+                                                            </textarea>
                                                             
                                                             </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Nama</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="input nama anda" value="" id="nama" name="nama">
                                                             
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">E-Mail</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="email anda" value="" id="email" name="email">
-                                                           
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                            <label class="col-sm-2 col-form-label">Phone Number</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-9">
-                                                            <input type="text" class="form-control" placeholder="Phone Number Anda" value="" id="phone" name="phone">
-                                                           
-                                                            </div>
-                                                            </div>
+                                                          
                                                             
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data">Update Data</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" id="btn_insert_data">Insert Berita</button>
         </div>
         </form>
         </div>
@@ -201,122 +183,34 @@ p.note
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script src="<?php echo $url .'/assets/js/config-jqvalidate.js'; ?>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
     <script type="text/javascript">
-        $(function(){
-            var baseUrl = '<?php echo $url; ?>';
+       $(function(){
+        var baseUrl = "<?php echo $url; ?>";
 
-            var table = $('#table-baak').DataTable({
-                    processing : true,
-                    serverSide : true,
-                    searching  : true,
-                    ajax       : 'data/list_baak',
-                    columns    : 
-                                [
-                                   {data : 'username', name : 'username'},
-                                   {data : 'username', name : 'username'},
-                                   {data : 'nama',     name : 'name'},
-                                   {data : 'phone',    name : 'phone'},
-                                   {data : 'email',    name : 'email'},
-                                   {render : function(data, type, full, meta)
-                                    {
-                                        return  " <button id='btnDelete' href='ss' data-id="+full.username+" class='btn btn-danger btnDetails'>Delete Data</button>";
-                                    }},
-                                ]
-            });
+        var table  = $('#table-news').DataTable({
+            processing : true,
+            serverside : true,
+            seraching  : true,
+            ajax       : 'data/list_news',
+            columns    : 
+                            [
+                                {data : 'id_extra', nama : 'id_extra'},
+                                {data : 'judul',    nama : 'judul' },
+                                {render : function(data, type, full, meta){
+                                      return  "<button id='btnDetails' href='ss' data-id="+full.id_extra+" class='btn btn-info btnDetails'>Update</button>"+" <button id='btnDelete' href='ss' data-id="+full.id_extra+" class='btn btn-danger btnDetails'>Delet Data</button>";
+                                } }
+                            ]
 
-            // fungsi untuk menambah nomor indexing \\
-            table.on('order.dt search.dt',function(){
+        });
+
+         table.on('order.dt search.dt',function(){
                 table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                         cell.innerHTML = i+1;
                 });
             }).draw();
 
-           // fungsi delete di datatable
-           $('#table-baak').on('click','[id=btnDelete]', function(){
-                let uname = $(this).data('id');
-
-                cnf = confirm("Apakah Anda Yakin Menghapus Data Mahasiswa Dengan Nim "+ uname +" ?");
-                if(cnf)
-                {
-                    $.ajax({
-                            url      : baseUrl + '/admin/delete_data_user',
-                            type     : 'POST',
-                            dataType : 'JSON',
-                            data     : {username:uname}, 
-                            success  : function(resp)
-                            {
-                                    if(resp.message == 'true')
-                                    {
-                                        alert(resp.message);
-                                        window.location.reload();
-                                    }
-                                    else
-                                    {
-                                        alert(resp.message);
-                                        window.location.reload();
-                                    }
-                            },error : function(resp)
-                            {
-                                  alert('Kesalahan, jaringan');
-                            }
-                    });
-                }
-           });
-
-        });
-
-        function ajx_insert_data()
-        {
-            let baseUrl = '<?php echo $url; ?>';
-            let obj          = new Object();
-                obj.nama        = $('#nama').val();
-                obj.username    = $('#username').val();
-                obj.email       = $('#email').val();
-                obj.phone       = $('#phone').val();
-                obj.level       = 'baak';
-                obj.access_lev  = 'baak';
-                console.log(obj);
-                $.ajax({
-                    url      : baseUrl +'/admin/insert_data/user',
-                    type     : 'POST',
-                    dataType : 'JSON',
-                    data     : {datum:obj},
-                    success  : function(respond)
-                    {
-                        if(respond.success == 'true')
-                        {
-                            window.location.reload();
-                        }
-                        else
-                        {
-                            alert(respond.message);
-                            window.location.reload();
-                        }
-
-                    },error : function(respond)
-                    {
-                        alert("Kesalahn jaringan");
-                    }
-                });
-        }
-
-
-      $(document).ready(function(){
-       validate_user();
-
-       $('#btn_insert_data').on('click', function(){
-            let vd = $('#formUser').valid();
-            console.log(vd);
-            if(vd === true)
-            {
-                // alert('true');
-                ajx_insert_data();
-            }
        });
-
-        });
-        
-       
     </script>
 </body>
 </html>

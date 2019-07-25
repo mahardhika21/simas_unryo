@@ -97,6 +97,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> "web.admin.json_list_admin",
 		]);
 
+		Route::get('/admin/data/list_news', [
+			"uses"  => "Admin\AdminBackend@list_news_json",
+			"as"    => "web.admin.json_slide_admin",
+		]);
+
 
 
 
@@ -174,6 +179,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 		Route::post('admin/about_crud/{type}',[
 			'uses'  => 'Admin\AdminBackend@about_crud',
 			'as'    => 'web.crud.about',
+		]);
+
+		Route::post('admin/news_crud/{type}', [
+			'uses'  => 'Admin\AdminBackend@news',
+			'as'    => 'web.crud.news',
 		]);
 
 	
