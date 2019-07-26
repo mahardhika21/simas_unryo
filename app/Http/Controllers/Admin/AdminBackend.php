@@ -572,11 +572,34 @@ class AdminBackend extends Controller
 
 	public function news(Request $request, $type)
 	{
-		  if($type === 'insert')
+
+	
+		
+		  if($type == 'insert')
 		  {
+		  	// $arr_data = $request->validate([
+		  	// 			"nama"      => "required|max:25",
+		  	// 			"body"       => "required",
+		  	// 		]);
+		  	
 		  		DB::beginTransaction();
 		  		try
 		  		{
+		  			$arr_data = $request->validate([
+		  				"nama"      => "required|max:25",
+		  				"body"       => "required",
+		  			]);
+		  			$arr_data['type'] = "news";
+
+		  			Extra::insert($arr_data);
+
+		  			DB::commit();
+
+		  			$resp['status']   = 'true';
+		  			$resp['code']     = 'success';
+		  			$resp['message']  = 'success insert news';
+
+		  		    return redirect('admin/news')->with(['msg'=>$resp]);
 
 		  		}
 		  		catch(\Illuminate\Database\QueryException $e)
@@ -584,19 +607,86 @@ class AdminBackend extends Controller
 		  			$resp['status']   = 'error';
 		  			$resp['code']     = 'danger';
 		  			$resp['message']  = $e->getMessage();
+		  			
+		  			return redirect('admin/news')->with(['msg'=>$resp]);
+
 		  		}
 		  }
 		  elseif($type === 'update')
 		  {
 
+		  		DB::beginTransaction();
+
+		  		try
+		  		{
+		  			$arr_data = $request->validate([
+		  				"nama"        => "required|max:25",
+		  				"body"         => "required",
+		  			]);
+		  			$arr_data['updated_at'] = date('Y-m-d H:i:s');
+
+		  			Extra::where('id_extra',$request)->update($arr_data);
+
+		  			DB::commit();
+
+		  			$resp['status']  = 'true';
+		  			$resp['code']    = 'success';
+		  			$resp['message'] = 'success update news';
+
+		  			return redirect('admin/news')->with(['msg'=> $resp]);
+
+		  		}
+		  		catch(\Illuminate\Database\QueryException $e)
+		  		{
+		  			$resp['status']  = 'error';
+		  			$resp['code']    = 'danger';
+		  			$resp['message'] = $e->getMessage();
+
+		  			return redirect('admin/news')->with(['msg' => $resp]);
+		  		}
 		  }
 		  elseif($type === 'get')
 		  {
+		  		$data = Extra::where('id_extra', $request->input('id'))->get();
 
+		  		if($data->count() > 0)
+		  		{
+		  			$resp['status'] = 'true';
+		  			$resp['code']   = 'success';
+		  			$data['data']   = (array)$data;
+		  		}else{
+		  			$resp['status'] = 'false';
+		  			$resp['code']   = 'danger';
+		  			$data['data']   = NULL;
+		  		}
+		  		
+		  		return response()->json($resp, 200);
 		  }
 		  elseif($type === 'delete')
 		  {
+		  		DB::beginTransaction();
+		  		
+		  		try
+		  		{
+		  			Extra::where('id_extra', $request->input('id'))->delete();
 
+		  			DB::commit();
+
+		  			$resp['status']  = 'true';
+		  			$resp['code']    = 'success';
+		  			$resp['message'] = "success delete news";
+
+		  			return response()->json($resp, 200);
+
+		  		}
+		  		catch(\Illuminate\Database\QueryException $e)
+		  		{
+		  			$resp['status']  = 'false';
+		  			$resp['code']    = 'danger';
+		  			$resp['message'] = $e->getMessage();
+
+		  			return response()->json($resp, 200);
+		  		}
 		  }
 		  else
 		  {
