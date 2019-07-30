@@ -620,12 +620,14 @@ class AdminBackend extends Controller
 		  		try
 		  		{
 		  			$arr_data = $request->validate([
-		  				"nama"        => "required|max:25",
+		  				"nama"        => "required|max:55",
 		  				"body"         => "required",
 		  			]);
+		  			
 		  			$arr_data['updated_at'] = date('Y-m-d H:i:s');
-
-		  			Extra::where('id_extra',$request)->update($arr_data);
+		  			//echo '<pre>'.print_r($arr_data) .'</pre>';
+		  			//die();
+		  			Extra::where('id_extra',$request->input('id'))->update($arr_data);
 
 		  			DB::commit();
 
@@ -647,17 +649,19 @@ class AdminBackend extends Controller
 		  }
 		  elseif($type === 'get')
 		  {
-		  		$data = Extra::where('id_extra', $request->input('id'))->get();
-
+		  		$id   = $request->input('id');
+		  		$data = Extra::where('id_extra', $id)->get();
+		  		//echo '3333';
 		  		if($data->count() > 0)
 		  		{
 		  			$resp['status'] = 'true';
 		  			$resp['code']   = 'success';
-		  			$data['data']   = (array)$data;
+		  			$resp['data']   = $data[0];
+
 		  		}else{
 		  			$resp['status'] = 'false';
 		  			$resp['code']   = 'danger';
-		  			$data['data']   = NULL;
+		  			$resp['data']   = NULL;
 		  		}
 		  		
 		  		return response()->json($resp, 200);

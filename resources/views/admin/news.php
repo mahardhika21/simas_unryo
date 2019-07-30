@@ -191,17 +191,18 @@ p.note
         </button>
         </div>
         <div class="modal-body">
-            <form class="" action="<?php echo $url .'/admin/news_crud/insert'; ?>"  method="POST">
+            <form class="" action="<?php echo $url .'/admin/news_crud/update'; ?>"  method="POST">
                                                             <div class="form-group row">
                                                             <label class="col-sm-8 col-form-label">Judul</label>
                                                             <div class="col-sm-12">
-                                                            <input type="text" required class="form-control" placeholder="input nama anda" value="" id="title" name="nama">    
+                                                            <input type="hidden" class="id_update" value="" name="id">
+                                                            <input type="text" required class="form-control title_update" placeholder="input nama anda" value="" id="title" name="nama">    
                                                             </div>
                                                             </div>
                                                              <div class="form-group row">
                                                             <label class="col-sm-8 col-form-label">Berita</label>
                                                             <div class="col-sm-12">
-                                                            <textarea class="form-control summernote" name="body">
+                                                            <textarea class="form-control summernote body_update" name="body">
                                                             </textarea>
                                                             </div>
                                                             </div>
@@ -313,6 +314,10 @@ p.note
                             }
                             else if(type === 'get')
                             {
+                               
+                                $('.body_update').summernote('code', resp.data.body);
+                                $('.title_update').val(resp.data.nama);
+                                $('.id_update').val(resp.data.id_extra);
                                 $('#update-data-news').modal('show');
                             }
                             else
