@@ -78,6 +78,11 @@ class AdminBackend extends Controller
 		    return Datatables::of(Extra::where('type','news')->get())->make('true');
 	}
 
+	public function list_room_json($type)
+	{
+			return Datatables::of(Kamar::where('status',$type)->get())->make('true');
+	}
+
 
 	public function delete_data_mahasiswa(Request $request)
 	{
@@ -700,6 +705,52 @@ class AdminBackend extends Controller
 
 		  	  return redirect('admin/news')->with(['msg', $resp]);
 		  }
+	}
+
+
+	public function room_crud(Request $request, $type)
+	{
+		if($type === "insert")
+		{
+			$file = $request->file("roomImg");
+
+			DB::beginTransaction();
+
+			try
+			{
+				$arr_data = $request->validate([
+							"nomor" 		 => "required|max:5",
+							"roomImg"        => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+							"lantai_kamar"   => "required|numeric|max:1",
+							"harga_perbulan" => "required|numeric",
+						]);
+				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
+				$fpath = 'assets/upload/room';
+
+				if($file->move($fpath, $fname))
+				{
+					$arr_data['foto_kamar']   = $fname;
+					$arr_data['status_kamar'] = "open";
+
+					kamar::insert($arr_data);
+					DB::commit();
+				}
+				else
+				{
+					$resp['status']  = 'false';
+					$resp['code']    = 'danger';
+					$resp['message'] = "galat upload file";
+  				}
+			}
+			catch(\Illuminate\Database\QueryException $e)
+			{
+				$resp['status']  = 'false';
+				$resp['code']    = 'danger';
+				$resp['message'] = $e->getMessage();
+			}
+
+			return redirect('admin/list_room')->with(['msg' => $resp]);
+		}
 	}
 
 

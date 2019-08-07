@@ -43,10 +43,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 			"as"	=> 'web.admin.about'
 		]);
 
-		Route::get('/admin/room', [
-			"uses" 	=> 'Admin\AdminController@room',
+		Route::get('/admin/list_room', [
+			"uses" 	=> 'Admin\AdminController@list_room',
 			"as" 	=> 'web.admin.kamar',
 		]);
+
 
 		// admin list view
 
@@ -100,6 +101,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 		Route::get('/admin/data/list_news', [
 			"uses"  => "Admin\AdminBackend@list_news_json",
 			"as"    => "web.admin.json_slide_admin",
+		]);
+
+		Route::get('/admin/data/list_room/{type}', [
+			"uses"  => "Admin\AdminBackend@list_room_json",
+			"as"	=> "web.admin.json_list_room"
 		]);
 
 

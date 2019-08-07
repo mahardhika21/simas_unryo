@@ -76,7 +76,7 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class="">
-                                                <a href="<?php echo $url .'/admin/list_kamar'; ?>" class="waves-effect waves-dark">
+                                                <a href="<?php echo $url .'/admin/list_room'; ?>" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Kamar</span>
                                                 </a>
                                             </li>

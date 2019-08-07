@@ -13,6 +13,7 @@ use App\Model\Extra;
 class AdminController extends Controller
 {
 	 private $url;
+
 	function __construct(UrlGenerator $url)
 	{
 		$this->url = $url;
@@ -175,37 +176,27 @@ class AdminController extends Controller
 		   return view('admin/news', $data);
 	}
 
-	public function room_list(Request $request)
+	public function list_room(Request $request)
 	{
-		$data = array
-				(
-					"url"   => $this->url->to('/'),
-					"part"  => array
-								(
-									"header"   => view('base/header-admin'),
-									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
-									"footer"   => view('base/footer')
-								),
-				);
-		return view('admin/room_list',$data);
+
+
+		//echo "sadadas"; die();
+		$data = array (
+						"title"  => "Admin | List Kamar",
+						"url" 		=> $this->url->to('/'),
+						"part"	    => array
+										(
+											"header"    => view('base/header-admin', $this->baseUrl()),
+											"sidebar"	=> view('base/side-menu-admin', $this->baseUrl()),
+											"footer"	=> view('base/footer'),
+										),
+					  );
+		return view('admin/list-room', $data);
 	}
 
-	public function add_room(Request $request,$type)
-	{
-		$data = array
-				(
-					"url"   => $this->url->to('/'),
-					"part"  => array
-								(
-									"header"   => view('base/header-admin'),
-									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
-									"footer"   => view('base/footer')
-								),
-				);
 
-		return view('admin/add_roomview_'.$type,$data);
-	}
 
+	
 
 	public function list_rent_room(Request $request)
 	{
@@ -238,39 +229,7 @@ class AdminController extends Controller
 		return view('admin/stat_paid'.$type,$data);
 	}
 
-
-
-	public function user_list(Request $request, $type)
-	{
-		$data = array
-				(
-					"url"   => $this->url->to('/'),
-					"part"  => array
-								(
-									"header"   => view('base/header-admin'),
-									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
-									"footer"   => view('base/footer')
-								),
-				);
-		return view('admin/user_list',$data);
-	}
-
-
-	public function add_user(Request $request, $type)
-	{
-		$data = array
-				(
-					"url"   => $this->url->to('/'),
-					"part"  => array
-								(
-									"header"   => view('base/header-admin'),
-									"sidebar"  => view('base/side-menu-admin', $this->baseUrl()),
-									"footer"   => view('base/footer')
-								),
-				);
-		return view('admin/add_userView_'.$type,$data);
-	}
-
+	
 
 	public function price(Request $request)
 	{
