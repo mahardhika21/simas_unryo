@@ -80,10 +80,17 @@ class AdminBackend extends Controller
 
 	public function list_room_json($type)
 	{
-			return Datatables::of(Kamar::where('status',$type)->get())->make('true');
+		    if($type === 'all')
+		    {
+		    	return Datatables::of(kamar::all())->make('true');
+		    }
+		    else
+		    {
+		    	return Datatables::of(Kamar::where('status_kamar',$type)->get())->make('true');
+		    }
 	}
 
-
+ 
 	public function delete_data_mahasiswa(Request $request)
 	{
 		$sessi 		= $request->session()->get('roleAuth');
@@ -710,6 +717,14 @@ class AdminBackend extends Controller
 
 	public function room_crud(Request $request, $type)
 	{
+
+		$sessi = $request->session()->get('roleAuth');
+
+		// echo '<pre>'.print_r($sessi, true) .'</pre>';
+
+		// echo '<pre>'.print_r($request, true) .'</pre>';
+
+		// die();
 		if($type === "insert")
 		{
 			$file = $request->file("roomImg");
@@ -719,20 +734,31 @@ class AdminBackend extends Controller
 			try
 			{
 				$arr_data = $request->validate([
-							"nomor" 		 => "required|max:5",
-							"roomImg"        => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
-							"lantai_kamar"   => "required|numeric|max:1",
-							"harga_perbulan" => "required|numeric",
+							"nomor_kamar" 		 => "required|max:5",
+							"roomImg"            => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+							"lantai_kamar"       => "required|numeric|max:1",
+							"harga_perbulan"     => "required|numeric",
 						]);
+
 				$fname = strtotime(date('Y-m-d H:i:s')).'.'.$file->getClientOriginalExtension();
 				$fpath = 'assets/upload/room';
 
 				if($file->move($fpath, $fname))
 				{
-					$arr_data['foto_kamar']   = $fname;
-					$arr_data['status_kamar'] = "open";
+					$inp_data['nomor_kamar']      = $arr_data['nomor_kamar'];
+					$inp_data['lantai_kamar']     = $arr_data['lantai_kamar'];
+					$inp_data['harga_perbulan']   = $arr_data['harga_perbulan'];
+					$inp_data['foto_kamar']       = $fname;
+					$inp_data['status_kamar']     = "1"; // 1 = available; 2 = used; 3 = not available
+					$inp_data['id_admin']         = $sessi['username'];
+					$inp_data['time_insert']      = date('Y-m-d H:i:s');
 
-					kamar::insert($arr_data);
+
+					$resp['status']  = 'true';
+					$resp['code']    = 'success';
+					$resp['message'] = 'success insert data kamar';
+
+					kamar::insert($inp_data);
 					DB::commit();
 				}
 				else
@@ -750,6 +776,51 @@ class AdminBackend extends Controller
 			}
 
 			return redirect('admin/list_room')->with(['msg' => $resp]);
+		}
+		elseif($type === "update")
+		{
+			$file    = $request->file('room');
+			$id_room = $request->input('id_kamar');
+
+			DB::beginTransaction();
+
+			try
+			{
+				$arr_data = $request->validate([
+							"nomor" 		 => "required|max:5",
+							"lantai_kamar"   => "required|numeric|max:1",
+							"harga_perbulan" => "required|numeric",
+							"status_kamar"   => "required",
+							"harga_perbulan" => "required",
+						]);
+
+				if(!empty($file))
+				{
+					$request->validate([
+						                  "roomImg"  => "required|image:mimes:jpeg,png,jpg|max:2048",
+										]);
+					$fname = strtoname(date('Y-m-d H:i:s')) .'.'. $file->getClientOriginalExtension();
+					$fpath = 'assets/upload/room';
+
+					if($file->move($fpath, $fname))
+					{
+						$arr_data['foto_kamar']    = $fname;
+					}
+
+					//Kamar::where('id_kamar', $id_kamar)->update($arr_data);
+				}
+
+				Kamar::where('id_kamar', $id_kamar)->update($arr_data);
+
+				DB::commit();
+
+			}
+			catch(\Illuminate\Database\QueryException $e)
+			{
+				$resp['status']  = 'false';
+				$resp['code']    = 'danger';
+				$resp['message'] = $e->getMessage();
+			}
 		}
 	}
 

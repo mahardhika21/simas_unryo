@@ -18,7 +18,7 @@ Route::get('/', function (){
 });
  
 //Route::
-
+ 
 Route::group(['middleware' => 'AuthSimas'], function(){
 	Route::get('/coba', function(){
 		return "coba";
@@ -190,6 +190,11 @@ Route::group(['middleware' => 'AuthSimas'], function(){
 		Route::post('admin/news_crud/{type}', [
 			'uses'  => 'Admin\AdminBackend@news',
 			'as'    => 'web.crud.news',
+		]);
+
+		Route::post('admin/room_crud/{type}', [
+			'uses'  => 'Admin\AdminBackend@room_crud',
+			'as'    => 'web.crud.room',
 		]);
 
 	

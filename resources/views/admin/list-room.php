@@ -24,9 +24,10 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 </head>
 <style type="text/css">
-    .error {
-    color : red;   
-            }
+    .error 
+           {
+                color : red;   
+           }
 </style>
 <body>
 <?php // echo '<pre>'.print_r($data, true) .'</pre>'; ?>
@@ -53,7 +54,7 @@
                                         <i class="feather icon-users bg-c-blue"></i>
                                         <div class="d-inline">
                                             <h5>Data</h5>
-                                            <span>List Mahasiswa</span>
+                                            <span>List Room</span>
                                         </div>
                                     </div>
                                 </div>
@@ -79,19 +80,37 @@
                                                 <div class="card">
                                            
                                             <div class="card-block ">
+
+                                                <?php if ($errors->any()){ ?>
+                                                <div class="alert alert-danger">
+                                                        <ul>
+                                                            <?php foreach ($errors->all() as $error){ ?>
+                                                                <li><?php echo $error ?></li>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php  $msg = Session::get('msg'); ?>
+                                                <?php if(!empty($msg)){  ?>
+                                                         <div class="alert alert-<?php echo $msg['code']; ?>">
+                                                                    <strong><?php echo $msg['status']; ?></strong> <?php echo $msg['message']; ?>
+                                                         </div>
+                                                <?php } ?>
+
                                                             <div class="card-header">
-                                                            <h5>List Mahasiswa</h5>
-                                                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-mahasiswa"><i class="fa fa-plus-circle" ></i>Tambah Data Mahasiswa</button>
+                                                            <h5>List Data Kamar</h5>
+                                                             <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#add-data-mahasiswa"><i class="fa fa-plus-circle" ></i>Tambah Data Kamar</button>
                                                             </div>
                                                            
                                                             <table class="table" id="table-mahasiswa">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Nim</th>
-                                                                        <th>Nama</th>
-                                                                        <th>Prod</th>
-                                                                        <th>Fakultas</th>
-                                                                        <th>Tahun Masuk</th>
+                                                                        <th>#</th>
+                                                                        <th>Nomor Kamar</th>
+                                                                        <th>Lantai Kamar</th>
+                                                                        <th>Harga /Bulan</th>
+                                                                        <th>Status Kamar</th>
+                                                                        <th>Foto Kamar</th>
                                                                         <th>Option</th>
                                                                     </tr>
                                                                 </thead>
@@ -119,129 +138,56 @@
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
-        <h4 class="modal-title">Tambah Data Mahasiswa</h4>
+        <h4 class="modal-title">Tambah Data Kamar</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body"> 
                     <div class="container">
-                        <form id="formmhs" method="post">
-                                                        
+                        <form  method="post" id="room_inst" action="<?php echo $url .'/admin/room_crud/insert/'; ?>"  enctype="multipart/form-data">
                                                         <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">NIM</label>
+                                                            <label class="col-sm-4 col-form-label">Nomor Kamar</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                              <input type="text" class="form-control" placeholder="input nim mahasiswa" value="" id="nim_mhs" name="nim_mhs">
+                                                              <input type="text" class="form-control" placeholder="Nomor Kamar" value="" id="nomor_kamar" name="nomor_kamar">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Nama</label>
+                                                            <label class="col-sm-4 col-form-label">Lantai Kamar</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input Nama Mahasiswa" value="" id="nama_mhs">
+                                                            <input type="text" class="form-control" placeholder="Lantai Kamar" value="" name="lantai_kamar" id="lantai_kamar">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Fakultas</label>
+                                                            <label class="col-sm-4 col-form-label">Harga Perbulan</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                             <select class="form-control" name="fak" id="fak" onselect="pilih(this)">
-                                                                    <option value="FST">Pilih Fakultas</option>
-                                                                    <option value="FST">FST</option>
-                                                                    <option value="FIKES">FIKES</option>
-                                                                    <option value="FISE">FISE</option>
-                                                             </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Prodi</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <select class="form-control" name="prodi_mhs" id="prodi">
-                                                             <option value="<?php //echo $profile[0]['prodi']; ?>"><?php //echo $profile[0]['prodi']; ?></option> 
-                 
-                                                             </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Tahun Masuk</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <select class="form-control" id="tahun_masuk_mhs" name="tahun_masuk_mhs">
-                                                                <option value="2013">2013</option>
-                                                                <option value="2014">2014</option>
-                                                                <option value="2015">2015</option>
-                                                                <option value="2016">2016</option>
-                                                                <option value="2017">2017</option>
-                                                                <option value="2018">2018</option>
-                                                                <option value="2019">2019</option>
-                                                            </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Provinsi</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <select class="form-control form-control-sm" name="province_mhs" id="province">
-                                                                <option value="">Pilih Provinsi</option>
-                                                                 <option value=""></option>
-                                                            </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Kabupaten</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <select class="form-control form-control-sm" name="city_mhs" id="city_mhs">
-                             
-                                                             </select>  
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Alamat</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                           <textarea type="text" class="form-control" placeholder="Input Alamat Mahasiswa" value="" id="alamat_mhs" name="alamat_mhs"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input email anda" value="" id="email_mhs" name="email_mhs">
+                                                            <input type="text" class="form-control" placeholder="Harga Kamar" value="" name="harga_perbulan" id="harga_perbulan">
                                                             </div>
                                                         </div>
                                                          <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
+                                                            <label class="col-sm-4 col-form-label">Foto Kamar</label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                            <input type="text" class="form-control" placeholder="input Nomor Telephone" value="" id="phone_mhs" name="phone_mhs">
+                                                            <input type="file" id="roomImg" name="roomImg"  accept="image/*" onchange="loadFile(event)">
                                                             </div>
                                                         </div>
-                                                         <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">File : Png/Jpg/Jpeg</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <input type="file" name="slide" id="fileSLide" accept="image/*" onchange="loadFile2(event)">
-                                                            </div>
-                                                            </div>
-                                                            <div class="form-group row">
+                                                        <div class="form-group row">
                                                             <label class="col-sm-4 col-form-label"></label>
                                                             <div class="col-sm-1">:</div>
                                                             <div class="col-sm-7">
-                                                           <img style="max-height: 200px;" id="output2"/>
+                                                           <img style="max-height: 200px;" id="output"/>
                                                             </div>
-                                                            </div>  
-                                    </form>
-
-                                                            
+                                                        </div>  
+                        </form>
                      </div>
                                                             
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_data_mhs">Insert Data</button>
+        <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_insert_room">Insert Data</button>
         </div>
         </div>
         </div>
@@ -277,62 +223,7 @@
                                                             <strong id="nama"></strong>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Fakultas</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="fakultas"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Prodi</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="prodi2"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Tahun Masuk</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="tahun_masuk"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Provinsi</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="provinsi"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Kabupaten</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="Kabupaten"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Alamat</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="alamat"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">E-Mail</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="email"></strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-sm-4 col-form-label">Phone Number</label>
-                                                            <div class="col-sm-1">:</div>
-                                                            <div class="col-sm-7">
-                                                            <strong id="phone"></strong>
-                                                            </div>
-                                                        </div>
+                                                      
                                                          <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">File : Png/Jpg/Jpeg</label>
                                                             <div class="col-sm-1">:</div>
@@ -366,7 +257,6 @@
     <script type="text/javascript" src="<?php echo $url .'/bower_components/jquery-slimscroll/js/jquery.slimscroll.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/modernizr/js/modernizr.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo $url .'/bower_components/modernizr/js/css-scrollbars.js'; ?>"></script>
-    <script type="text/javascript" src="<?php echo $url .'/bower_components/classie/js/classie.html'; ?>"></script>
     <script src="<?php echo $url .'/assets/js/pcoded.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/vertical/vertical-layout.min.js'; ?>" type="text/javascript"></script>
     <script src="<?php echo $url .'/assets/js/jquery.mCustomScrollbar.concat.min.js'; ?>" type="text/javascript"></script>
@@ -389,14 +279,18 @@
                                 searchPlaceholder: "Search Data Mahasiswa"
                                  },
                     oSearch      : {sSearch: "1"},
-                    ajax       : 'data/list_mahasiswa',
+                    ajax       : 'data/list_room/all',
                     columns : [
                             
-                            {data : 'nim', name : 'nim'},
-                            {data : 'nama', name : 'nama'},
-                            {data : 'prodi', name : 'prodi'},
-                            {data : 'fakultas', name : 'fakultas'},
-                            {data : 'tahun_masuk', name : 'tahun_masuk'},
+                            {data : 'id_kamar', name : 'id_kamar'},
+                            {data : 'nomor_kamar', name : 'nomor_kamar'},
+                            {data : 'lantai_kamar', name : 'lantai_kamar'},
+                            {data : 'harga_perbulan', name : 'harga_perbulan'},
+                            {data : 'status_kamar', name : 'status_kamar'},
+                           // {data : 'foto_kamar', name : 'foto_kamar'},
+                            {reader : function(data, type, full, meta){
+                                return "<img class='img' height='120px' style=' margin-left: auto; margin-right: auto;' src="+ baseUrl+'/'+full.url+'/'+ full.kamar+" /> ";
+                            }},
                             {render : function(data, type, full, meta)
                                 {
                                   //  console.log(full);
@@ -491,112 +385,109 @@
         });
 
 
-    $("#fak").change(function() {
-            let fak = $(this).val();
-            pilih(fak);
-      });
-
-    $('#province').change(function()
-    {
-        let baseUrl = '<?php echo $url; ?>';
-        let id = $(this).val();
-        
-        $.ajax({
-            url         : baseUrl +"/admin/data/lib/city",
-            type        : 'POST',
-            dataType    : 'JSON',
-            data        : {id:id},
-            success     : function(response)
-            {
-                    console.log(response);
-                    if(response.error === false)
-                    {
-                       let op = "";
-                        response.kabupatens.forEach(function(arrDt)
-                        {
-                            console.log(arrDt);
-                            op += '<option>'+arrDt.nama+'</option>'; 
-                            $('#city_mhs').html(op);
-                        });
-
-
-                    }
-                    else
-                    {
-                        alert(response.message);
-                    }
-            },error     : function(response)
-            {
-                alert('galat, kegalan jaringan');
-            }     
-        });
-
-    });
-
-
-    $('#btn_insert_data_mhs2').on('click', function(){
-        
-
-    });
-
-    function ajx_insert_data_mhs()
-    {
-        let baseUrl = '<?php echo $url; ?>';
-        let obj     = new Object();
-
-        obj.nim         = $('#nim_mhs').val();
-        obj.nama        = $('#nama_mhs').val();
-        obj.fakultas    = $('#fak').val();
-        obj.prodi       = $('#prodi').val();
-        obj.tahun_masuk = $('#tahun_masuk_mhs').val();
-        obj.provinsi    = $('#province').val();
-        obj.kabupaten   = $('#city_mhs').val();
-        obj.alamat      = $('#alamat_mhs').val();
-        obj.email       = $('#email_mhs').val();
-        obj.phone       = $('#phone_mhs').val();
-
-        console.log(obj);
-        let dt = JSON.stringify(obj);
-
-        $.ajax({
-            url         : baseUrl +'/admin/insert_data/mahasiswa',
-            type        : 'POST',
-            dataType    : 'JSON',
-            data        : {datum:dt},
-            success     : function(resp)
-            {
-                        console.log(resp);
-                        //let res = JSON.parse(resp)
-                        if(resp.success === "true")
-                        {
-                            window.location.reload();
-                        }
-                        else
-                        {
-                            alert(resp.message);
-                            window.location.reload();
-                        }
-            },error     : function(resp)
-            {
-                alert('error, kesalahan jaringan');
-            }
-        });
-    }
-
     $(document).ready(function(){
-          validate_mhs();
+          validate_inst_room();
 
-         $('#btn_insert_data_mhs').on('click', function(){
-            let vd = $('#formmhs').valid();
+         $('#btn_insert_room').on('click', function(){
+            let vd = $('#room_inst').valid();
             console.log(vd);
             if(vd === true)
             {
-               // alert('true');
-               ajx_insert_data_mhs();
+               alert('true ajax');
+               $('#room_inst').submit();
+               
             }
           });
         
     });
+
+    var loadFile = function(event) 
+    {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    var loadFile2 = function(event)
+    {
+        var output = document.getElementById('output2');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    }
+
+
+    function validate_inst_room()
+        {
+                let vmhs = $('#room_inst').validate({
+                  rules : {
+                        nomor_kamar   :{
+                                            required       : true,
+                                            minlength      : 2,
+                                      },
+                        lantai_kamar  :{
+                                            required       : true,
+                                            minlength      : 1,
+
+                                        },
+                        harga_perbulan  : {
+                                            required : true, 
+                                            minlength : 3,
+                                            number    : true,
+                                          },
+
+                    },
+                    messages : {
+                        nomor_kamar : {
+                                        required       : "Nomor kamar Tidak boleh dikosongkan",
+                                        minlength      : "minmal panjang nomor kamar 5 karakter",
+                                      },
+                        lantai_kamar : {
+                                            required       : "nama Tidak boleh dikosongkan",
+                                            minlength      : "minmal panjang nama 3 karakter",
+                                        },
+                       
+                        harga_perbulan : {
+                                    required  : "Harga Perbulan tidak boleh dikosongkan",
+                                    minlength : "minimal panjang 3 karakte",
+                                    number    : "Harga Perbulan harus berupa angka 0-9",
+                                },       
+
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                        // Add the `help-block` class to the error element
+                        error.addClass( "help-block" );
+
+                        // Add `has-feedback` class to the parent div.form-group
+                        // in order to add icons to inputs
+                        element.parents( ".col-sm-9" ).addClass( "has-feedback" );
+
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.insertAfter( element.parent( "label" ) );
+                        } else {
+                            error.insertAfter( element );
+                        }
+
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if ( !element.next( "span" )[ 0 ] ) {
+                            $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+                        }
+                    },
+                    success: function ( label, element ) {
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if ( !$( element ).next( "span" )[ 0 ] ) {
+                            $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).parents( ".col-sm-" ).addClass( "has-error" ).removeClass( "has-success" );
+                        $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+                    },
+                    unhighlight: function ( element, errorClass, validClass ) {
+                        $( element ).parents( ".col-sm-9" ).addClass( "has-success" ).removeClass( "has-error" );
+                        $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+                    }
+
+                });
+        }
 
     </script>
 </body>

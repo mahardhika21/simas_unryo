@@ -11,5 +11,4 @@ class Extra extends Model
 		protected $primaryKey = 'id_extra';
 
 		protected $filelable = ['id_extra','nama','body','type','detail','url','insert_time','updated_ad'];
-
 }

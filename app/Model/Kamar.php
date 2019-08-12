@@ -1,7 +1,8 @@
 <?php
 namespace App\Model;
 
-use Illuminate\Database\Elequent\Model;
+
+use Illuminate\Database\Eloquent\Model;
 
 class Kamar extends Model
 {
@@ -12,4 +13,4 @@ class Kamar extends Model
 
 
 		protected $filehiden = ['last_update'];
-}
+} 
